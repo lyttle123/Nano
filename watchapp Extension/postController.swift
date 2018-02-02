@@ -25,6 +25,7 @@ class postController: WKInterfaceController {
 	@IBOutlet var postImage: WKInterfaceImage!
 	@IBOutlet var postTime: WKInterfaceLabel!
 	
+	var reddit = RedditAPI()
 	var saved = false
 	var comments = [String: JSON]()
 	var currentPost = JSON()
@@ -307,13 +308,13 @@ class postController: WKInterfaceController {
 			print(UserDefaults.standard.object(forKey: "access_token"))
 			self.upvoteButton.setTitleWithColor(title: "↑", color: UIColor(red:0.95, green:0.61, blue:0.07, alpha:1.0))
 			self.downvoteButton.setTitleWithColor(title: "↓", color: UIColor.white)
-			RedditAPI().vote(1, id: "t3_\(UserDefaults.standard.object(forKey: "selectedId") as! String)", access_token: UserDefaults.standard.object(forKey: "access_token") as! String)
+			reddit.vote(1, id: "t3_\(UserDefaults.standard.object(forKey: "selectedId") as! String)")
 			
 		} else{
 			downvoted = false
 			upvoted = false
 			self.upvoteButton.setTitleWithColor(title: "↑", color: UIColor.white)
-			RedditAPI().vote(0, id: "t3_\(UserDefaults.standard.object(forKey: "selectedId") as! String)", access_token: UserDefaults.standard.object(forKey: "access_token") as! String)
+			reddit.vote(0, id: "t3_\(UserDefaults.standard.object(forKey: "selectedId") as! String)")
 		}
 		
 	}
@@ -328,13 +329,13 @@ class postController: WKInterfaceController {
 			print(UserDefaults.standard.object(forKey: "access_token"))
 			self.downvoteButton.setTitleWithColor(title: "↓", color: UIColor(red:0.16, green:0.50, blue:0.73, alpha:1.0))
 			self.upvoteButton.setTitleWithColor(title: "↑", color: UIColor.white)
-			RedditAPI().vote(-1, id: "\(UserDefaults.standard.object(forKey: "selectedId") as! String)", access_token: UserDefaults.standard.object(forKey: "access_token") as! String)
+			reddit.vote(-1, id: "\(UserDefaults.standard.object(forKey: "selectedId") as! String)")
 			
 		} else{
 			downvoted = false
 			upvoted = false
 			self.downvoteButton.setTitleWithColor(title: "↓", color: UIColor.white)
-			RedditAPI().vote(0, id: "\(UserDefaults.standard.object(forKey: "selectedId") as! String)", access_token: UserDefaults.standard.object(forKey: "access_token") as! String)
+			reddit.vote(0, id: "\(UserDefaults.standard.object(forKey: "selectedId") as! String)")
 			
 		}
 		
@@ -345,14 +346,12 @@ class postController: WKInterfaceController {
 		if !saved{
 			savePostButton.setBackgroundColor(UIColor(red:0.95, green:0.61, blue:0.07, alpha:1.0))
 			let id = UserDefaults.standard.object(forKey: "selectedId") as! String
-			let token = UserDefaults.standard.object(forKey: "access_token") as! String
-			RedditAPI().save(id: id, type: "post", access_token: token)
+			reddit.save(id: id, type: "post")
 			saved = true
 		} else{
 			savePostButton.setBackgroundColor(UIColor(red: 0.13, green: 0.13, blue: 0.13, alpha: 1.0))
 			let id = UserDefaults.standard.object(forKey: "selectedId") as! String
-			let token = UserDefaults.standard.object(forKey: "access_token") as! String
-			RedditAPI().save(id: id, type: "post", access_token: token, true)
+			reddit.save(id: id, type: "post", true)
 			saved = false
 		}
 	}
@@ -373,9 +372,9 @@ class postController: WKInterfaceController {
 		presentTextInputController(withSuggestions: ["No"], allowedInputMode:  WKTextInputMode.plain) { (arr: [Any]?) in
 			if let arr = arr{
 				if let comment = arr.first as? String{
-					guard let access_token = UserDefaults.standard.object(forKey: "access_token") as? String else {return}
+				
 					print(self.currentPost["id"].string!)
-					RedditAPI().post(commentText: comment, access_token: access_token, parentId: (self.currentPost["id"].string!), completionHandler: {js in
+					self.reddit.post(commentText: comment, parentId: (self.currentPost["id"].string!), completionHandler: {js in
 						
 						guard let dat = js["json"]["data"]["things"].array else{return}
 						guard let first = dat.first else {return}

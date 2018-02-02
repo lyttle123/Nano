@@ -13,12 +13,15 @@ import SwiftyJSON
 class subCommentController: WKInterfaceController {
     
     @IBOutlet var commentLabel: WKInterfaceLabel!
+	var reddit = RedditAPI()
+	
     var comments = [String: JSON]()
     var idList = [String]()
     var reduce = commentController()
     var post = JSON()
     @IBOutlet var repliesTable: WKInterfaceTable!
     override func awake(withContext context: Any?) {
+	
 		self.setTitle("Comments")
 		addMenuItem(with: WKMenuItemIcon.info, title: "Back to Posts", action: #selector(backToPosts))
         super.awake(withContext: context)
@@ -116,12 +119,13 @@ class subCommentController: WKInterfaceController {
 		self.popToRootController()
 	}
 	@IBAction func postReply() {
+		
 		guard let id = post["id"].string else {return}
 		guard let access_token = UserDefaults.standard.object(forKey: "access_token") as? String else{return}
 		presentTextInputController(withSuggestions: ["No"], allowedInputMode: .plain, completion: { (arr: [Any]?) in
 			if let arr = arr{
 				if let comment = arr.first as? String{
-					RedditAPI().post(commentText: comment, access_token: access_token, parentId: id, type: "comment", completionHandler: {js in
+					self.reddit.post(commentText: comment, parentId: id, type: "comment", completionHandler: {js in
 						print(js)
 						guard let dat = js["json"]["data"]["things"].array else{return}
 						guard let first = dat.first else {return}
@@ -172,37 +176,37 @@ class subCommentController: WKInterfaceController {
 		if !upvoted{
 			upvoted = true
 			downvoted = false
-			RedditAPI().vote(1, id: id, access_token: access_token, type: "comment")
+			reddit.vote(1, id: id, type: "comment")
 			upvoteButton.setTitleWithColor(title: "↑", color: UIColor(red:0.95, green:0.61, blue:0.07, alpha:1.0))
 			downvoteButton.setTitleWithColor(title: "↓", color: UIColor.white)
 		} else{
 			upvoted = false
 			downvoted = false
-			RedditAPI().vote(0, id: id, access_token: access_token, type: "comment")
+			reddit.vote(0, id: id, type: "comment")
 			upvoteButton.setTitleWithColor(title: "↑", color: UIColor.white)
 
 		}
 	}
 	@IBAction func downvoteComment() {
-		guard let access_token = UserDefaults.standard.object(forKey: "access_token") as? String, let id = post["id"].string else{ return}
+		guard let id = post["id"].string else{ return}
 		if !downvoted{
 			downvoted = true
 			upvoted = false
-			RedditAPI().vote(-1, id: id, access_token: access_token, type: "comment")
+			reddit.vote(-1, id: id, type: "comment")
 			downvoteButton.setTitleWithColor(title: "↓", color: UIColor(red:0.16, green:0.50, blue:0.73, alpha:1.0))
 			upvoteButton.setTitleWithColor(title: "↑", color: UIColor.white)
 			
 		} else{
 			upvoted = false
 			downvoted = false
-			RedditAPI().vote(0, id: id, access_token: access_token, type: "comment")
+			reddit.vote(0, id: id, type: "comment")
 			downvoteButton.setTitleWithColor(title: "↓", color: UIColor.white)
 			
 		}
 	}
 	@IBAction func saveComment() {
 		guard let access_token = UserDefaults.standard.object(forKey: "access_token") as? String, let id = post["id"].string else{ return}
-		RedditAPI().save(id: id, type: "comment", access_token: access_token)
+		reddit.save(id: id, type: "comment")
 		
 	}
 	

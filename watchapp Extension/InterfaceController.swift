@@ -19,7 +19,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 	
 	
 	@IBOutlet var redditTable: WKInterfaceTable!
-	
+	var reddit = RedditAPI()
 	var upvoted = false
 	var downvoted = false
 	var posts = [String: [String: Any]]()
@@ -115,7 +115,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 			if shouldRefresh{
 				UserDefaults.standard.set(Date(), forKey: "lastRefresh")
 				print("Haven't refreshed access in atleast 30 mins")
-				RedditAPI().getAccessToken(grantType: "refresh_token", code: refresh_token, completionHandler: { result in
+				reddit.getAccessToken(grantType: "refresh_token", code: refresh_token, completionHandler: { result in
 					print("Got back \(result)")
 					print("Saving \(String(describing: result["acesss_token"]))")
 					UserDefaults.standard.set(result["acesss_token"]!, forKey: "access_token")
@@ -164,7 +164,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 		if let refesh_token = message["refresh_token"] as? String{
 			print(refesh_token)
 			UserDefaults.standard.set(refesh_token, forKey: "refresh_token")
-			RedditAPI().getAccessToken(grantType: "refresh_token", code: refesh_token, completionHandler: { result in
+			reddit.getAccessToken(grantType: "refresh_token", code: refesh_token, completionHandler: { result in
 				print(result)
 				print("Saving \(String(describing: result["acesss_token"]))")
 				UserDefaults.standard.set(result["acesss_token"], forKey: "access_token")
@@ -453,7 +453,6 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 	}
 	func didSelect(upvoteButton: WKInterfaceButton, downvoteButton: WKInterfaceButton, onCellWith id: String, action: String) {
 		print(id)
-		guard let access_token = UserDefaults.standard.object(forKey: "access_token") as? String else {return}
 		var dir = 0
 		if action == "upvote" && !upvoted{
 			print("Upvoting")
@@ -485,7 +484,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 			downvoteButton.setTitleWithColor(title: "↓", color: UIColor.white)
 		}
 		
-		RedditAPI().vote(dir, id: id, access_token: access_token)
+		reddit.vote(dir, id: id)
 	}
 	
 }

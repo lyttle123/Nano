@@ -12,8 +12,20 @@ import SwiftyJSON
 import WatchKit
 
 class RedditAPI{
-	
+
+	var access_token: String
+	init(){
+		var temp = String()
+		if let token = UserDefaults.standard.object(forKey: "access_token") as? String{
+			temp = token
+		}
+		self.access_token = temp
+		
+		
+	}
 	func getAccessToken(grantType: String, code: String, completionHandler: @escaping ([String: String]) -> Void){
+		///Returns an access token which can be used to perform actions on the users behalf
+
 		print(grantType)
 		var parameters = [
 			"grant_type": grantType,
@@ -47,7 +59,8 @@ class RedditAPI{
 				}
 			})
 	}
-	func vote(_ direction: Int, id: String, rank: Int = 2, access_token: String, type: String = "post"){
+	func vote(_ direction: Int, id: String, rank: Int = 2,  type: String = "post"){
+		///Votes on posts with 3 states, 1 = upvote, 0 = neutral, = -1 = downvote
 		let types: [String: String] = ["post": "t3_", "comment": "t1_"]
 		let parameters = [
 			"dir": direction,
@@ -64,7 +77,8 @@ class RedditAPI{
 				print(String(describing: response.result.value))
 			})
 	}
-	func save(id: String, type: String, access_token: String, _ unsave:Bool = false){
+	func save(id: String, type: String,  _ unsave:Bool = false){
+		///Save a post based on it's type and ID
 		let types: [String: String] = ["post": "t3_", "comment": "t1_"]
 		
 		let parameters = [
@@ -88,7 +102,8 @@ class RedditAPI{
 				print("Got \(String(describing: reponse.response?.statusCode))")
 		}
 	}
-	func post(commentText: String, access_token: String, parentId: String, type: String = "post", completionHandler: @escaping (JSON) -> Void){
+	func post(commentText: String, parentId: String, type: String = "post", completionHandler: @escaping (JSON) -> Void){
+		///Create a post based on the type of the parent post.
 		let headers = [
 			"Authorization": "bearer \(access_token)",
 			"User-Agent": "RedditWatch/0.1 by 123icebuggy",
