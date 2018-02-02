@@ -60,12 +60,6 @@ Bold features signify "Recently Added" features.
 
 
 
-# Planned Features
-
-* Click on subreddit links in comments
-
-
-
 # Maybe One Day Features
 
 * Click on actual links and get a "Reader Mode" output like Safari
