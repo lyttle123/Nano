@@ -20,7 +20,7 @@ class subCommentController: WKInterfaceController {
     @IBOutlet var repliesTable: WKInterfaceTable!
     override func awake(withContext context: Any?) {
 		self.setTitle("Comments")
-		
+		addMenuItem(with: WKMenuItemIcon.info, title: "Back to Posts", action: #selector(backToPosts))
         super.awake(withContext: context)
         if let js = context as? JSON{
             post = js
@@ -112,6 +112,9 @@ class subCommentController: WKInterfaceController {
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
     }
+	@objc func backToPosts(){
+		self.popToRootController()
+	}
 	@IBAction func postReply() {
 		guard let id = post["id"].string else {return}
 		guard let access_token = UserDefaults.standard.object(forKey: "access_token") as? String else{return}
