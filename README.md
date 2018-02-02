@@ -36,7 +36,9 @@ Bold features signify "Recently Added" features.
 
 * Gif Support (not inline) (Very slow gif support; no gifv, webm, etc support at this time)
 
-* Sign into account (upvote/downvote and save posts)
+* Sign into account
+
+* Upvote, downvote, and save posts
 
 * Inline Twitter support
 
@@ -50,7 +52,13 @@ Bold features signify "Recently Added" features.
 
 * **See flair of a post**
 
+* **See subreddit of post if in /r/popular or /r/all**
+
 * **See if a post is SFW or NSFW**
+
+* **Upvote, downvote, and save comments**
+
+
 
 # Planned Features
 

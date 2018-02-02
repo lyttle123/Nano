@@ -47,10 +47,11 @@ class RedditAPI{
 				}
 			})
 	}
-	func vote(_ direction: Int, id: String, rank: Int = 2, access_token: String){
+	func vote(_ direction: Int, id: String, rank: Int = 2, access_token: String, type: String = "post"){
+		let types: [String: String] = ["post": "t3_", "comment": "t1_"]
 		let parameters = [
 			"dir": direction,
-			"id": id,
+			"id": types[type]! + id,
 			"rank": 1
 			] as [String : Any]
 		let headers = [
@@ -64,13 +65,16 @@ class RedditAPI{
 			})
 	}
 	func save(id: String, type: String, access_token: String, _ unsave:Bool = false){
+		let types: [String: String] = ["post": "t3_", "comment": "t1_"]
+		
 		let parameters = [
-			"id": type + "_" + id,
+			"id": types[type]! + id,
 			] as [String : Any]
 		let headers = [
 			"Authorization": "bearer \(access_token)",
 			"User-Agent": "RedditWatch/0.1 by 123icebuggy",
 			]
+		print(parameters)
 		print(headers)
 		var save = "save"
 		if unsave{
@@ -83,7 +87,6 @@ class RedditAPI{
 			.response { reponse in
 				print("Got \(String(describing: reponse.response?.statusCode))")
 		}
-		debugPrint(b)
 	}
 	func post(commentText: String, access_token: String, parentId: String, type: String = "post", completionHandler: @escaping (JSON) -> Void){
 		let headers = [

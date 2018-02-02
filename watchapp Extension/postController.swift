@@ -328,13 +328,13 @@ class postController: WKInterfaceController {
 			print(UserDefaults.standard.object(forKey: "access_token"))
 			self.downvoteButton.setTitleWithColor(title: "↓", color: UIColor(red:0.16, green:0.50, blue:0.73, alpha:1.0))
 			self.upvoteButton.setTitleWithColor(title: "↑", color: UIColor.white)
-			RedditAPI().vote(-1, id: "t3_\(UserDefaults.standard.object(forKey: "selectedId") as! String)", access_token: UserDefaults.standard.object(forKey: "access_token") as! String)
+			RedditAPI().vote(-1, id: "\(UserDefaults.standard.object(forKey: "selectedId") as! String)", access_token: UserDefaults.standard.object(forKey: "access_token") as! String)
 			
 		} else{
 			downvoted = false
 			upvoted = false
 			self.downvoteButton.setTitleWithColor(title: "↓", color: UIColor.white)
-			RedditAPI().vote(0, id: "t3_\(UserDefaults.standard.object(forKey: "selectedId") as! String)", access_token: UserDefaults.standard.object(forKey: "access_token") as! String)
+			RedditAPI().vote(0, id: "\(UserDefaults.standard.object(forKey: "selectedId") as! String)", access_token: UserDefaults.standard.object(forKey: "access_token") as! String)
 			
 		}
 		
@@ -346,13 +346,13 @@ class postController: WKInterfaceController {
 			savePostButton.setBackgroundColor(UIColor(red:0.95, green:0.61, blue:0.07, alpha:1.0))
 			let id = UserDefaults.standard.object(forKey: "selectedId") as! String
 			let token = UserDefaults.standard.object(forKey: "access_token") as! String
-			RedditAPI().save(id: id, type: "t3", access_token: token)
+			RedditAPI().save(id: id, type: "post", access_token: token)
 			saved = true
 		} else{
 			savePostButton.setBackgroundColor(UIColor(red: 0.13, green: 0.13, blue: 0.13, alpha: 1.0))
 			let id = UserDefaults.standard.object(forKey: "selectedId") as! String
 			let token = UserDefaults.standard.object(forKey: "access_token") as! String
-			RedditAPI().save(id: id, type: "t3", access_token: token, true)
+			RedditAPI().save(id: id, type: "post", access_token: token, true)
 			saved = false
 		}
 	}

@@ -31,7 +31,13 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 
 
-
+struct Platform {
+	
+	static var isSimulator: Bool {
+		return TARGET_OS_SIMULATOR != 0
+	}
+	
+}
 extension UIImage {
 	
 	public class func gifImageWithData(_ data: Data) -> UIImage? {

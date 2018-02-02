@@ -435,6 +435,30 @@
                             <fontDescription key="font" type="system" weight="semibold" pointSize="16"/>
                         </label>
                         <label width="136" alignment="left" text="s" numberOfLines="0" id="wn6-kp-3FM"/>
+                        <group width="136" alignment="left" id="giB-hc-V1k">
+                            <items>
+                                <button width="44" alignment="left" title="↑" id="wii-vf-u32">
+                                    <variation key="device=watch42mm" width="51"/>
+                                    <connections>
+                                        <action selector="upvoteComment" destination="xh4-hG-gSc" id="vCF-K1-KpP"/>
+                                    </connections>
+                                </button>
+                                <button width="44" alignment="left" title="↓" id="qNn-Nk-9h3">
+                                    <variation key="device=watch42mm" width="51"/>
+                                    <connections>
+                                        <action selector="downvoteComment" destination="xh4-hG-gSc" id="Qfx-t5-uRb"/>
+                                    </connections>
+                                </button>
+                                <button width="44" alignment="left" title="💾" id="aI7-ac-sON">
+                                    <color key="backgroundColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <variation key="device=watch42mm" width="51"/>
+                                    <connections>
+                                        <action selector="saveComment" destination="xh4-hG-gSc" id="8L1-Iw-LDJ"/>
+                                    </connections>
+                                </button>
+                            </items>
+                            <variation key="device=watch42mm" width="154"/>
+                        </group>
                         <button width="1" alignment="left" title="Reply" id="FLz-k3-IdH">
                             <connections>
                                 <action selector="postReply" destination="xh4-hG-gSc" id="1SW-5Y-5wi"/>
@@ -497,8 +521,11 @@
                     </items>
                     <connections>
                         <outlet property="commentLabel" destination="wn6-kp-3FM" id="yb2-ZY-DDL"/>
+                        <outlet property="downvoteButton" destination="qNn-Nk-9h3" id="3ad-x2-hm9"/>
                         <outlet property="postReply" destination="FLz-k3-IdH" id="CER-aK-eFe"/>
                         <outlet property="repliesTable" destination="92T-3E-HWh" id="Mhc-7t-YG9"/>
+                        <outlet property="saveButton" destination="aI7-ac-sON" id="En6-NN-fWN"/>
+                        <outlet property="upvoteButton" destination="wii-vf-u32" id="UG7-bZ-Nmu"/>
                     </connections>
                 </controller>
             </objects>

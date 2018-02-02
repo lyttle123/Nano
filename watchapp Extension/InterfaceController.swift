@@ -90,7 +90,14 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 		}
 		
 		var lastTime = Date()
-		var shouldRefresh = false
+		var shouldRefresh: Bool
+		
+		if Platform.isSimulator{
+			shouldRefresh = true
+			
+		} else{
+			shouldRefresh = false
+		}
 		
 		if let lastRefresh = UserDefaults.standard.object(forKey: "lastRefresh") as? Date{
 			lastTime = lastRefresh
@@ -478,7 +485,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 			downvoteButton.setTitleWithColor(title: "↓", color: UIColor.white)
 		}
 		
-		RedditAPI().vote(dir, id: "t3_" + id, access_token: access_token)
+		RedditAPI().vote(dir, id: id, access_token: access_token)
 	}
 	
 }

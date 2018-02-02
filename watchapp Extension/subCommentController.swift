@@ -159,5 +159,48 @@ class subCommentController: WKInterfaceController {
 			//}
 		}
     }
-    
+	@IBOutlet var upvoteButton: WKInterfaceButton!
+	@IBOutlet var saveButton: WKInterfaceButton!
+	@IBOutlet var downvoteButton: WKInterfaceButton!
+	var upvoted = false
+	var downvoted = false
+	@IBAction func upvoteComment() {
+		guard let access_token = UserDefaults.standard.object(forKey: "access_token") as? String, let id = post["id"].string else{ return}
+		if !upvoted{
+			upvoted = true
+			downvoted = false
+			RedditAPI().vote(1, id: id, access_token: access_token, type: "comment")
+			upvoteButton.setTitleWithColor(title: "↑", color: UIColor(red:0.95, green:0.61, blue:0.07, alpha:1.0))
+			downvoteButton.setTitleWithColor(title: "↓", color: UIColor.white)
+		} else{
+			upvoted = false
+			downvoted = false
+			RedditAPI().vote(0, id: id, access_token: access_token, type: "comment")
+			upvoteButton.setTitleWithColor(title: "↑", color: UIColor.white)
+
+		}
+	}
+	@IBAction func downvoteComment() {
+		guard let access_token = UserDefaults.standard.object(forKey: "access_token") as? String, let id = post["id"].string else{ return}
+		if !downvoted{
+			downvoted = true
+			upvoted = false
+			RedditAPI().vote(-1, id: id, access_token: access_token, type: "comment")
+			downvoteButton.setTitleWithColor(title: "↓", color: UIColor(red:0.16, green:0.50, blue:0.73, alpha:1.0))
+			upvoteButton.setTitleWithColor(title: "↑", color: UIColor.white)
+			
+		} else{
+			upvoted = false
+			downvoted = false
+			RedditAPI().vote(0, id: id, access_token: access_token, type: "comment")
+			downvoteButton.setTitleWithColor(title: "↓", color: UIColor.white)
+			
+		}
+	}
+	@IBAction func saveComment() {
+		guard let access_token = UserDefaults.standard.object(forKey: "access_token") as? String, let id = post["id"].string else{ return}
+		RedditAPI().save(id: id, type: "comment", access_token: access_token)
+		
+	}
+	
 }
