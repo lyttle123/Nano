@@ -138,7 +138,7 @@ class postController: WKInterfaceController {
 			getComments(subreddit: subreddit, id: id)
 			
 			
-			updateUserActivity("com.willbishop.watchy.handoff", userInfo: ["current": id, "subreddit": subreddit], webpageURL: nil)
+			updateUserActivity("com.willbishop.redditwatch.handoff", userInfo: ["current": id, "subreddit": subreddit], webpageURL: nil)
 			
 			
 		} else{

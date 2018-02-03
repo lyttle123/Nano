@@ -102,8 +102,7 @@ class subCommentController: WKInterfaceController {
                 }
             }
         }
-		
-        // Configure interface objects here.
+		repliesTable.scrollToRow(at: 0)
     }
     
     override func willActivate() {
