@@ -7,6 +7,9 @@ target 'redditwatch' do
   # Pods for redditwatch
   pod 'Alamofire'
   pod 'SwiftyJSON'
+  pod 'SAConfettiView'
+  pod 'SwiftyStoreKit'
+
   target 'redditwatchTests' do
     inherit! :search_paths
     # Pods for testing

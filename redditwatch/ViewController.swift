@@ -11,6 +11,8 @@ import WatchConnectivity
 import SafariServices
 import Alamofire
 import SwiftyJSON
+import SAConfettiView
+
 
 class ViewController: UIViewController, WCSessionDelegate, SFSafariViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
 	@IBOutlet weak var userSubreddits: UITextField!
@@ -30,6 +32,9 @@ class ViewController: UIViewController, WCSessionDelegate, SFSafariViewControlle
 	var wcSession: WCSession!
 	
 	override func viewWillAppear(_ animated: Bool) {
+		
+		
+
 		userSubreddits.text = phases.joined(separator: ",")
 		defaultSubredditField.delegate = self
 		if let sub = UserDefaults.standard.object(forKey: "defaultSubreddit") as? String{
@@ -48,6 +53,7 @@ class ViewController: UIViewController, WCSessionDelegate, SFSafariViewControlle
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		
 		
 		for element in clients.enumerated(){
 			if UIApplication.shared.canOpenURL(URL(string: element.element + "://")!){
@@ -253,6 +259,9 @@ class ViewController: UIViewController, WCSessionDelegate, SFSafariViewControlle
 		return true
 	}
 	
+	@IBAction func goToPro(_ sender: Any) {
+		self.navigationController?.pushViewController((storyboard?.instantiateViewController(withIdentifier: "proController"))!, animated: true)
+	}
 	override func restoreUserActivityState(_ activity: NSUserActivity) {
 		print("Processing")
 		if let id = activity.userInfo!["current"]{

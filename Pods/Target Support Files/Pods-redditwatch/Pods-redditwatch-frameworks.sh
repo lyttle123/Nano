@@ -103,11 +103,15 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire-iOS/Alamofire.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/SAConfettiView/SAConfettiView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyJSON-iOS/SwiftyJSON.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/SwiftyStoreKit/SwiftyStoreKit.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire-iOS/Alamofire.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/SAConfettiView/SAConfettiView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyJSON-iOS/SwiftyJSON.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/SwiftyStoreKit/SwiftyStoreKit.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait
