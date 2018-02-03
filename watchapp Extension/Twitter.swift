@@ -17,14 +17,14 @@ class Twitter{
 			consumerSecret: "yEUjk5aypsjCBUbLECQD9Jn1C8Jgfo2qjCIV5TbVmJnZ8fPkzx"
 		)
 		// do your HTTP request without authorize
-		oauthswift.client.get("https://api.twitter.com/1.1/statuses/show.json", parameters: ["id": tweetId],
-							  success: { response in
-								let tweet = try? JSON(data: response.data)
-								completionHandler(tweet)
-		},
-							  failure: { error in
-								print(error.localizedDescription)
-								//...
+		
+		_ = oauthswift.client.get("https://api.twitter.com/1.1/statuses/show.json", parameters: ["id": tweetId],
+			  success: { response in
+				let tweet = try? JSON(data: response.data)
+				completionHandler(tweet)
+			  },
+			  failure: { error in
+				print(error.localizedDescription)
 		}
 		)
 	}

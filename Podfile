@@ -32,7 +32,7 @@ target 'watchapp Extension' do
   use_frameworks!
   pod 'SwiftyJSON'
   pod 'Alamofire' 
-  pod 'OAuthSwift', '~> 1.2.0'
+  pod 'OAuthSwift'
   # Pods for watchapp Extension
 
 

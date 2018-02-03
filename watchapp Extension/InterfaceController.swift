@@ -11,7 +11,6 @@ import Foundation
 import SwiftyJSON
 import WatchConnectivity
 import Alamofire
-import OAuthSwift
 
 class InterfaceController: WKInterfaceController, WCSessionDelegate, customDelegate{
 
@@ -52,7 +51,6 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 							print("Setting")
 							setupTable(sub, sort: "hot")
 						} else{
-							print(UserDefaults.standard.object(forKey: "defaultSubreddit"))
 							print("woulnd't let")
 							changeSubreddit()
 						}
@@ -435,8 +433,8 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 	
 	override func table(_ table: WKInterfaceTable, didSelectRowAt rowIndex: Int) {
 		WKInterfaceDevice.current().play(WKHapticType.click)
-		if (redditTable.rowController(at: rowIndex) as? NameRowController) != nil{
-			
+		if let row = redditTable.rowController(at: rowIndex) as? NameRowController{
+			row.nameLabe.setTextColor(UIColor.lightGray)
 			//    UserDefaults.standard.set(posts[names[rowIndex]], forKey: "selectedPost")
 			if images[rowIndex] != nil{
 				print("Should attach image")

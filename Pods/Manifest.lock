@@ -5,7 +5,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
-  - OAuthSwift (~> 1.2.0)
+  - OAuthSwift
   - SwiftyJSON
 
 SPEC CHECKSUMS:
@@ -13,6 +13,6 @@ SPEC CHECKSUMS:
   OAuthSwift: 7fd6855b8e4d58eb5a30d156ea9bed7a8aecd1ca
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
 
-PODFILE CHECKSUM: fe6ee5638669a5833bc0ecb1b1d1ed90a70efbe3
+PODFILE CHECKSUM: 3151e38122e870fc5480c3cae268f3706f3f7d0a
 
 COCOAPODS: 1.3.1

@@ -25,7 +25,7 @@ class waitForiPhone: WKInterfaceController, WCSessionDelegate {
 		default:
 			print("not actived")
 		}
-		print(error?.localizedDescription)
+		print(error?.localizedDescription ?? "No error")
 		
 	}
 	@IBOutlet var getStartedButton: WKInterfaceButton!
@@ -57,7 +57,7 @@ class waitForiPhone: WKInterfaceController, WCSessionDelegate {
 			UserDefaults.standard.set(refesh_token, forKey: "refresh_token")
 			RedditAPI().getAccessToken(grantType: "refresh_token", code: refesh_token, completionHandler: { result in
 				print(result)
-				print("Saving \(result["access_token"])")
+				print("Saving \(String(describing: result["access_token"]))")
 				UserDefaults.standard.set(result["access_token"], forKey: "access_token")
 				UserDefaults.standard.set(true, forKey: "connected")
 				print("SHould enable")

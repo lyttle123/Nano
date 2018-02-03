@@ -32,7 +32,7 @@ class commentSort: WKInterfaceController {
 					post = pos
 						
 					commentSortTable.setNumberOfRows(sort.count, withRowType: "commentSort")
-					for (index, element) in sort.enumerated(){
+					for (index, _) in sort.enumerated(){
 						print("setting \([sort[index]])")
 						if let row = commentSortTable.rowController(at: index) as? sortCell{
 							row.sortLab.setText(sort[index])
@@ -44,7 +44,7 @@ class commentSort: WKInterfaceController {
 					guard let sort = cont["sorts"] as? [String] else { print("No sorts"); return }
 					sorts = sort
 					commentSortTable.setNumberOfRows(sort.count, withRowType: "commentSort")
-					for (index, element) in sort.enumerated(){
+					for (index, _) in sort.enumerated(){
 						print("setting \([sort[index]])")
 						if let row = commentSortTable.rowController(at: index) as? sortCell{
 							row.sortLab.setText(sort[index])

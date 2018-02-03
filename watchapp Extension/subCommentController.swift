@@ -121,7 +121,6 @@ class subCommentController: WKInterfaceController {
 	@IBAction func postReply() {
 		
 		guard let id = post["id"].string else {return}
-		guard let access_token = UserDefaults.standard.object(forKey: "access_token") as? String else{return}
 		presentTextInputController(withSuggestions: ["No"], allowedInputMode: .plain, completion: { (arr: [Any]?) in
 			if let arr = arr{
 				if let comment = arr.first as? String{
@@ -172,7 +171,7 @@ class subCommentController: WKInterfaceController {
 	var upvoted = false
 	var downvoted = false
 	@IBAction func upvoteComment() {
-		guard let access_token = UserDefaults.standard.object(forKey: "access_token") as? String, let id = post["id"].string else{ return}
+		guard let id = post["id"].string else{ return}
 		if !upvoted{
 			upvoted = true
 			downvoted = false
@@ -205,7 +204,7 @@ class subCommentController: WKInterfaceController {
 		}
 	}
 	@IBAction func saveComment() {
-		guard let access_token = UserDefaults.standard.object(forKey: "access_token") as? String, let id = post["id"].string else{ return}
+		guard let id = post["id"].string else{ return}
 		reddit.save(id: id, type: "comment")
 		
 	}

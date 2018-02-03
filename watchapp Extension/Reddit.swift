@@ -94,7 +94,7 @@ class RedditAPI{
 		if unsave{
 			save = "un" + save
 		}
-		let b = Alamofire.request("https://oauth.reddit.com/api/\(save)", method: .post, parameters: parameters, headers: headers)
+		Alamofire.request("https://oauth.reddit.com/api/\(save)", method: .post, parameters: parameters, headers: headers)
 			.responseString(completionHandler: {response in
 				print(String(describing: response.result.value))
 			})

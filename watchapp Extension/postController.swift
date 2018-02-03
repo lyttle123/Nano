@@ -57,7 +57,6 @@ class postController: WKInterfaceController {
 				savePostButton.setHidden(false)
 			}
 		}
-		print(UserDefaults.standard.object(forKey: "connected"))
 		if let author = post["author"].string{
 			postAuthor.setText(author)
 		}
@@ -103,7 +102,7 @@ class postController: WKInterfaceController {
 							} else{
 								let image = UIImage(data: data)
 								if image != nil{
-									print("setting \(image)")
+									print("setting \(String(describing: image))")
 									self.postImage.setImage(image)
 									
 								}
@@ -154,7 +153,7 @@ class postController: WKInterfaceController {
 		ids.removeAll()
 		idList.removeAll()
 		
-		print(url)
+		print(url!)
 		
 		let parameters = [
 			"sort": sort.lowercased()
@@ -283,7 +282,7 @@ class postController: WKInterfaceController {
 		print("Heyo")
 	}
 	override func table(_ table: WKInterfaceTable, didSelectRowAt rowIndex: Int) {
-		print(ids[Array(comments.keys)[rowIndex]])
+		print(ids[Array(comments.keys)[rowIndex]] ?? "found no cell")
 		
 		
 		if (commentsTable.rowController(at: rowIndex) as? commentController) != nil{
@@ -304,8 +303,6 @@ class postController: WKInterfaceController {
 		}
 		if !upvoted{
 			upvoted = true
-			print(UserDefaults.standard.object(forKey: "selectedId"))
-			print(UserDefaults.standard.object(forKey: "access_token"))
 			self.upvoteButton.setTitleWithColor(title: "↑", color: UIColor(red:0.95, green:0.61, blue:0.07, alpha:1.0))
 			self.downvoteButton.setTitleWithColor(title: "↓", color: UIColor.white)
 			reddit.vote(1, id: "t3_\(UserDefaults.standard.object(forKey: "selectedId") as! String)")
@@ -325,8 +322,6 @@ class postController: WKInterfaceController {
 		}
 		if !downvoted{
 			downvoted = true
-			print(UserDefaults.standard.object(forKey: "selectedId"))
-			print(UserDefaults.standard.object(forKey: "access_token"))
 			self.downvoteButton.setTitleWithColor(title: "↓", color: UIColor(red:0.16, green:0.50, blue:0.73, alpha:1.0))
 			self.upvoteButton.setTitleWithColor(title: "↑", color: UIColor.white)
 			reddit.vote(-1, id: "\(UserDefaults.standard.object(forKey: "selectedId") as! String)")
@@ -387,7 +382,7 @@ class postController: WKInterfaceController {
 							print("Created")
 							let idx = NSIndexSet(index: 0)
 							self.commentsTable.insertRows(at: idx as IndexSet, withRowType: "commentCell")
-							if var row = self.commentsTable.rowController(at: 0) as? commentController{
+							if let row = self.commentsTable.rowController(at: 0) as? commentController{
 								row.scoreLabel.setText("↑ 1 |")
 								row.timeLabel.setText("Just Now")
 								row.gildedIndicator.setHidden(true)
