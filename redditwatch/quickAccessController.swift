@@ -77,6 +77,7 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = quickAccessSubreddits.dequeueReusableCell(withIdentifier: "quickSubreddit") as! quickSubredditCell
 		print(indexPath.row)
+		
 		cell.subreddit = subreddits[indexPath.row]
 		cell.disableInput()
 		cell.update()
@@ -137,6 +138,14 @@ class quickSubredditCell: UITableViewCell, UITextFieldDelegate{
 	}
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 		subredditLabel.resignFirstResponder()
+		guard var sub = textField.text else {return false}
+		
+		if sub.range(of: "r/") != nil{
+			sub = sub.replacingOccurrences(of: "r/", with: "")
+		}
+		if sub.characters.first == "/"{
+			sub = sub.replacingOccurrences(of: "/", with: "")
+		}
 		NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadSubreddits"), object: nil, userInfo: ["text": textField.text!])
 
 		return true
