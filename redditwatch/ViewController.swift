@@ -14,20 +14,16 @@ import SwiftyJSON
 import SAConfettiView
 
 
-class ViewController: UIViewController, WCSessionDelegate, SFSafariViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
+class ViewController: UIViewController, WCSessionDelegate, SFSafariViewControllerDelegate, UITextFieldDelegate {
 	@IBOutlet weak var userSubreddits: UITextField!
 	var authSession: SFAuthenticationSession?
 	
 	@IBOutlet weak var defaultSubredditField: UITextField!
 	@IBOutlet weak var defaultSubredditSwitch: UISwitch!
-	@IBOutlet weak var clientTable: UITableView!
 	@IBOutlet weak var connectButton: UIButton!
 	@IBOutlet weak var highResSwitch: UISwitch!
 	var switchState = UserDefaults.standard.object(forKey: "switchState") as? Bool ?? false
-	let clients = ["Reddit", "Apollo", "Narwhal"]
-	var availableClients = [String]()
-	var selectedClient = UserDefaults.standard.object(forKey: "selectedClient") as? String ?? "reddit"
-	var phases = UserDefaults.standard.object(forKey: "phrases") as? [String] ?? ["pics","all", "popular"]
+	
 	
 	var wcSession: WCSession!
 	
@@ -36,7 +32,6 @@ class ViewController: UIViewController, WCSessionDelegate, SFSafariViewControlle
 		
 		//proButton.isEnabled = false
 
-		userSubreddits.text = phases.joined(separator: ",")
 		defaultSubredditField.delegate = self
 		if let sub = UserDefaults.standard.object(forKey: "defaultSubreddit") as? String{
 			defaultSubredditField.text = sub
@@ -54,17 +49,12 @@ class ViewController: UIViewController, WCSessionDelegate, SFSafariViewControlle
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		tabBarController?.tabBar.tintColor = UIColor.flatColors.light.blue
+
+		
+	
 		
 		
-		for element in clients.enumerated(){
-			if UIApplication.shared.canOpenURL(URL(string: element.element + "://")!){
-				availableClients.append(element.element)
-			}
-			
-		}
-		
-		clientTable.delegate = self
-		clientTable.dataSource = self
 		self.connectButton.isEnabled = false
 		connectButton.setTitle("Please launch on watch to connect to Reddit", for: .normal)
 		if let bool = UserDefaults.standard.object(forKey: "highResImage") as? Bool{
@@ -107,30 +97,8 @@ class ViewController: UIViewController, WCSessionDelegate, SFSafariViewControlle
 		//
 	}
 	
-	func numberOfSections(in tableView: UITableView) -> Int {
-		return 1
-	}
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return availableClients.count
-	}
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = clientTable.dequeueReusableCell(withIdentifier: "client")
-		cell?.textLabel?.text = availableClients[indexPath.row]
-		if availableClients[indexPath.row].lowercased() == selectedClient{
-			UserDefaults.standard.set(availableClients[indexPath.row].lowercased(), forKey: "selectedClient")
-			print("Adding checkmark because \(availableClients[indexPath.row].lowercased()) == \(selectedClient)")
-			cell?.accessoryType = .checkmark
-		}else{
-			cell?.accessoryType = .none
-		}
-		return cell!
-	}
-	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		selectedClient = (clientTable.cellForRow(at: indexPath)?.textLabel?.text?.lowercased())!
-		print(selectedClient)
-		UserDefaults.standard.set(selectedClient, forKey: "selectedClient")
-		clientTable.reloadData()
-	}
+	
+	
 	@IBAction func switchDefault(_ sender: Any) {
 		if let switchSub = sender as? UISwitch{
 			if switchSub.isOn{
@@ -210,15 +178,6 @@ class ViewController: UIViewController, WCSessionDelegate, SFSafariViewControlle
 		}
 	}
 	
-	@IBAction func clickedButton(_ sender: Any) {
-		
-		UserDefaults.standard.set(userSubreddits.text?.components(separatedBy: ","), forKey: "phrases")
-		phases = (userSubreddits.text?.components(separatedBy: ","))!
-		wcSession.sendMessage(["phrases": phases], replyHandler: nil, errorHandler: { errror in
-			print(errror)
-		})
-		
-	}
 	@IBAction func switchImageRes(_ sender: Any) {
 		print("switching")
 		if let sender = sender as? UISwitch{
@@ -240,11 +199,7 @@ class ViewController: UIViewController, WCSessionDelegate, SFSafariViewControlle
 	{
 		UserDefaults.standard.set(textField.text, forKey: "defaultSubreddit")
 		if textField.tag == 2{
-			UserDefaults.standard.set(userSubreddits.text?.components(separatedBy: ","), forKey: "phrases")
-			phases = (userSubreddits.text?.components(separatedBy: ","))!
-			wcSession.sendMessage(["phrases": phases], replyHandler: nil, errorHandler: { errror in
-				print(errror)
-			})
+			//Placeholder
 		} else if textField.tag == 3{
 			if let sub = textField.text{
 				wcSession.sendMessage(["defaultSubreddit": sub], replyHandler: nil, errorHandler: { errror in

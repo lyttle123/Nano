@@ -34,6 +34,8 @@
 		BE2406E41FEB1E5300D92A34 /* subCommentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2406E31FEB1E5300D92A34 /* subCommentController.swift */; };
 		BE2D9DE92025D13F003C32A2 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE2D9DE82025D13F003C32A2 /* StoreKit.framework */; };
 		BE2D9DEB2026689B003C32A2 /* quickAccessController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2D9DEA2026689B003C32A2 /* quickAccessController.swift */; };
+		BE2D9DED2026E0CA003C32A2 /* handoffController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2D9DEC2026E0CA003C32A2 /* handoffController.swift */; };
+		BE2D9DEF2026EA5D003C32A2 /* thanksController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2D9DEE2026EA5C003C32A2 /* thanksController.swift */; };
 		BE4F9A021FFE34780094F0C8 /* Twitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4F9A011FFE34780094F0C8 /* Twitter.swift */; };
 		BE64A7A71FFDD8A2005B9350 /* waitForiPhone.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE64A7A61FFDD8A2005B9350 /* waitForiPhone.swift */; };
 		BE8B1FC120107A6D00D24D26 /* commentSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8B1FC020107A6D00D24D26 /* commentSort.swift */; };
@@ -145,6 +147,8 @@
 		BE2406E31FEB1E5300D92A34 /* subCommentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = subCommentController.swift; sourceTree = "<group>"; };
 		BE2D9DE82025D13F003C32A2 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		BE2D9DEA2026689B003C32A2 /* quickAccessController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = quickAccessController.swift; path = /Users/Will/Developer/redditwatch/redditwatch/quickAccessController.swift; sourceTree = "<absolute>"; };
+		BE2D9DEC2026E0CA003C32A2 /* handoffController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = handoffController.swift; sourceTree = "<group>"; };
+		BE2D9DEE2026EA5C003C32A2 /* thanksController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = thanksController.swift; sourceTree = "<group>"; };
 		BE4F9A011FFE34780094F0C8 /* Twitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Twitter.swift; sourceTree = "<group>"; };
 		BE64A7A61FFDD8A2005B9350 /* waitForiPhone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = waitForiPhone.swift; sourceTree = "<group>"; };
 		BE8B1FC020107A6D00D24D26 /* commentSort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = commentSort.swift; sourceTree = "<group>"; };
@@ -262,10 +266,12 @@
 		BE2406811FEA743000D92A34 /* redditwatch */ = {
 			isa = PBXGroup;
 			children = (
+				BE2D9DEC2026E0CA003C32A2 /* handoffController.swift */,
 				BE2D9DEA2026689B003C32A2 /* quickAccessController.swift */,
 				BE2406821FEA743000D92A34 /* AppDelegate.swift */,
 				BE2406841FEA743000D92A34 /* ViewController.swift */,
 				BE2406861FEA743000D92A34 /* Main.storyboard */,
+				BE2D9DEE2026EA5C003C32A2 /* thanksController.swift */,
 				BE2406891FEA743000D92A34 /* Assets.xcassets */,
 				BE24068B1FEA743000D92A34 /* LaunchScreen.storyboard */,
 				BE24068E1FEA743000D92A34 /* Info.plist */,
@@ -793,8 +799,10 @@
 				BE2406DD1FEA756600D92A34 /* NameRowController.swift in Sources */,
 				BE2D9DEB2026689B003C32A2 /* quickAccessController.swift in Sources */,
 				BE2406851FEA743000D92A34 /* ViewController.swift in Sources */,
+				BE2D9DED2026E0CA003C32A2 /* handoffController.swift in Sources */,
 				BE98F80420257AE900177AA0 /* proController.swift in Sources */,
 				BE2406831FEA743000D92A34 /* AppDelegate.swift in Sources */,
+				BE2D9DEF2026EA5D003C32A2 /* thanksController.swift in Sources */,
 				BECCA461201E223900AC36A2 /* Reddit.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

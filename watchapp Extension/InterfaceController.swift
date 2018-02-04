@@ -91,6 +91,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 		var shouldRefresh: Bool
 		
 		if Platform.isSimulator{
+			
 			shouldRefresh = true
 			
 		} else{
