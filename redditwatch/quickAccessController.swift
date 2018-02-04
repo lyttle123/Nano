@@ -18,7 +18,7 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 	
 	override func viewDidLoad() {
         super.viewDidLoad()
-		tabBarController?.tabBar.tintColor = UIColor.flatColors.light.blue
+		tabBarController?.tabBar.tintColor = UIColor.flatColors.light.yellow
 
 		wcSession = WCSession.default
 		wcSession.delegate = self
@@ -43,6 +43,9 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 		//
 	}
 	
+	override func viewWillDisappear(_ animated: Bool) {
+		tabBarController?.tabBar.tintColor = UIColor.flatColors.light.blue
+	}
 	func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
 		print("Done")
 	}

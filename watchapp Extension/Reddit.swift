@@ -65,17 +65,18 @@ class RedditAPI{
 		let parameters = [
 			"dir": direction,
 			"id": types[type]! + id,
-			"rank": 1
+			"rank": rank
 			] as [String : Any]
 		let headers = [
 			"Authorization": "bearer \(access_token)",
 			"User-Agent": "RedditWatch/0.1 by 123icebuggy",
 		]
 		print(headers)
-		Alamofire.request("https://oauth.reddit.com/api/vote", method: .post, parameters: parameters, headers: headers)
+		let b = Alamofire.request("https://oauth.reddit.com/api/vote", method: .post, parameters: parameters, headers: headers)
 			.responseString(completionHandler: {response in
 				print(String(describing: response.result.value))
 			})
+		debugPrint(b)
 	}
 	func save(id: String, type: String,  _ unsave:Bool = false){
 		///Save a post based on it's type and ID

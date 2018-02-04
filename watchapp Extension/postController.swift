@@ -312,13 +312,14 @@ class postController: WKInterfaceController {
 			upvoted = true
 			self.upvoteButton.setTitleWithColor(title: "↑", color: UIColor(red:0.95, green:0.61, blue:0.07, alpha:1.0))
 			self.downvoteButton.setTitleWithColor(title: "↓", color: UIColor.white)
-			reddit.vote(1, id: "t3_\(UserDefaults.standard.object(forKey: "selectedId") as! String)")
+			print(UserDefaults.standard.object(forKey: "selectedId"))
+			reddit.vote(1, id: "\(UserDefaults.standard.object(forKey: "selectedId") as! String)")
 			
 		} else{
 			downvoted = false
 			upvoted = false
 			self.upvoteButton.setTitleWithColor(title: "↑", color: UIColor.white)
-			reddit.vote(0, id: "t3_\(UserDefaults.standard.object(forKey: "selectedId") as! String)")
+			reddit.vote(0, id: "\(UserDefaults.standard.object(forKey: "selectedId") as! String)")
 		}
 		
 	}
@@ -331,6 +332,7 @@ class postController: WKInterfaceController {
 			downvoted = true
 			self.downvoteButton.setTitleWithColor(title: "↓", color: UIColor(red:0.16, green:0.50, blue:0.73, alpha:1.0))
 			self.upvoteButton.setTitleWithColor(title: "↑", color: UIColor.white)
+			print(UserDefaults.standard.object(forKey: "selectedId"))
 			reddit.vote(-1, id: "\(UserDefaults.standard.object(forKey: "selectedId") as! String)")
 			
 		} else{
