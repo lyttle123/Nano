@@ -21,7 +21,6 @@ class ViewController: UIViewController, WCSessionDelegate, SFSafariViewControlle
 	@IBOutlet weak var defaultSubredditField: UITextField!
 	@IBOutlet weak var defaultSubredditSwitch: UISwitch!
 	@IBOutlet weak var connectButton: UIButton!
-	@IBOutlet weak var highResSwitch: UISwitch!
 	var switchState = UserDefaults.standard.object(forKey: "switchState") as? Bool ?? false
 	
 	
@@ -57,11 +56,7 @@ class ViewController: UIViewController, WCSessionDelegate, SFSafariViewControlle
 		
 		self.connectButton.isEnabled = false
 		connectButton.setTitle("Please launch on watch to connect to Reddit", for: .normal)
-		if let bool = UserDefaults.standard.object(forKey: "highResImage") as? Bool{
-			highResSwitch.setOn(bool, animated: false)
-		} else{
-			print("couldn't do bool")
-		}
+		
 		
 		if let b = UserDefaults.standard.object(forKey: "connected") as? Bool{
 			if b{

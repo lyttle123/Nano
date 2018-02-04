@@ -9,11 +9,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Options-->
+        <!--Default-->
         <scene sceneID="9lt-wL-fCa">
             <objects>
                 <navigationController id="JVy-5y-SCi" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Options" image="settings" id="N8S-bU-9S2"/>
+                    <tabBarItem key="tabBarItem" title="Default" image="settings" id="N8S-bU-9S2"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="fhO-cV-k5a">
                         <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -75,7 +75,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="client" id="wfk-RF-Di8">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="client" id="wfk-RF-Di8">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wfk-RF-Di8" id="K8k-L6-u8x">
@@ -204,7 +204,7 @@ Without any of the people above, this app wouldn't be possible! Thank you all!</
             </objects>
             <point key="canvasLocation" x="2096.8000000000002" y="89.505247376311857"/>
         </scene>
-        <!--Options-->
+        <!--Default-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="redditwatch" customModuleProvider="target" sceneMemberID="viewController">
@@ -212,96 +212,82 @@ Without any of the people above, this app wouldn't be possible! Thank you all!</
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kvg-eY-u5t">
-                                <rect key="frame" x="16" y="568" width="343" height="30"/>
-                                <state key="normal" title="Connect to Reddit"/>
-                                <connections>
-                                    <action selector="connectToReddit" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ooo-gV-3ns"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="High Resolution Image Mode  (Slow)" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m7x-ut-vyr">
-                                <rect key="frame" x="16" y="144" width="277" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" tag="3" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="popular" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jcY-5Y-YIY">
-                                <rect key="frame" x="16" y="207" width="135" height="30"/>
+                            <textField opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="popular" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jcY-5Y-YIY">
+                                <rect key="frame" x="16" y="222" width="269" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="m8K-bQ-oFb">
-                                <rect key="frame" x="300" y="139" width="51" height="31"/>
-                                <connections>
-                                    <action selector="switchImageRes:" destination="BYZ-38-t0r" eventType="valueChanged" id="Mt4-iA-6XS"/>
-                                </connections>
-                            </switch>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WTl-pw-UEP">
-                                <rect key="frame" x="30" y="543" width="315" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WTl-pw-UEP">
+                                <rect key="frame" x="3" y="541" width="370" height="30"/>
                                 <state key="normal" title="Disconnect from Reddit (warning: not reliable)"/>
                                 <connections>
                                     <action selector="resetAllData:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yRQ-Gl-jVq"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Default Subreddit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zgt-Cn-Z2u">
-                                <rect key="frame" x="16" y="178" width="135" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="zw2-3A-p4w">
-                                <rect key="frame" x="300" y="207" width="51" height="31"/>
-                                <connections>
-                                    <action selector="switchDefault:" destination="BYZ-38-t0r" eventType="valueChanged" id="Nxh-Sf-j7z"/>
-                                </connections>
-                            </switch>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L3L-OD-5Lj">
-                                <rect key="frame" x="164" y="505" width="46" height="30"/>
+                                <rect key="frame" x="137" y="511" width="101" height="30"/>
                                 <state key="normal" title="Pro"/>
                                 <connections>
                                     <action selector="goToPro:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WaM-qU-3PY"/>
                                 </connections>
                             </button>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="zw2-3A-p4w">
+                                <rect key="frame" x="310" y="222" width="51" height="31"/>
+                                <connections>
+                                    <action selector="switchDefault:" destination="BYZ-38-t0r" eventType="valueChanged" id="Nxh-Sf-j7z"/>
+                                </connections>
+                            </switch>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kvg-eY-u5t">
+                                <rect key="frame" x="67" y="567" width="241" height="30"/>
+                                <state key="normal" title="Connect to Reddit"/>
+                                <connections>
+                                    <action selector="connectToReddit" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ooo-gV-3ns"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zgt-Cn-Z2u">
+                                <rect key="frame" x="30" y="128" width="315" height="86"/>
+                                <string key="text">You can enter a default subreddit below. 
+This will load on app launch automatically</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="L3L-OD-5Lj" firstAttribute="centerX" secondItem="WTl-pw-UEP" secondAttribute="centerX" id="23U-zp-ArU"/>
-                            <constraint firstItem="zw2-3A-p4w" firstAttribute="top" secondItem="m8K-bQ-oFb" secondAttribute="bottom" constant="37" id="4yn-oQ-UwC"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Kvg-eY-u5t" secondAttribute="trailing" constant="16" id="50y-9b-4kO"/>
-                            <constraint firstItem="m7x-ut-vyr" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="28" id="6Fi-Jm-5f5"/>
-                            <constraint firstItem="m7x-ut-vyr" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="28" id="7mO-3B-TAi"/>
-                            <constraint firstItem="m8K-bQ-oFb" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="23" id="8vb-cy-f9X"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="WTl-pw-UEP" secondAttribute="bottom" constant="45" id="D6H-Mf-mOd"/>
-                            <constraint firstItem="zw2-3A-p4w" firstAttribute="leading" secondItem="m8K-bQ-oFb" secondAttribute="leading" id="FRc-5b-dg5"/>
-                            <constraint firstItem="WTl-pw-UEP" firstAttribute="centerX" secondItem="Kvg-eY-u5t" secondAttribute="centerX" id="I9f-fW-nu6"/>
-                            <constraint firstItem="jcY-5Y-YIY" firstAttribute="top" secondItem="Zgt-Cn-Z2u" secondAttribute="bottom" constant="8" symbolic="YES" id="LNo-WZ-LF7"/>
-                            <constraint firstItem="Kvg-eY-u5t" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Rme-YY-rH9"/>
-                            <constraint firstItem="m7x-ut-vyr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="T8p-fW-brc"/>
-                            <constraint firstItem="L3L-OD-5Lj" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="164" id="WcV-64-Hxf"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="zw2-3A-p4w" secondAttribute="trailing" constant="26" id="btk-eJ-A3h"/>
-                            <constraint firstItem="Zgt-Cn-Z2u" firstAttribute="leading" secondItem="jcY-5Y-YIY" secondAttribute="leading" id="dAn-N9-tJN"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="m8K-bQ-oFb" secondAttribute="trailing" constant="26" id="eau-7f-IQk"/>
-                            <constraint firstItem="Zgt-Cn-Z2u" firstAttribute="leading" secondItem="m7x-ut-vyr" secondAttribute="leading" id="f3V-my-Fkf"/>
-                            <constraint firstItem="m8K-bQ-oFb" firstAttribute="leading" secondItem="m7x-ut-vyr" secondAttribute="trailing" constant="7" id="n1O-X0-AMy"/>
-                            <constraint firstItem="WTl-pw-UEP" firstAttribute="top" secondItem="L3L-OD-5Lj" secondAttribute="bottom" constant="8" symbolic="YES" id="wfr-ds-Lfj"/>
-                            <constraint firstItem="jcY-5Y-YIY" firstAttribute="top" secondItem="zw2-3A-p4w" secondAttribute="top" id="yIp-sP-IIW"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Kvg-eY-u5t" secondAttribute="bottom" constant="20" id="zti-CL-ke0"/>
+                            <constraint firstItem="zw2-3A-p4w" firstAttribute="leading" secondItem="jcY-5Y-YIY" secondAttribute="trailing" constant="25" id="6vM-Ud-e4P"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="zw2-3A-p4w" secondAttribute="trailing" constant="16" id="9Y1-as-3ie"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="WTl-pw-UEP" secondAttribute="trailing" constant="2" id="Bng-fX-6Nu"/>
+                            <constraint firstItem="Zgt-Cn-Z2u" firstAttribute="trailing" secondItem="zw2-3A-p4w" secondAttribute="trailing" constant="-14" id="DH7-Zo-6hg"/>
+                            <constraint firstItem="Zgt-Cn-Z2u" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="12" id="Iep-ww-Es8"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Kvg-eY-u5t" secondAttribute="bottom" constant="21" id="L8j-mf-cZa"/>
+                            <constraint firstItem="WTl-pw-UEP" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="3" id="NPQ-FE-VfV"/>
+                            <constraint firstItem="Zgt-Cn-Z2u" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="Oil-1S-cF5"/>
+                            <constraint firstItem="WTl-pw-UEP" firstAttribute="top" secondItem="L3L-OD-5Lj" secondAttribute="bottom" id="WP0-ey-TR8"/>
+                            <constraint firstItem="Kvg-eY-u5t" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="67" id="gAj-Ju-OJr"/>
+                            <constraint firstItem="L3L-OD-5Lj" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="137" id="ihH-n3-m4O"/>
+                            <constraint firstItem="jcY-5Y-YIY" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="ipV-lO-S2F"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="L3L-OD-5Lj" secondAttribute="trailing" constant="137" id="j87-6B-7Zc"/>
+                            <constraint firstItem="zw2-3A-p4w" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="222" id="kWk-zz-rqu"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="WTl-pw-UEP" secondAttribute="bottom" constant="47" id="lmt-px-jXS"/>
+                            <constraint firstItem="jcY-5Y-YIY" firstAttribute="top" secondItem="Zgt-Cn-Z2u" secondAttribute="bottom" constant="8" symbolic="YES" id="lps-aS-PbL"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Kvg-eY-u5t" secondAttribute="trailing" constant="67" id="odk-Fk-DEz"/>
+                            <constraint firstItem="zw2-3A-p4w" firstAttribute="top" secondItem="jcY-5Y-YIY" secondAttribute="top" id="vjF-ua-a55"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Options" largeTitleDisplayMode="always" id="tdE-XQ-aAQ"/>
+                    <navigationItem key="navigationItem" title="Default" largeTitleDisplayMode="always" id="tdE-XQ-aAQ"/>
                     <connections>
                         <outlet property="connectButton" destination="Kvg-eY-u5t" id="d6w-eC-DXy"/>
                         <outlet property="defaultSubredditField" destination="jcY-5Y-YIY" id="XnT-Z2-QAo"/>
                         <outlet property="defaultSubredditSwitch" destination="zw2-3A-p4w" id="yyZ-Xv-vtC"/>
-                        <outlet property="highResSwitch" destination="m8K-bQ-oFb" id="eIT-Dn-Og2"/>
                         <outlet property="proButton" destination="L3L-OD-5Lj" id="POY-tU-aZC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="32.799999999999997" y="89.505247376311857"/>
+            <point key="canvasLocation" x="31.875" y="88.732394366197184"/>
         </scene>
         <!--Quick-Access-->
         <scene sceneID="a4l-cK-nwl">
@@ -315,7 +301,7 @@ Without any of the people above, this app wouldn't be possible! Thank you all!</
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="quickSubreddit" id="wZ5-3l-CS2" customClass="quickSubredditCell" customModule="redditwatch" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="quickSubreddit" id="wZ5-3l-CS2" customClass="quickSubredditCell" customModule="redditwatch" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wZ5-3l-CS2" id="nbb-qf-vIS">
