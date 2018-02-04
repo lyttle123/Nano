@@ -146,6 +146,13 @@ class postController: WKInterfaceController {
 		}
 	}
 	
+	override func willDisappear() {
+		Alamofire.SessionManager.default.session.getTasksWithCompletionHandler { (sessionDataTask, uploadData, downloadData) in
+			sessionDataTask.forEach { $0.cancel() }
+			uploadData.forEach { $0.cancel() }
+			downloadData.forEach { $0.cancel() }
+		}
+	}
 	
 	func getComments(subreddit: String, id: String, sort: String = "best"){
 		let url = URL(string: "https://www.reddit.com/r/\(subreddit)/comments/\(id).json")
