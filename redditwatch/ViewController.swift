@@ -31,9 +31,10 @@ class ViewController: UIViewController, WCSessionDelegate, SFSafariViewControlle
 	
 	var wcSession: WCSession!
 	
+	@IBOutlet weak var proButton: UIButton!
 	override func viewWillAppear(_ animated: Bool) {
 		
-		
+		//proButton.isEnabled = false
 
 		userSubreddits.text = phases.joined(separator: ",")
 		defaultSubredditField.delegate = self

@@ -75,7 +75,7 @@ class proController: UIViewController {
 			print(result)
 		})
 	}
-	
+		
 	func restorePurchase(){
 		SwiftyStoreKit.restorePurchases(atomically: true, completion: {
 			result in
