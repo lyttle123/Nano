@@ -83,12 +83,12 @@ class ViewController: UIViewController, WCSessionDelegate, SFSafariViewControlle
 			if switchSub.isOn{
 				print("Setting to on")
 				UserDefaults.standard.set(true, forKey: "switchState")
-				wcSession.sendMessage(["defaultSubreddit": true], replyHandler: nil, errorHandler: { errror in
+				wcSession.sendMessage(["defaultSubreddit": true], replyHandler: {reply in }, errorHandler: { errror in
 					print(errror)
 				})
 				defaultSubredditField.isEnabled = true
 			} else{
-				wcSession.sendMessage(["defaultSubreddit": false], replyHandler: nil, errorHandler: { errror in
+				wcSession.sendMessage(["defaultSubreddit": false], replyHandler: {reply in }, errorHandler: { errror in
 					print(errror)
 				})
 				print("Print setting to false")
@@ -101,7 +101,7 @@ class ViewController: UIViewController, WCSessionDelegate, SFSafariViewControlle
 	
 	func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
 		print("recieved")
-		
+			
 	}
 	
 	@IBAction func switchImageRes(_ sender: Any) {
@@ -110,9 +110,9 @@ class ViewController: UIViewController, WCSessionDelegate, SFSafariViewControlle
 			switch sender.isOn{
 			case true:
 				UserDefaults.standard.set(true, forKey: "highResImage")
-				wcSession.sendMessage(["highResImage": true], replyHandler: nil, errorHandler: nil)
+				wcSession.sendMessage(["highResImage": true], replyHandler: {reply in }, errorHandler: nil)
 			case false:
-				wcSession.sendMessage(["highResImage": false], replyHandler: nil, errorHandler: nil)
+				wcSession.sendMessage(["highResImage": false], replyHandler: {reply in }, errorHandler: nil)
 				UserDefaults.standard.set(false, forKey: "highResImage")
 			}
 		}
@@ -128,7 +128,7 @@ class ViewController: UIViewController, WCSessionDelegate, SFSafariViewControlle
 			//Placeholder
 		} else if textField.tag == 3{
 			if let sub = textField.text{
-				wcSession.sendMessage(["defaultSubreddit": sub], replyHandler: nil, errorHandler: { errror in
+				wcSession.sendMessage(["defaultSubreddit": sub], replyHandler: {reply in }, errorHandler: { errror in
 					print(errror)
 				})
 				

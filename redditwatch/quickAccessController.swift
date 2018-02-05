@@ -66,7 +66,9 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 	}
 	
 	func sendSubredditsToWatch(){
-		wcSession.sendMessage(["phrases": savedSubs], replyHandler: nil, errorHandler: { errror in
+		wcSession.sendMessage(["phrases": savedSubs], replyHandler: {eh in
+			print(eh)
+		}, errorHandler: { errror in
 			print(errror)
 		})
 	}
