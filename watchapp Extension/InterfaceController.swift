@@ -135,8 +135,8 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 		// This method is called when watch view controller is no longer visible
 		super.didDeactivate()
 	}
-	
-	func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+
+	func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
 		print(message)
 		if let responsePhrases = message["phrases"] as? [String]{
 			UserDefaults.standard.set(responsePhrases, forKey: "phrases")
@@ -174,6 +174,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 				self.wcSession?.sendMessage(["setup":true], replyHandler: nil, errorHandler: { error in
 					print(error.localizedDescription)
 				})
+				replyHandler(["success": true as AnyObject])
 				UserDefaults.standard.set(true, forKey: "setup")
 				
 				

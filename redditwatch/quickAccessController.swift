@@ -12,8 +12,8 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 
 	
 	@IBOutlet weak var quickAccessSubreddits: UITableView!
-	var subreddits = UserDefaults.standard.object(forKey: "quickSubreddits") as? [String] ?? ["pics","popular","all"]
-	var savedSubs = UserDefaults.standard.object(forKey: "quickSubreddits") as? [String] ?? ["pics","popular","all"]
+	var subreddits = UserDefaults.standard.object(forKey: "quickSubreddits") as? [String] ?? ["Popular","All","Funny"]
+	var savedSubs = UserDefaults.standard.object(forKey: "quickSubreddits") as? [String] ?? ["Popular","All","Funny"]
 	var wcSession: WCSession!
 	
 	override func viewDidLoad() {

@@ -26,7 +26,6 @@ class RedditAPI{
 	func getAccessToken(grantType: String, code: String, completionHandler: @escaping ([String: String]) -> Void){
 		///Returns an access token which can be used to perform actions on the users behalf
 
-		print(grantType)
 		var parameters = [
 			"grant_type": grantType,
 			"redirect_uri": "redditwatch://redirect"
@@ -36,11 +35,11 @@ class RedditAPI{
 		} else{
 			parameters["code"] = code
 		}
-		print(parameters)
 		Alamofire.request("https://www.reddit.com/api/v1/access_token", method: .post, parameters: parameters)
 			.authenticate(user: "uUgh0YyY_k_6ow", password: "")
 			.responseJSON(completionHandler: {data in
 				if data.response?.statusCode == 200{
+					
 					UserDefaults.standard.set(true, forKey: "connected")
 				}
 				if let dat = data.data{

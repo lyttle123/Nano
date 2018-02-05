@@ -20,7 +20,6 @@ class ViewController: UIViewController, WCSessionDelegate, SFSafariViewControlle
 	
 	@IBOutlet weak var defaultSubredditField: UITextField!
 	@IBOutlet weak var defaultSubredditSwitch: UISwitch!
-	@IBOutlet weak var connectButton: UIButton!
 	var switchState = UserDefaults.standard.object(forKey: "switchState") as? Bool ?? false
 	
 	
@@ -49,21 +48,6 @@ class ViewController: UIViewController, WCSessionDelegate, SFSafariViewControlle
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		tabBarController?.tabBar.tintColor = UIColor.flatColors.light.blue
-
-		
-	
-		
-		
-		self.connectButton.isEnabled = false
-		connectButton.setTitle("Please launch on watch to connect to Reddit", for: .normal)
-		
-		
-		if let b = UserDefaults.standard.object(forKey: "connected") as? Bool{
-			if b{
-				self.connectButton.isEnabled = false
-				self.connectButton.setTitle("Connected to Reddit", for: .normal)
-			}
-		}
 		
 		wcSession = WCSession.default
 		wcSession.delegate = self
@@ -114,63 +98,10 @@ class ViewController: UIViewController, WCSessionDelegate, SFSafariViewControlle
 			
 		}
 	}
-	@IBAction func connectToReddit(){
-		
-		let callbackUrl  = "redditwatch://redirect"
-		let authURL = URL(string: "https://www.reddit.com/api/v1/authorize?client_id=uUgh0YyY_k_6ow&response_type=code&state=not_that_important&redirect_uri=redditwatch://redirect&duration=permanent&scope=identity%20edit%20flair%20history%20modconfig%20modflair%20modlog%20modposts%20modwiki%20mysubreddits%20privatemessages%20read%20report%20save%20submit%20subscribe%20vote%20wikiedit%20wikiread")
-		//Initialize auth session
-		self.authSession = SFAuthenticationSession(url: authURL!, callbackURLScheme: callbackUrl, completionHandler: { (callBack:URL?, error:Error? ) in
-			guard error == nil, let successURL = callBack else {
-				print(error!)
-				print("error")
-				return
-			}
-			self.connectButton.isEnabled = false
-			self.connectButton.setTitle("Connecting...", for: .normal)
-			print(successURL)
-			let user = self.getQueryStringParameter(url: (successURL.absoluteString), param: "code")
-			if let code = user{
-				print("Going")
-				RedditAPI().getAccessToken(grantType: "authorization_code", code: code, completionHandler: {result in
-					UserDefaults.standard.set(true, forKey: "connected")
-					UserDefaults.standard.set(true, forKey: "setup")
-					print(result)
-					self.connectButton.isEnabled = false
-					self.connectButton.setTitle("Connected To Reddit", for: .normal)
-					self.wcSession.sendMessage(result, replyHandler: nil, errorHandler: { error in
-						print(error.localizedDescription)
-					})
-				})
-			} else {
-				self.connectButton.isEnabled = true
-				self.connectButton.setTitle("Connect To Reddit", for: .normal)
-			}
-		})
-		self.authSession?.start()
-		
-	}
 	
 	func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
 		print("recieved")
-		if let launched = message["appLaunched"] as? Bool{
-			if launched{
-				DispatchQueue.main.async {
-					if (UserDefaults.standard.object(forKey: "setup") as? Bool) != nil{
-						//
-					} else{
-						self.connectButton.isEnabled = true
-						self.connectButton.setTitle("Connect To Reddit", for: .normal)
-					}
-					
-				}
-			}
-		}
-		if let setup = message["setup"] as? Bool{
-			if setup{
-				self.connectButton.isEnabled = false
-				self.connectButton.setTitle("Connected to Reddit", for: .normal)
-			}
-		}
+		
 	}
 	
 	@IBAction func switchImageRes(_ sender: Any) {

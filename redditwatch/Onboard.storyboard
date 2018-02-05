@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="scu-CC-L5P">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Onboard One Controller-->
+        <scene sceneID="6kK-IP-LjF">
+            <objects>
+                <viewController id="scu-CC-L5P" customClass="onboardOneController" customModule="redditwatch" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="alF-57-Kdb">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to RedditWatch" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RCh-AN-m1y">
+                                <rect key="frame" x="16" y="140" width="288" height="21"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please launch RedditWatch on your Apple Watch to continue" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KYW-kd-UCB">
+                                <rect key="frame" x="16" y="263.5" width="288" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Knm-Aq-WVe">
+                                <rect key="frame" x="16" y="269" width="288" height="30"/>
+                                <state key="normal" title="Connect to Reddit">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="connectToReddit:" destination="scu-CC-L5P" eventType="touchUpInside" id="0cQ-4d-1zr"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.20392156862745098" green="0.59607843137254901" blue="0.85882352941176465" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Knm-Aq-WVe" firstAttribute="centerY" secondItem="alF-57-Kdb" secondAttribute="centerY" id="0sb-mE-rmu"/>
+                            <constraint firstItem="hi8-KN-FIn" firstAttribute="bottom" secondItem="RCh-AN-m1y" secondAttribute="bottom" constant="407" id="1jW-rU-xOs"/>
+                            <constraint firstItem="hi8-KN-FIn" firstAttribute="trailing" secondItem="KYW-kd-UCB" secondAttribute="trailing" constant="16" id="3SU-7K-Oa0"/>
+                            <constraint firstItem="KYW-kd-UCB" firstAttribute="centerY" secondItem="alF-57-Kdb" secondAttribute="centerY" id="DzL-Lh-P9T"/>
+                            <constraint firstItem="hi8-KN-FIn" firstAttribute="trailing" secondItem="Knm-Aq-WVe" secondAttribute="trailing" constant="16" id="HW5-fQ-RUI"/>
+                            <constraint firstItem="Knm-Aq-WVe" firstAttribute="leading" secondItem="hi8-KN-FIn" secondAttribute="leading" constant="16" id="PMC-6q-SN4"/>
+                            <constraint firstItem="KYW-kd-UCB" firstAttribute="centerX" secondItem="alF-57-Kdb" secondAttribute="centerX" id="WZx-5K-EL6"/>
+                            <constraint firstItem="hi8-KN-FIn" firstAttribute="trailing" secondItem="RCh-AN-m1y" secondAttribute="trailing" constant="16" id="dh0-Hy-aPG"/>
+                            <constraint firstItem="RCh-AN-m1y" firstAttribute="top" secondItem="hi8-KN-FIn" secondAttribute="top" constant="120" id="ftW-T6-kmJ"/>
+                            <constraint firstItem="Knm-Aq-WVe" firstAttribute="centerX" secondItem="alF-57-Kdb" secondAttribute="centerX" id="myB-kJ-PyC"/>
+                            <constraint firstItem="RCh-AN-m1y" firstAttribute="leading" secondItem="hi8-KN-FIn" secondAttribute="leading" constant="16" id="vA4-kH-MR2"/>
+                            <constraint firstItem="KYW-kd-UCB" firstAttribute="leading" secondItem="hi8-KN-FIn" secondAttribute="leading" constant="16" id="wTg-h0-QP3"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="hi8-KN-FIn"/>
+                    </view>
+                    <connections>
+                        <outlet property="connectButton" destination="Knm-Aq-WVe" id="p42-Rg-2tT"/>
+                        <outlet property="launchOnDevice" destination="KYW-kd-UCB" id="rL7-dc-gyO"/>
+                        <outlet property="welcomeMessage" destination="RCh-AN-m1y" id="KhR-k0-nPa"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Iim-OP-39B" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="468.75" y="-275.7042253521127"/>
+        </scene>
+    </scenes>
+</document>

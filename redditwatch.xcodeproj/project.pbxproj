@@ -42,6 +42,8 @@
 		BE8B1FC420107DDA00D24D26 /* sortCel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8B1FC220107D0C00D24D26 /* sortCel.swift */; };
 		BE98F80220256C5600177AA0 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE98F80120256C5600177AA0 /* Extensions.swift */; };
 		BE98F80420257AE900177AA0 /* proController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE98F80320257AE900177AA0 /* proController.swift */; };
+		BEBA355F20282CFE00B2ADED /* Onboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEBA355E20282CFD00B2ADED /* Onboard.storyboard */; };
+		BEBA356120282D1900B2ADED /* onboardOneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBA356020282D1900B2ADED /* onboardOneController.swift */; };
 		BECCA461201E223900AC36A2 /* Reddit.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF987B1FFD0B3E00BFBC99 /* Reddit.swift */; };
 		BEDF987C1FFD0B3E00BFBC99 /* Reddit.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF987B1FFD0B3E00BFBC99 /* Reddit.swift */; };
 		C72FD277C19DCB0D03725F9F /* Pods_redditwatchUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 574D317AF5B46AE42DE27B9A /* Pods_redditwatchUITests.framework */; };
@@ -155,6 +157,8 @@
 		BE8B1FC220107D0C00D24D26 /* sortCel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sortCel.swift; sourceTree = "<group>"; };
 		BE98F80120256C5600177AA0 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		BE98F80320257AE900177AA0 /* proController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = proController.swift; sourceTree = "<group>"; };
+		BEBA355E20282CFD00B2ADED /* Onboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Onboard.storyboard; sourceTree = "<group>"; };
+		BEBA356020282D1900B2ADED /* onboardOneController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = onboardOneController.swift; sourceTree = "<group>"; };
 		BEDF987B1FFD0B3E00BFBC99 /* Reddit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reddit.swift; sourceTree = "<group>"; };
 		CE900D4E5A4A0F6ECE5CFBF7 /* Pods-watchapp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-watchapp.release.xcconfig"; path = "Pods/Target Support Files/Pods-watchapp/Pods-watchapp.release.xcconfig"; sourceTree = "<group>"; };
 		E5C988D08F5C46F2B5A20855 /* Pods-redditwatch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-redditwatch.release.xcconfig"; path = "Pods/Target Support Files/Pods-redditwatch/Pods-redditwatch.release.xcconfig"; sourceTree = "<group>"; };
@@ -271,6 +275,8 @@
 				BE2406821FEA743000D92A34 /* AppDelegate.swift */,
 				BE2406841FEA743000D92A34 /* ViewController.swift */,
 				BE2406861FEA743000D92A34 /* Main.storyboard */,
+				BEBA355E20282CFD00B2ADED /* Onboard.storyboard */,
+				BEBA356020282D1900B2ADED /* onboardOneController.swift */,
 				BE2D9DEE2026EA5C003C32A2 /* thanksController.swift */,
 				BE2406891FEA743000D92A34 /* Assets.xcassets */,
 				BE24068B1FEA743000D92A34 /* LaunchScreen.storyboard */,
@@ -509,6 +515,7 @@
 			files = (
 				BE24068D1FEA743000D92A34 /* LaunchScreen.storyboard in Resources */,
 				BE24068A1FEA743000D92A34 /* Assets.xcassets in Resources */,
+				BEBA355F20282CFE00B2ADED /* Onboard.storyboard in Resources */,
 				BE2406881FEA743000D92A34 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -795,6 +802,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEBA356120282D1900B2ADED /* onboardOneController.swift in Sources */,
 				BE98F80220256C5600177AA0 /* Extensions.swift in Sources */,
 				BE2406DD1FEA756600D92A34 /* NameRowController.swift in Sources */,
 				BE2D9DEB2026689B003C32A2 /* quickAccessController.swift in Sources */,

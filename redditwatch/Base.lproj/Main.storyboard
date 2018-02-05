@@ -36,8 +36,8 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="JVy-5y-SCi" kind="relationship" relationship="viewControllers" id="cdz-AW-eji"/>
                         <segue destination="hi8-gi-Y0G" kind="relationship" relationship="viewControllers" id="0eu-E5-fhJ"/>
+                        <segue destination="JVy-5y-SCi" kind="relationship" relationship="viewControllers" id="cdz-AW-eji"/>
                         <segue destination="pTa-e3-F3O" kind="relationship" relationship="viewControllers" id="yvx-z8-6QS"/>
                         <segue destination="XVx-fd-ypy" kind="relationship" relationship="viewControllers" id="De2-ya-TBL"/>
                     </connections>
@@ -213,7 +213,7 @@ Without any of the people above, this app wouldn't be possible! Thank you all!</
                                     <action selector="resetAllData:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yRQ-Gl-jVq"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L3L-OD-5Lj">
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L3L-OD-5Lj">
                                 <rect key="frame" x="137" y="511" width="101" height="30"/>
                                 <state key="normal" title="Pro"/>
                                 <connections>
@@ -226,13 +226,6 @@ Without any of the people above, this app wouldn't be possible! Thank you all!</
                                     <action selector="switchDefault:" destination="BYZ-38-t0r" eventType="valueChanged" id="Nxh-Sf-j7z"/>
                                 </connections>
                             </switch>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kvg-eY-u5t">
-                                <rect key="frame" x="67" y="567" width="241" height="30"/>
-                                <state key="normal" title="Connect to Reddit"/>
-                                <connections>
-                                    <action selector="connectToReddit" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ooo-gV-3ns"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zgt-Cn-Z2u">
                                 <rect key="frame" x="30" y="128" width="315" height="86"/>
                                 <string key="text">You can enter a default subreddit below. 
@@ -249,25 +242,21 @@ This will load on app launch automatically</string>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="WTl-pw-UEP" secondAttribute="trailing" constant="2" id="Bng-fX-6Nu"/>
                             <constraint firstItem="Zgt-Cn-Z2u" firstAttribute="trailing" secondItem="zw2-3A-p4w" secondAttribute="trailing" constant="-14" id="DH7-Zo-6hg"/>
                             <constraint firstItem="Zgt-Cn-Z2u" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="12" id="Iep-ww-Es8"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Kvg-eY-u5t" secondAttribute="bottom" constant="21" id="L8j-mf-cZa"/>
                             <constraint firstItem="WTl-pw-UEP" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="3" id="NPQ-FE-VfV"/>
                             <constraint firstItem="Zgt-Cn-Z2u" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="Oil-1S-cF5"/>
                             <constraint firstItem="WTl-pw-UEP" firstAttribute="top" secondItem="L3L-OD-5Lj" secondAttribute="bottom" id="WP0-ey-TR8"/>
-                            <constraint firstItem="Kvg-eY-u5t" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="67" id="gAj-Ju-OJr"/>
                             <constraint firstItem="L3L-OD-5Lj" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="137" id="ihH-n3-m4O"/>
                             <constraint firstItem="jcY-5Y-YIY" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="ipV-lO-S2F"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="L3L-OD-5Lj" secondAttribute="trailing" constant="137" id="j87-6B-7Zc"/>
                             <constraint firstItem="zw2-3A-p4w" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="222" id="kWk-zz-rqu"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="WTl-pw-UEP" secondAttribute="bottom" constant="47" id="lmt-px-jXS"/>
                             <constraint firstItem="jcY-5Y-YIY" firstAttribute="top" secondItem="Zgt-Cn-Z2u" secondAttribute="bottom" constant="8" symbolic="YES" id="lps-aS-PbL"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Kvg-eY-u5t" secondAttribute="trailing" constant="67" id="odk-Fk-DEz"/>
                             <constraint firstItem="zw2-3A-p4w" firstAttribute="top" secondItem="jcY-5Y-YIY" secondAttribute="top" id="vjF-ua-a55"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Default" largeTitleDisplayMode="always" id="tdE-XQ-aAQ"/>
                     <connections>
-                        <outlet property="connectButton" destination="Kvg-eY-u5t" id="d6w-eC-DXy"/>
                         <outlet property="defaultSubredditField" destination="jcY-5Y-YIY" id="XnT-Z2-QAo"/>
                         <outlet property="defaultSubredditSwitch" destination="zw2-3A-p4w" id="yyZ-Xv-vtC"/>
                         <outlet property="proButton" destination="L3L-OD-5Lj" id="POY-tU-aZC"/>
@@ -275,7 +264,7 @@ This will load on app launch automatically</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="31.875" y="88.732394366197184"/>
+            <point key="canvasLocation" x="679" y="90"/>
         </scene>
         <!--Quick-Access-->
         <scene sceneID="a4l-cK-nwl">
@@ -333,7 +322,7 @@ This will load on app launch automatically</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C03-Ij-Iwm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="708" y="89.505247376311857"/>
+            <point key="canvasLocation" x="-100" y="90"/>
         </scene>
         <!--Pro-->
         <scene sceneID="cY3-0V-b5t">
