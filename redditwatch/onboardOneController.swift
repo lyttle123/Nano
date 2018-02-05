@@ -47,6 +47,9 @@ class onboardOneController: UIViewController, WCSessionDelegate, SFSafariViewCon
 	}
 	override func viewDidLoad() {
 		connectButton.alpha = 0
+		
+	}
+	override func viewDidAppear(_ animated: Bool) {
 		wcSession = WCSession.default
 		wcSession.delegate = self
 		wcSession.activate()
@@ -104,8 +107,7 @@ class onboardOneController: UIViewController, WCSessionDelegate, SFSafariViewCon
 			if let code = user{
 				print("Going")
 				RedditAPI().getAccessToken(grantType: "authorization_code", code: code, completionHandler: {result in
-					UserDefaults.standard.set(true, forKey: "connected")
-					UserDefaults.standard.set(true, forKey: "setup")
+
 					print(result)
 					self.connectButton.isEnabled = false
 					
@@ -115,6 +117,8 @@ class onboardOneController: UIViewController, WCSessionDelegate, SFSafariViewCon
 								DispatchQueue.main.async {
 									self.connectButton.titleLabel?.text = "Connected to Reddit"
 									UserDefaults.standard.set(true, forKey: "setup")
+									UserDefaults.standard.set(true, forKey: "connected")
+
 									self.connected()
 								}
 								
