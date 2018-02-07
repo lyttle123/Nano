@@ -32,6 +32,7 @@ class onboardOneController: UIViewController, WCSessionDelegate, SFSafariViewCon
 		}
 		
 	}
+	
 	func connected(){
 		DispatchQueue.main.async {
 
@@ -55,14 +56,14 @@ class onboardOneController: UIViewController, WCSessionDelegate, SFSafariViewCon
 		wcSession.activate()
 	}
 	func sessionDidBecomeInactive(_ session: WCSession) {
-		//
+		print("INACTIVATE")
 	}
 	
 	func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
 		print("Done")
 	}
 	func sessionDidDeactivate(_ session: WCSession) {
-		//
+		print("DEACTIVATED")
 	}
 	func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
 		print(message)
@@ -88,6 +89,27 @@ class onboardOneController: UIViewController, WCSessionDelegate, SFSafariViewCon
 			print("Wouldn't let as bool")
 		}
 	}
+	func sendToWatch(result: [String: Any]){
+		wcSession.activate()
+		
+		self.wcSession.sendMessage(result, replyHandler: { reply in
+			if let success = reply["success"] as? Bool{
+				if success{
+					DispatchQueue.main.async {
+						self.connectButton.titleLabel?.text = "Connected to Reddit"
+						UserDefaults.standard.set(true, forKey: "setup")
+						UserDefaults.standard.set(true, forKey: "connected")
+						
+						self.connected()
+					}
+					
+				}
+			}
+		}, errorHandler: { error in
+			print(error.localizedDescription)
+			self.sendToWatch(result: result)
+		})
+	}
 	@IBAction func connectToReddit(_ sender: Any) {
 		let callbackUrl  = "redditwatch://redirect"
 		let authURL = URL(string: "https://www.reddit.com/api/v1/authorize?client_id=uUgh0YyY_k_6ow&response_type=code&state=not_that_important&redirect_uri=redditwatch://redirect&duration=permanent&scope=identity%20edit%20flair%20history%20modconfig%20modflair%20modlog%20modposts%20modwiki%20mysubreddits%20privatemessages%20read%20report%20save%20submit%20subscribe%20vote%20wikiedit%20wikiread")
@@ -111,22 +133,7 @@ class onboardOneController: UIViewController, WCSessionDelegate, SFSafariViewCon
 					print(result)
 					self.connectButton.isEnabled = false
 					
-					self.wcSession.sendMessage(result, replyHandler: { reply in
-						if let success = reply["success"] as? Bool{
-							if success{
-								DispatchQueue.main.async {
-									self.connectButton.titleLabel?.text = "Connected to Reddit"
-									UserDefaults.standard.set(true, forKey: "setup")
-									UserDefaults.standard.set(true, forKey: "connected")
-
-									self.connected()
-								}
-								
-							}
-						}
-					}, errorHandler: { error in
-						print(error.localizedDescription)
-					})
+					self.sendToWatch(result: result)
 				})
 			} else {
 				self.connectButton.isEnabled = true
