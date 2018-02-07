@@ -415,6 +415,29 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 		}
 		
 	}
+	func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any] = [:]) {
+		if let responsePhrases = userInfo["phrases"] as? [String]{
+			UserDefaults.standard.set(responsePhrases, forKey: "phrases")
+			phrases = responsePhrases
+		}
+		if let refesh_token = userInfo["refresh_token"] as? String{
+			print(refesh_token)
+			UserDefaults.standard.set(refesh_token, forKey: "refresh_token")
+			if let access_token = userInfo["access_token"] as? String{
+				UserDefaults.standard.set(access_token, forKey: "access_token")
+				
+				UserDefaults.standard.set(true, forKey: "connected")
+				print("SHould enable")
+				self.wcSession?.sendMessage(["setup":true], replyHandler: nil, errorHandler: { error in
+					print(error.localizedDescription)
+				})
+				UserDefaults.standard.set(true, forKey: "setup")
+				
+			}
+		} else{
+			print("WOULDN'T LET")
+		}
+	}
 	@IBAction func changeSubreddit() {
 		changeSub()
 	}

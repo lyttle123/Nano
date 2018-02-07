@@ -71,6 +71,7 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 		}, errorHandler: { errror in
 			print(errror)
 		})
+		wcSession.transferUserInfo(["phrases": savedSubs])
 	}
 
 	func numberOfSections(in tableView: UITableView) -> Int {

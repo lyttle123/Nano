@@ -83,10 +83,15 @@ class onboardOneController: UIViewController, WCSessionDelegate, SFSafariViewCon
 					
 				}
 			}
-		} else if (message["setup"] as? Bool) != nil{
-			
-		}else {
-			print("Wouldn't let as bool")
+		}
+		if let setup = message["setup"] as? Bool{
+			if setup{
+				self.connectButton.titleLabel?.text = "Connected to Reddit"
+				UserDefaults.standard.set(true, forKey: "setup")
+				UserDefaults.standard.set(true, forKey: "connected")
+				
+				self.connected()
+			}
 		}
 	}
 	func sendToWatch(result: [String: Any]){
@@ -109,6 +114,7 @@ class onboardOneController: UIViewController, WCSessionDelegate, SFSafariViewCon
 			print(error.localizedDescription)
 			self.sendToWatch(result: result)
 		})
+		self.wcSession.transferUserInfo(result)
 	}
 	@IBAction func connectToReddit(_ sender: Any) {
 		let callbackUrl  = "redditwatch://redirect"
@@ -134,6 +140,7 @@ class onboardOneController: UIViewController, WCSessionDelegate, SFSafariViewCon
 					self.connectButton.isEnabled = false
 					
 					self.sendToWatch(result: result)
+					
 				})
 			} else {
 				self.connectButton.isEnabled = true
