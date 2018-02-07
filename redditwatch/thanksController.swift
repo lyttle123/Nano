@@ -12,10 +12,13 @@ class thanksController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-		tabBarController?.tabBar.tintColor = UIColor.flatColors.light.red
+		
 
         // Do any additional setup after loading the view.
     }
+	override func viewDidAppear(_ animated: Bool) {
+		tabBarController?.tabBar.tintColor = UIColor.flatColors.light.red
+	}
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

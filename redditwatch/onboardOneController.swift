@@ -30,6 +30,7 @@ class onboardOneController: UIViewController, WCSessionDelegate, SFSafariViewCon
 		} else{
 			print("Wouldn't let")
 		}
+		connected()
 		
 	}
 	
