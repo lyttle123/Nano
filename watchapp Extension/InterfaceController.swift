@@ -163,23 +163,20 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 		if let refesh_token = message["refresh_token"] as? String{
 			print(refesh_token)
 			UserDefaults.standard.set(refesh_token, forKey: "refresh_token")
-			reddit.getAccessToken(grantType: "refresh_token", code: refesh_token, completionHandler: { result in
-				print(result)
-				print("Saving \(String(describing: result["acesss_token"]))")
-				UserDefaults.standard.set(result["acesss_token"], forKey: "access_token")
+			if let access_token = message["access_token"] as? String{
+				UserDefaults.standard.set(access_token, forKey: "access_token")
+				
 				UserDefaults.standard.set(true, forKey: "connected")
 				print("SHould enable")
 				self.dismiss()
-				self.changeSubreddit()
+				self.changeSub()
 				self.wcSession?.sendMessage(["setup":true], replyHandler: nil, errorHandler: { error in
 					print(error.localizedDescription)
 				})
 				replyHandler(["success": true as AnyObject])
 				UserDefaults.standard.set(true, forKey: "setup")
 				
-				
-				
-			})
+			}
 		} else{
 			print("WOULDN'T LET")
 		}
@@ -401,16 +398,25 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 		}
 	
 	}
-	@IBAction func changeSubreddit() {
-		let suggestions = UserDefaults.standard.object(forKey: "phrases") as? [String] ?? phrases
-		presentTextInputController(withSuggestions: suggestions, allowedInputMode:   WKTextInputMode.plain) { (arr: [Any]?) in
-			if let input = arr?.first as? String{
-				self.setupTable(input.lowercased().replacingOccurrences(of: " ", with: ""))
-			} else{
-				WKInterfaceDevice.current().play(WKHapticType.failure)
-				self.changeSubreddit()
+	func changeSub(){
+		DispatchQueue.main.async {
+			print("CHANGING")
+			let suggestions = UserDefaults.standard.object(forKey: "phrases") as? [String] ?? self.phrases
+			
+			self.presentTextInputController(withSuggestions: suggestions, allowedInputMode:   WKTextInputMode.plain) { (arr: [Any]?) in
+				print(arr)
+				if let input = arr?.first as? String{
+					self.setupTable(input.lowercased().replacingOccurrences(of: " ", with: ""))
+				} else{
+					WKInterfaceDevice.current().play(WKHapticType.failure)
+					self.changeSubreddit()
+				}
 			}
 		}
+		
+	}
+	@IBAction func changeSubreddit() {
+		changeSub()
 	}
 	@IBAction func changeSort() {
 		
