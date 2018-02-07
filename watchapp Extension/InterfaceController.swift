@@ -13,7 +13,7 @@ import WatchConnectivity
 import Alamofire
 
 class InterfaceController: WKInterfaceController, WCSessionDelegate, customDelegate{
-
+	
 	
 	
 	
@@ -33,38 +33,42 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 	var highResImage = UserDefaults.standard.object(forKey: "highResImage") as? Bool ?? false
 	var currentSubreddit = String()
 	var currentSort = String()
+	var setup = UserDefaults.standard.object(forKey: "setup") as? Bool ?? false
+	
 	
 	
 	override func awake(withContext context: Any?) {
 		super.awake(withContext: context)
 		invalidateUserActivity()
+		
 		//		let domain = Bundle.main.bundleIdentifier!
 		//		UserDefaults.standard.removePersistentDomain(forName: domain) //Prevent nasty 0 __pthread_kill SIGABRT kill
 		//		UserDefaults.standard.synchronize()
 		print("we back bitche")
-		if let bool = UserDefaults.standard.object(forKey: "setup") as? Bool{
-			if bool{
-				print("setup")
-				if let should = UserDefaults.standard.object(forKey: "shouldLoadDefaultSubreddit") as? Bool{
-					if should{
-						if let sub = UserDefaults.standard.object(forKey: "defaultSubreddit") as? String{
-							print("Setting")
-							setupTable(sub, sort: "hot")
-						} else{
-							print("woulnd't let")
-							changeSubreddit()
-						}
+		
+		if setup{
+			
+			print("setup")
+			if let should = UserDefaults.standard.object(forKey: "shouldLoadDefaultSubreddit") as? Bool{
+				if should{
+					if let sub = UserDefaults.standard.object(forKey: "defaultSubreddit") as? String{
+						print("Setting")
+						setupTable(sub, sort: "hot")
 					} else{
-						print("Shouldn't")
+						print("woulnd't let")
 						changeSubreddit()
 					}
 				} else{
-					print("not setup")
-					
+					print("Shouldn't")
 					changeSubreddit()
-					
 				}
+			} else{
+				print("not setup")
+				
+				changeSubreddit()
+				
 			}
+			
 		}else{
 			self.presentController(withNamesAndContexts: [("setup", AnyObject.self as AnyObject), ("page2", AnyObject.self as AnyObject)])
 			
@@ -135,7 +139,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 		// This method is called when watch view controller is no longer visible
 		super.didDeactivate()
 	}
-
+	
 	func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
 		print(message)
 		if let responsePhrases = message["phrases"] as? [String]{
@@ -168,11 +172,20 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 				
 				UserDefaults.standard.set(true, forKey: "connected")
 				print("SHould enable")
-				self.dismiss()
-				self.changeSub()
-				self.wcSession?.sendMessage(["setup":true], replyHandler: nil, errorHandler: { error in
-					print(error.localizedDescription)
-				})
+				
+				if !setup{
+					
+					self.dismiss()
+					self.changeSub()
+					self.wcSession?.sendMessage(["setup":true], replyHandler: nil, errorHandler: { error in
+						print(error.localizedDescription)
+						UserDefaults.standard.set(true, forKey: "setup")
+						
+					})
+					self.setup = true
+					
+				}
+				
 				replyHandler(["success": true as AnyObject])
 				UserDefaults.standard.set(true, forKey: "setup")
 				
@@ -396,7 +409,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 					}
 				}
 		}
-	
+		
 	}
 	func changeSub(){
 		DispatchQueue.main.async {
@@ -412,6 +425,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 					self.changeSubreddit()
 				}
 			}
+			
 		}
 		
 	}
@@ -428,10 +442,20 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 				
 				UserDefaults.standard.set(true, forKey: "connected")
 				print("SHould enable")
+				if !setup{
+					self.dismiss()
+					self.changeSub()
+					self.wcSession?.sendMessage(["setup":true], replyHandler: nil, errorHandler: { error in
+						print(error.localizedDescription)
+					})
+					UserDefaults.standard.set(true, forKey: "setup")
+					self.setup = true
+					
+				}
 				self.wcSession?.sendMessage(["setup":true], replyHandler: nil, errorHandler: { error in
 					print(error.localizedDescription)
 				})
-				UserDefaults.standard.set(true, forKey: "setup")
+				
 				
 			}
 		} else{
@@ -451,12 +475,12 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 			] as [String : Any?]
 		self.presentController(withName: "commentSort", context: context)
 		
-//		let sorts = ["Hot", "New", "Rising", "Controversial", "Top", "Gilded"]
-//		presentTextInputController(withSuggestions: sorts, allowedInputMode: WKTextInputMode.plain){ (arr: [Any]?) in
-//			if let sort = arr?.first as? String{
-//				self.setupTable(self.currentSubreddit, sort: sort.lowercased())
-//			}
-//		}
+		//		let sorts = ["Hot", "New", "Rising", "Controversial", "Top", "Gilded"]
+		//		presentTextInputController(withSuggestions: sorts, allowedInputMode: WKTextInputMode.plain){ (arr: [Any]?) in
+		//			if let sort = arr?.first as? String{
+		//				self.setupTable(self.currentSubreddit, sort: sort.lowercased())
+		//			}
+		//		}
 		
 	}
 	
