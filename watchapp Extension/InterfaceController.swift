@@ -474,13 +474,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 			"subreddit": currentSubreddit
 			] as [String : Any?]
 		self.presentController(withName: "commentSort", context: context)
-		
-		//		let sorts = ["Hot", "New", "Rising", "Controversial", "Top", "Gilded"]
-		//		presentTextInputController(withSuggestions: sorts, allowedInputMode: WKTextInputMode.plain){ (arr: [Any]?) in
-		//			if let sort = arr?.first as? String{
-		//				self.setupTable(self.currentSubreddit, sort: sort.lowercased())
-		//			}
-		//		}
+
 		
 	}
 	
@@ -490,7 +484,6 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 		WKInterfaceDevice.current().play(WKHapticType.click)
 		if let row = redditTable.rowController(at: rowIndex) as? NameRowController{
 			row.nameLabe.setTextColor(UIColor.lightGray)
-			//    UserDefaults.standard.set(posts[names[rowIndex]], forKey: "selectedPost")
 			if images[rowIndex] != nil{
 				print("Should attach image")
 				UserDefaults.standard.set(true, forKey: "shouldLoadImage")
