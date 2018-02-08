@@ -135,4 +135,18 @@ class RedditAPI{
 		}
 		debugPrint(b)
 	}
+	func getSubscriptions(completionHandler: @escaping (JSON?) -> Void){
+		let headers = [
+			"Authorization": "bearer \(access_token)",
+			"User-Agent": "RedditWatch/0.1 by 123icebuggy",
+			]
+		Alamofire.request("https://oauth.reddit.com/subreddits/mine/subscriber", headers: headers)
+			.responseJSON { dat in
+				if let data = dat.data{
+					completionHandler(try? JSON(data: data))
+				} else{
+					print("wouldn't let data")
+				}
+		}
+	}
 }

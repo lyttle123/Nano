@@ -86,7 +86,10 @@ class onboardOneController: UIViewController, WCSessionDelegate, SFSafariViewCon
 		}
 		if let setup = message["setup"] as? Bool{
 			if setup{
-				self.connectButton.titleLabel?.text = "Connected to Reddit"
+				DispatchQueue.main.async {
+					self.connectButton.titleLabel?.text = "Connected to Reddit"
+
+				}
 				UserDefaults.standard.set(true, forKey: "setup")
 				UserDefaults.standard.set(true, forKey: "connected")
 				
@@ -140,6 +143,9 @@ class onboardOneController: UIViewController, WCSessionDelegate, SFSafariViewCon
 					self.connectButton.isEnabled = false
 					
 					self.sendToWatch(result: result)
+					if let refresh_token = result["refresh_token"] as? String{
+						UserDefaults.standard.set(refresh_token, forKey: "refresh_token")
+					}
 					
 				})
 			} else {

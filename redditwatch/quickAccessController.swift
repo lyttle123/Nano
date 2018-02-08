@@ -15,6 +15,7 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 	var subreddits = UserDefaults.standard.object(forKey: "quickSubreddits") as? [String] ?? ["Popular","All","Funny"]
 	var savedSubs = UserDefaults.standard.object(forKey: "quickSubreddits") as? [String] ?? ["Popular","All","Funny"]
 	var wcSession: WCSession!
+	var reddit = RedditAPI()
 	
 	override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +32,28 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 		quickAccessSubreddits.tableFooterView = UIView()
 		print(subreddits)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.loadSubreddits(_:)), name: NSNotification.Name(rawValue: "loadSubreddits"), object: nil)
+		if let refresh_token = UserDefaults.standard.object(forKey: "refresh_token") as? String{
+			reddit.getAccessToken(grantType: "refresh_token", code: refresh_token, completionHandler: { result in
+				print("Got back \(result)")
+				print("Saving \(String(describing: result["acesss_token"]))")
+				UserDefaults.standard.set(result["acesss_token"]!, forKey: "access_token")
+				self.reddit = RedditAPI()
+				
+				self.reddit.getSubscriptions(completionHandler: { js in
+					if let json = js{
+						if let array = json["data"]["children"].array{
+							self.savedSubs = (array.map {$0["data"]["display_name"].stringValue})
+							self.subreddits = (array.map {$0["data"]["display_name"].stringValue})
+							self.sendSubredditsToWatch()
+							self.quickAccessSubreddits.reloadData()
+						}
+					}
+				})
+			})
+			
+		} else{
+			print("wouldn't let")
+		}
 		
         // Do any additional setup after loading the view.
     }
