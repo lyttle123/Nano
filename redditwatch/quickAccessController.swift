@@ -42,8 +42,9 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 				self.reddit.getSubscriptions(completionHandler: { js in
 					if let json = js{
 						if let array = json["data"]["children"].array{
-							self.savedSubs = (array.map {$0["data"]["display_name"].stringValue})
-							self.subreddits = (array.map {$0["data"]["display_name"].stringValue})
+							self.savedSubs = (array.map {$0["data"]["display_name"].stringValue.lowercased()}).sorted()
+							self.subreddits = (array.map {$0["data"]["display_name"].stringValue.lowercased()}).sorted()
+							UserDefaults.standard.set(self.savedSubs, forKey: "quickSubreddits")
 							self.sendSubredditsToWatch()
 							self.quickAccessSubreddits.reloadData()
 						}
