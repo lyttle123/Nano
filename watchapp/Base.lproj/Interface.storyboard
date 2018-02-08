@@ -300,6 +300,7 @@
                                     <fontDescription key="font" type="system" pointSize="10"/>
                                 </label>
                             </items>
+                            <edgeInsets key="margins" left="0.0" right="0.0" top="4" bottom="4"/>
                         </group>
                         <group width="136" alignment="left" id="Vkh-Cn-sDJ">
                             <items>

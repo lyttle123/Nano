@@ -455,8 +455,12 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 				if let input = arr?.first as? String{
 					self.setupTable(input.lowercased().replacingOccurrences(of: " ", with: ""))
 				} else{
-					WKInterfaceDevice.current().play(WKHapticType.failure)
-				//	self.changeSubreddit()
+					print(self.currentSubreddit)
+					if self.currentSubreddit.isEmpty{
+						WKInterfaceDevice.current().play(WKHapticType.failure)
+						self.changeSubreddit()
+						
+					}
 				}
 			}
 			

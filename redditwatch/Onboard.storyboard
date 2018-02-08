@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="scu-CC-L5P">
-    <device id="retina4_0" orientation="portrait">
+    <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -14,23 +14,23 @@
             <objects>
                 <viewController id="scu-CC-L5P" customClass="onboardOneController" customModule="redditwatch" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="alF-57-Kdb">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to RedditWatch" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RCh-AN-m1y">
-                                <rect key="frame" x="16" y="140" width="288" height="21"/>
+                                <rect key="frame" x="16" y="140" width="343" height="120"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please launch RedditWatch on your Apple Watch to continue" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KYW-kd-UCB">
-                                <rect key="frame" x="16" y="263.5" width="288" height="41"/>
+                                <rect key="frame" x="16" y="313" width="343" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Knm-Aq-WVe">
-                                <rect key="frame" x="16" y="269" width="288" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Knm-Aq-WVe">
+                                <rect key="frame" x="16" y="319" width="343" height="30"/>
                                 <state key="normal" title="Connect to Reddit">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
@@ -41,18 +41,17 @@
                         </subviews>
                         <color key="backgroundColor" red="0.20392156862745098" green="0.59607843137254901" blue="0.85882352941176465" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="Knm-Aq-WVe" firstAttribute="centerY" secondItem="alF-57-Kdb" secondAttribute="centerY" id="0sb-mE-rmu"/>
                             <constraint firstItem="hi8-KN-FIn" firstAttribute="bottom" secondItem="RCh-AN-m1y" secondAttribute="bottom" constant="407" id="1jW-rU-xOs"/>
                             <constraint firstItem="hi8-KN-FIn" firstAttribute="trailing" secondItem="KYW-kd-UCB" secondAttribute="trailing" constant="16" id="3SU-7K-Oa0"/>
                             <constraint firstItem="KYW-kd-UCB" firstAttribute="centerY" secondItem="alF-57-Kdb" secondAttribute="centerY" id="DzL-Lh-P9T"/>
-                            <constraint firstItem="hi8-KN-FIn" firstAttribute="trailing" secondItem="Knm-Aq-WVe" secondAttribute="trailing" constant="16" id="HW5-fQ-RUI"/>
-                            <constraint firstItem="Knm-Aq-WVe" firstAttribute="leading" secondItem="hi8-KN-FIn" secondAttribute="leading" constant="16" id="PMC-6q-SN4"/>
+                            <constraint firstItem="Knm-Aq-WVe" firstAttribute="centerY" secondItem="KYW-kd-UCB" secondAttribute="centerY" id="J4i-NS-yA6"/>
                             <constraint firstItem="KYW-kd-UCB" firstAttribute="centerX" secondItem="alF-57-Kdb" secondAttribute="centerX" id="WZx-5K-EL6"/>
                             <constraint firstItem="hi8-KN-FIn" firstAttribute="trailing" secondItem="RCh-AN-m1y" secondAttribute="trailing" constant="16" id="dh0-Hy-aPG"/>
                             <constraint firstItem="RCh-AN-m1y" firstAttribute="top" secondItem="hi8-KN-FIn" secondAttribute="top" constant="120" id="ftW-T6-kmJ"/>
-                            <constraint firstItem="Knm-Aq-WVe" firstAttribute="centerX" secondItem="alF-57-Kdb" secondAttribute="centerX" id="myB-kJ-PyC"/>
+                            <constraint firstItem="Knm-Aq-WVe" firstAttribute="trailing" secondItem="KYW-kd-UCB" secondAttribute="trailing" id="h9h-7R-hwL"/>
                             <constraint firstItem="RCh-AN-m1y" firstAttribute="leading" secondItem="hi8-KN-FIn" secondAttribute="leading" constant="16" id="vA4-kH-MR2"/>
                             <constraint firstItem="KYW-kd-UCB" firstAttribute="leading" secondItem="hi8-KN-FIn" secondAttribute="leading" constant="16" id="wTg-h0-QP3"/>
+                            <constraint firstItem="Knm-Aq-WVe" firstAttribute="leading" secondItem="KYW-kd-UCB" secondAttribute="leading" id="wp5-PG-5vN"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="hi8-KN-FIn"/>
                     </view>

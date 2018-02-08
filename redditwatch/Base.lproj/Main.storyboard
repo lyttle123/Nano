@@ -15,7 +15,7 @@
                 <navigationController id="JVy-5y-SCi" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Default" image="settings" id="N8S-bU-9S2"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="fhO-cV-k5a">
-                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="93"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -52,7 +52,7 @@
                 <navigationController id="hi8-gi-Y0G" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" systemItem="favorites" id="efL-Co-kgA"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="Jcv-9L-iMi">
-                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="93"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -110,7 +110,7 @@
                 <navigationController id="pTa-e3-F3O" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Handoff" image="noun_325208_cc" id="Tdt-2V-4cw"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="j10-cq-Osz">
-                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="93"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -134,7 +134,7 @@
                         </userDefinedRuntimeAttributes>
                     </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="uPI-Xy-Tkt">
-                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="93"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -154,7 +154,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f9K-v8-2Rq">
-                                <rect key="frame" x="16" y="116" width="359" height="502"/>
+                                <rect key="frame" x="16" y="113" width="359" height="505"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <string key="text">This app would not have been possible without a couple of people.
 
@@ -227,7 +227,7 @@ Without any of the people above, this app wouldn't be possible! Thank you all!</
                                 </connections>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zgt-Cn-Z2u">
-                                <rect key="frame" x="30" y="128" width="315" height="86"/>
+                                <rect key="frame" x="30" y="125" width="315" height="89"/>
                                 <string key="text">You can enter a default subreddit below. 
 This will load on app launch automatically</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -315,7 +315,7 @@ This will load on app launch automatically</string>
                         <viewLayoutGuide key="safeArea" id="ORE-3G-GV0"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="2ru-M9-tsK"/>
-                    <navigationItem key="navigationItem" title="Favorites" largeTitleDisplayMode="always" id="W8h-8C-i4K"/>
+                    <navigationItem key="navigationItem" title="Subscriptions" largeTitleDisplayMode="always" id="W8h-8C-i4K"/>
                     <connections>
                         <outlet property="quickAccessSubreddits" destination="BY3-cC-xQP" id="KZt-el-EqL"/>
                     </connections>

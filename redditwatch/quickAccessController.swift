@@ -26,7 +26,7 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 		wcSession.activate()
 		
 		
-		subreddits.append("Add another subreddit")
+		//subreddits.append("Add another subreddit")
 		quickAccessSubreddits.delegate = self
 		quickAccessSubreddits.dataSource = self
 		quickAccessSubreddits.tableFooterView = UIView()

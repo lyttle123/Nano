@@ -17,9 +17,12 @@ class onboardOneController: UIViewController, WCSessionDelegate, SFSafariViewCon
 	@IBOutlet weak var welcomeMessage: UILabel!
 	@IBOutlet weak var launchOnDevice: UILabel!
 	@IBOutlet weak var connectButton: UIButton!
+	var timer = Timer()
 	var authSession: SFAuthenticationSession?
 	var wcSession: WCSession!
 	var reddit = RedditAPI()
+	var index = 0
+	var loadingStates = ["Banning /u/spez", "Spamming r/AppleWatch", "Pretending to fix bugs", "Baconing at midnight"]
 	
 	override func viewWillAppear(_ animated: Bool) {
 		if let bool = UserDefaults.standard.object(forKey: "setup") as? Bool{
@@ -49,7 +52,13 @@ class onboardOneController: UIViewController, WCSessionDelegate, SFSafariViewCon
 		connectButton.alpha = 0
 		
 	}
-	
+	@objc func changeState(){
+		print(index)
+		if index != loadingStates.count - 1{
+			self.connectButton.titleLabel?.text = loadingStates[index]
+		}
+		index += 1
+	}
 	override func viewDidAppear(_ animated: Bool) {
 		wcSession = WCSession.default
 		wcSession.delegate = self
@@ -109,6 +118,7 @@ class onboardOneController: UIViewController, WCSessionDelegate, SFSafariViewCon
 						UserDefaults.standard.set(true, forKey: "connected")
 						
 						self.connected()
+						self.timer.invalidate()
 					}
 					
 				}
@@ -132,6 +142,7 @@ class onboardOneController: UIViewController, WCSessionDelegate, SFSafariViewCon
 			
 			
 			self.connectButton.setTitle("Connecting...", for: .normal)
+			self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.changeState), userInfo: nil, repeats: true)
 			print(successURL)
 			
 			let user = self.getQueryStringParameter(url: (successURL.absoluteString), param: "code")
@@ -143,7 +154,7 @@ class onboardOneController: UIViewController, WCSessionDelegate, SFSafariViewCon
 					self.connectButton.isEnabled = false
 					
 					self.sendToWatch(result: result)
-					if let refresh_token = result["refresh_token"] as? String{
+					if let refresh_token = result["refresh_token"]{
 						UserDefaults.standard.set(refresh_token, forKey: "refresh_token")
 					}
 					
