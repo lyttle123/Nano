@@ -70,7 +70,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 			}
 			
 		}else{
-			self.presentController(withNamesAndContexts: [("setup", AnyObject.self as AnyObject), ("page2", AnyObject.self as AnyObject)])
+			WKInterfaceController.reloadRootControllers(withNamesAndContexts: [("setup", AnyObject.self as AnyObject), ("page2", AnyObject.self as AnyObject)])
 			
 		}
 		
@@ -174,8 +174,8 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 				print("SHould enable")
 				
 				if !setup{
-					
-					self.dismiss()
+					print("Moving away")
+					WKInterfaceController.reloadRootControllers(withNamesAndContexts: [("interface", AnyObject.self as AnyObject)])
 					self.changeSub()
 					self.wcSession?.sendMessage(["setup":true], replyHandler: nil, errorHandler: { error in
 						print(error.localizedDescription)
@@ -188,6 +188,40 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 				
 				replyHandler(["success": true as AnyObject])
 				UserDefaults.standard.set(true, forKey: "setup")
+				
+			}
+		} else{
+			print("WOULDN'T LET")
+		}
+	}
+	func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any] = [:]) {
+		if let responsePhrases = userInfo["phrases"] as? [String]{
+			UserDefaults.standard.set(responsePhrases, forKey: "phrases")
+			phrases = responsePhrases
+		}
+		if let refesh_token = userInfo["refresh_token"] as? String{
+			print(refesh_token)
+			UserDefaults.standard.set(refesh_token, forKey: "refresh_token")
+			if let access_token = userInfo["access_token"] as? String{
+				UserDefaults.standard.set(access_token, forKey: "access_token")
+				
+				UserDefaults.standard.set(true, forKey: "connected")
+				print("SHould enable")
+				if !setup{
+					print("moving away")
+					WKInterfaceController.reloadRootControllers(withNamesAndContexts: [("interface", AnyObject.self as AnyObject)])
+					self.changeSub()
+					self.wcSession?.sendMessage(["setup":true], replyHandler: nil, errorHandler: { error in
+						print(error.localizedDescription)
+					})
+					UserDefaults.standard.set(true, forKey: "setup")
+					self.setup = true
+					
+				}
+				self.wcSession?.sendMessage(["setup":true], replyHandler: nil, errorHandler: { error in
+					print(error.localizedDescription)
+				})
+				
 				
 			}
 		} else{
@@ -422,46 +456,14 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 					self.setupTable(input.lowercased().replacingOccurrences(of: " ", with: ""))
 				} else{
 					WKInterfaceDevice.current().play(WKHapticType.failure)
-					self.changeSubreddit()
+				//	self.changeSubreddit()
 				}
 			}
 			
 		}
 		
 	}
-	func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any] = [:]) {
-		if let responsePhrases = userInfo["phrases"] as? [String]{
-			UserDefaults.standard.set(responsePhrases, forKey: "phrases")
-			phrases = responsePhrases
-		}
-		if let refesh_token = userInfo["refresh_token"] as? String{
-			print(refesh_token)
-			UserDefaults.standard.set(refesh_token, forKey: "refresh_token")
-			if let access_token = userInfo["access_token"] as? String{
-				UserDefaults.standard.set(access_token, forKey: "access_token")
-				
-				UserDefaults.standard.set(true, forKey: "connected")
-				print("SHould enable")
-				if !setup{
-					self.dismiss()
-					self.changeSub()
-					self.wcSession?.sendMessage(["setup":true], replyHandler: nil, errorHandler: { error in
-						print(error.localizedDescription)
-					})
-					UserDefaults.standard.set(true, forKey: "setup")
-					self.setup = true
-					
-				}
-				self.wcSession?.sendMessage(["setup":true], replyHandler: nil, errorHandler: { error in
-					print(error.localizedDescription)
-				})
-				
-				
-			}
-		} else{
-			print("WOULDN'T LET")
-		}
-	}
+	
 	@IBAction func changeSubreddit() {
 		changeSub()
 	}

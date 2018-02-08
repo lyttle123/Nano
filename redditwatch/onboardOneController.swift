@@ -30,8 +30,6 @@ class onboardOneController: UIViewController, WCSessionDelegate, SFSafariViewCon
 		} else{
 			print("Wouldn't let")
 		}
-		connected()
-		
 	}
 	
 	func connected(){
@@ -51,6 +49,7 @@ class onboardOneController: UIViewController, WCSessionDelegate, SFSafariViewCon
 		connectButton.alpha = 0
 		
 	}
+	
 	override func viewDidAppear(_ animated: Bool) {
 		wcSession = WCSession.default
 		wcSession.delegate = self
