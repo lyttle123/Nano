@@ -49,6 +49,8 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 		
 		if setup{
 			suggestions.insert("home", at: 0)
+			suggestions.insert("all", at: 1)
+			suggestions.insert("popular", at: 2)
 			print("setup")
 			if let should = UserDefaults.standard.object(forKey: "shouldLoadDefaultSubreddit") as? Bool{
 				if should{
