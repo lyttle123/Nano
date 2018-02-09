@@ -27,8 +27,9 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 	var post = [String: JSON]()
 	var ids = [String]()
 	var imageDownloadMode = false
-	var showSubredditLabels = ["popular", "all"]
+	var showSubredditLabels = ["popular", "all", "home"]
 	var phrases = ["Popular", "All", "Funny"]
+	var suggestions = UserDefaults.standard.object(forKey: "phrases") as? [String] ?? ["Popular", "All", "Funny"]
 	var wcSession: WCSession?
 	var highResImage = UserDefaults.standard.object(forKey: "highResImage") as? Bool ?? false
 	var currentSubreddit = String()
@@ -47,7 +48,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 		print("we back bitche")
 		
 		if setup{
-			
+			suggestions.insert("home", at: 0)
 			print("setup")
 			if let should = UserDefaults.standard.object(forKey: "shouldLoadDefaultSubreddit") as? Bool{
 				if should{
@@ -247,7 +248,9 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 		
 	}
 	func setupTable(_ subreddit: String = "askreddit", sort: String = "hot"){
+		
 		self.setTitle(subreddit.lowercased())
+		
 		self.currentSubreddit = subreddit
 		self.currentSort = sort
 		var parameters = [String: Any]()
@@ -267,171 +270,163 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 		posts.removeAll()
 		self.redditTable.setNumberOfRows(0, withRowType: "redditCell")
 		WKInterfaceDevice.current().play(WKHapticType.start)
-		Alamofire.request(url!, parameters: parameters)
-			.responseData { (dat) in
-				let data = dat.data
-				let error = dat.error
-				print(String(describing: error))
-				if (error != nil){
-					WKInterfaceDevice.current().play(WKHapticType.failure)
-					self.presentAlert(withTitle: "Error", message: error?.localizedDescription, preferredStyle: .alert, actions: [WKAlertAction.init(title: "Confirm", style: WKAlertActionStyle.default, handler: {
-						print("Ho")
-					})])
-				} else{
+		reddit.access_token = UserDefaults.standard.object(forKey: "access_token") as! String
+		reddit.getSubreddit(subreddit, sort: sort, completionHandler: { json in
+			let children = json["data"]["children"].array
+			guard let child = children else{ return}
+			for element in child{
+				
+				if !(element["data"]["stickied"].bool!){
+					self.names.append(element["data"]["title"].string!)
+					
+					self.post[element["data"]["id"].string!] = element["data"]
+					self.ids.append(element["data"]["id"].string!)
 					
 				}
-				
-				if let dat = data{
-					do {
-						let json = try JSON(data: dat)
-						let children = json["data"]["children"].array
-						guard let child = children else{
-							print("Wouldn't let with")
-							print(json)
-							return}
-						for element in child{
-							
-							if !(element["data"]["stickied"].bool!){
-								self.names.append(element["data"]["title"].string!)
+			}
+			self.redditTable.setAlpha(0.0)
+			self.redditTable.setNumberOfRows(self.names.count, withRowType: "redditCell")
+			for (index, _) in self.post.enumerated(){
+				if let row = self.redditTable.rowController(at: index ) as? NameRowController{
+					if let stuff = self.post[self.ids[index]]
+					{
+						
+						row.nameLabe.setText(stuff["title"].string!.dehtmlify())
+						row.id = stuff["id"].string!
+						row.delegate = self
+						
+						if let gildedCount = stuff["gilded"].int{
+							if gildedCount > 0{
+								row.gildedIndicator.setHidden(false)
 								
-								self.post[element["data"]["id"].string!] = element["data"]
-								self.ids.append(element["data"]["id"].string!)
+								row.gildedIndicator.setText("\(gildedCount * "•")")
 								
+								
+							} else{
+								row.gildedIndicator.setHidden(true)
+							}
+						} else
+						{
+							print("couldn't find gild")
+						}
+						if let flair = stuff["link_flair_text"].string{
+							row.postFlair.setText(flair)
+						} else{
+							row.postFlair.setHidden(true)
+						}
+						if let nsfw = stuff["over_18"].bool{
+							if nsfw{
+								row.nsfwIndicator.setHidden(false)
+							} else{
+								row.nsfwIndicator.setHidden(true)
 							}
 						}
-						self.redditTable.setAlpha(0.0)
-						self.redditTable.setNumberOfRows(self.names.count, withRowType: "redditCell")
-						for (index, _) in self.post.enumerated(){
-							if let row = self.redditTable.rowController(at: index ) as? NameRowController{
-								if let stuff = self.post[self.ids[index]]
-								{
-									
-									row.nameLabe.setText(stuff["title"].string!.dehtmlify())
-									row.id = stuff["id"].string!
-									row.delegate = self
-									
-									if let gildedCount = stuff["gilded"].int{
-										if gildedCount > 0{
-											row.gildedIndicator.setHidden(false)
-											
-											row.gildedIndicator.setText("\(gildedCount * "•")")
-											
-											
-										} else{
-											row.gildedIndicator.setHidden(true)
-										}
-									} else
-									{
-										print("couldn't find gild")
-									}
-									if let flair = stuff["link_flair_text"].string{
-										row.postFlair.setText(flair)
-									} else{
-										row.postFlair.setHidden(true)
-									}
-									if let nsfw = stuff["over_18"].bool{
-										if nsfw{
-											row.nsfwIndicator.setHidden(false)
-										} else{
-											row.nsfwIndicator.setHidden(true)
-										}
-									}
-									if let subreddit = stuff["subreddit_name_prefixed"].string{
-										if self.showSubredditLabels.contains(self.currentSubreddit){
-											row.postSubreddit.setText(subreddit)
-										} else{
-											row.postSubreddit.setHidden(true)
-										}
-									} else{
-										row.postSubreddit.setHidden(true)
-									}
-									row.postAuthor.setText(stuff["author"].string!)
-									row.postCommentCount.setText(String(stuff["num_comments"].int!) + " Comments")
-									let score = stuff["score"].int!
-									row.postScore.setText("↑ \(String(describing: score)) |")
-									if stuff["post_hint"].string != nil{
-										if stuff["url"].string!.range(of: "twitter") != nil && (stuff["url"].string!.range(of: "status") != nil){
-											print("MATCH: \(stuff["url"].string!)")
-											let id = stuff["url"].string!.components(separatedBy: "/").last!
-											Twitter().getTweet(tweetId: id, completionHandler: {tweet in
-												if let js = tweet{
-													row.tweetText.setText(js["text"].string!)
-													row.twitterLikes.setText(String(js["favorite_count"].int!) + " Likes")
-													row.twitterRetweets.setText(String(describing: js["retweet_count"].int!) +	 " Retweets")
-													row.twitterUsername.setText("@" + js["user"]["screen_name"].string!)
-													row.twitterDisplayName.setText(js["user"]["name"].string!)
-													self.downloadImage(url: js["user"]["profile_image_url_https"].string!, index: 0, completionHandler: { image in
-														if let img = image{
-															row.twitterPic.setImage(img.circleMasked)
-														}
-													})
-													
-												}
-												
-											})
-										} else {
-											row.twitterHousing.setHidden(true)
-											if let height = stuff["thumbnail_height"].int{
-												row.postImage.setHeight(CGFloat(height))
+						if let subreddit = stuff["subreddit_name_prefixed"].string{
+							if self.showSubredditLabels.contains(self.currentSubreddit){
+								row.postSubreddit.setText(subreddit)
+							} else{
+								row.postSubreddit.setHidden(true)
+							}
+						} else{
+							row.postSubreddit.setHidden(true)
+						}
+						row.postAuthor.setText(stuff["author"].string!)
+						row.postCommentCount.setText(String(stuff["num_comments"].int!) + " Comments")
+						let score = stuff["score"].int!
+						row.postScore.setText("↑ \(String(describing: score)) |")
+						if stuff["post_hint"].string != nil{
+							if stuff["url"].string!.range(of: "twitter") != nil && (stuff["url"].string!.range(of: "status") != nil){
+								print("MATCH: \(stuff["url"].string!)")
+								let id = stuff["url"].string!.components(separatedBy: "/").last!
+								Twitter().getTweet(tweetId: id, completionHandler: {tweet in
+									if let js = tweet{
+										row.tweetText.setText(js["text"].string!)
+										row.twitterLikes.setText(String(js["favorite_count"].int!) + " Likes")
+										row.twitterRetweets.setText(String(describing: js["retweet_count"].int!) +	 " Retweets")
+										row.twitterUsername.setText("@" + js["user"]["screen_name"].string!)
+										row.twitterDisplayName.setText(js["user"]["name"].string!)
+										self.downloadImage(url: js["user"]["profile_image_url_https"].string!, index: 0, completionHandler: { image in
+											if let img = image{
+												row.twitterPic.setImage(img.circleMasked)
 											}
-											var url = ""
-											//if hint == "image"{
-											row.id = stuff["id"].string!
-											//row.upvoteButton.set
-											if self.highResImage{
-												url = stuff["url"].string!
-											} else {
-												url = stuff["thumbnail"].string! //back to thumbnail, show full image on post view
-												if url == "image" || url == "nsfw"{
-													url = stuff["url"].string!
-												}
-											}
-											
-											if url.range(of: "http") == nil{
-												url = "https://" + url
-											}
-											
-											Alamofire.request(url)
-												.responseData { data in
-													if let data = data.data{
-														if let image = UIImage(data: data){
-															row.postImage.setImage(image)
-															self.images[index] = image
-														}
-														
-													}
-													
-											}
-											
-										}
+										})
 										
-										//}
-									} else{
-										row.twitterHousing.setHidden(true)
-									}
-									if let newTime = stuff["created_utc"].float{
-										
-										row.postTime.setText(TimeInterval().differenceBetween(newTime))
 									}
 									
+								})
+							} else {
+								row.twitterHousing.setHidden(true)
+								if let height = stuff["thumbnail_height"].int{
+									row.postImage.setHeight(CGFloat(height))
 								}
+								var url = ""
+								//if hint == "image"{
+								row.id = stuff["id"].string!
+								//row.upvoteButton.set
+								if self.highResImage{
+									url = stuff["url"].string!
+								} else {
+									url = stuff["thumbnail"].string! //back to thumbnail, show full image on post view
+									if url == "image" || url == "nsfw"{
+										url = stuff["url"].string!
+									}
+								}
+								
+								if url.range(of: "http") == nil{
+									url = "https://" + url
+								}
+								
+								Alamofire.request(url)
+									.responseData { data in
+										if let data = data.data{
+											if let image = UIImage(data: data){
+												row.postImage.setImage(image)
+												self.images[index] = image
+											}
+											
+										}
+										
+								}
+								
 							}
 							
-							
-							
+							//}
+						} else{
+							row.twitterHousing.setHidden(true)
 						}
-						self.redditTable.setAlpha(1.0)
-						WKInterfaceDevice.current().play(WKHapticType.stop)
+						if let newTime = stuff["created_utc"].float{
+							
+							row.postTime.setText(TimeInterval().differenceBetween(newTime))
+						}
 						
-						
-					} catch {
-						print("done stuffed up")
 					}
-				} else{
-					print("No go")
 				}
 				
-		}
+				
+				
+			}
+			self.redditTable.setAlpha(1.0)
+			WKInterfaceDevice.current().play(WKHapticType.stop)
+			
+			
+			
+		})
+		
+		//		Alamofire.request(url!, parameters: parameters)
+		//			.responseData { (dat) in
+		//				let data = dat.data
+		//				let error = dat.error
+		//				print(String(describing: error))
+		//				if (error != nil){
+		//					WKInterfaceDevice.current().play(WKHapticType.failure)
+		//					self.presentAlert(withTitle: "Error", message: error?.localizedDescription, preferredStyle: .alert, actions: [WKAlertAction.init(title: "Confirm", style: WKAlertActionStyle.default, handler: {
+		//						print("Ho")
+		//					})])
+		//				} else{
+		//
+		//				}
+		//
+		//
 		
 	}
 	func downloadImage(url: String, index: Int, completionHandler: @escaping (_: UIImage?) -> Void){
@@ -448,9 +443,9 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 	func changeSub(){
 		DispatchQueue.main.async {
 			print("CHANGING")
-			let suggestions = UserDefaults.standard.object(forKey: "phrases") as? [String] ?? self.phrases
 			
-			self.presentTextInputController(withSuggestions: suggestions, allowedInputMode:   WKTextInputMode.plain) { (arr: [Any]?) in
+			
+			self.presentTextInputController(withSuggestions: self.suggestions, allowedInputMode:   WKTextInputMode.plain) { (arr: [Any]?) in
 				print(arr)
 				if let input = arr?.first as? String{
 					self.setupTable(input.lowercased().replacingOccurrences(of: " ", with: ""))
@@ -480,7 +475,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 			"subreddit": currentSubreddit
 			] as [String : Any?]
 		self.presentController(withName: "commentSort", context: context)
-
+		
 		
 	}
 	

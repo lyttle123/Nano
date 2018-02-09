@@ -149,8 +149,8 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 	func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
 		if indexPath.row == subreddits.count - 1{ //If it's the last cell, don't edit it
 			return false
-		} else{ //Nah you can
-			return true
+		} else{ //CHANGE THIS TO TRUE
+			return false
 		}
 	}
 

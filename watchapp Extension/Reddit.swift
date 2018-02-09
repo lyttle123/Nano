@@ -149,4 +149,50 @@ class RedditAPI{
 				}
 		}
 	}
+	func getSubreddit(_ subreddit: String = "askreddit", sort: String = "hot", completionHandler: @escaping (JSON) -> Void){
+		var home = (subreddit.lowercased() == "home")
+		var headers = [
+			"Authorization": "bearer \(access_token)",
+			"User-Agent": "RedditWatch/0.1 by 123icebuggy",
+		]
+		var parameters = [String: Any]()
+		var url = URL(string: "https://www.reddit.com/r/\(subreddit)/\(sort).json")
+		if sort == "top"{
+			url = URL(string: "https://www.reddit.com/r/\(subreddit)/\(sort).json")
+			parameters["t"] = "all"
+			
+		} else{
+			url = URL(string: "https://www.reddit.com/r/\(subreddit)/\(sort).json")
+		}
+		if subreddit.lowercased() == "home"{
+			url = URL(string: "https://oauth.reddit.com")
+		}
+		if sort == "top"{
+			if home{
+				url = URL(string: "https://oauth.reddit.com" + "/\(sort)")
+			}
+		} else if sort != "hot"{
+			if home{
+				url = URL(string: "https://oauth.reddit.com" + "/\(sort)")
+			}
+		}
+		if !home{
+			headers = [String: String]()
+		}
+		print(url)
+		print(headers)
+		print(parameters)
+		Alamofire.request(url!, parameters: parameters, headers: headers)
+			.responseData { dat in
+				if let dat = dat.data{
+					if let js = try? JSON(data: dat){
+						completionHandler(js)
+					}
+					
+				}
+			}
+		.responseString(completionHandler: {str in
+			print(str.result.value)
+		})
+	}
 }
