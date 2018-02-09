@@ -230,7 +230,7 @@
                     </items>
                     <menu key="menu" id="CA2-iO-lml">
                         <items>
-                            <menuItem title="Change /r/" icon="info" id="47o-po-7lr">
+                            <menuItem title="Change Subreddit" icon="add" id="47o-po-7lr">
                                 <connections>
                                     <action selector="changeSubreddit" destination="AgC-eL-Hgc" id="z3h-Zl-kvx"/>
                                 </connections>
@@ -336,7 +336,7 @@
                         <label alignment="left" text="Comments" id="2lF-dX-hSB">
                             <fontDescription key="font" type="system" weight="semibold" pointSize="16"/>
                         </label>
-                        <imageView alignment="center" contentMode="center" id="Hhw-tv-8af"/>
+                        <imageView width="1" alignment="center" contentMode="center" id="Hhw-tv-8af"/>
                         <table alignment="left" id="hlc-ag-5jF">
                             <items>
                                 <tableRow identifier="commentCell" id="SBz-eR-690" customClass="commentController" customModule="watchapp_Extension">

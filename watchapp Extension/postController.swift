@@ -90,7 +90,7 @@ class postController: WKInterfaceController {
 		if UserDefaults.standard.object(forKey: "shouldLoadImage") as! Bool{
 			if let imagedat = UserDefaults.standard.object(forKey: "selectedThumbnail") as? Data{
 				postImage.setImageData(imagedat)
-				
+		
 				
 			}
 			if var url = post["url"].string{
@@ -114,6 +114,7 @@ class postController: WKInterfaceController {
 								if let b = UIImage.gifImageWithData(data){
 									print("Gif")
 									self.postImage.setImage(b)
+									
 									self.postImage.startAnimating()
 								}
 							} else{
