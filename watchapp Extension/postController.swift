@@ -206,9 +206,11 @@ class postController: WKInterfaceController {
 						self.commentsTable.setAlpha(0.0)
 						self.commentsTable.setNumberOfRows(self.comments.count, withRowType: "commentCell")
 						for (index, element) in self.idList.enumerated(){
+							var matches = [String]()
 							if let row = self.commentsTable.rowController(at: index) as? commentController{
 								if let stuff = self.comments[element]?.dictionary{
 									row.nameLabel.setText(stuff["body"]?.string?.dehtmlify())
+									
 									if let score = stuff["score"]{
 										
 										row.scoreLabel.setText("↑ \(String(describing: score.int!)) |")

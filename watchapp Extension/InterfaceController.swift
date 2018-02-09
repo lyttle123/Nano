@@ -50,7 +50,8 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 			}
 		}
 		get{
-			return loading
+			return self.loading
+			
 		}
 	}
 	
@@ -142,6 +143,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 					print("Got back \(result)")
 					print("Saving \(String(describing: result["acesss_token"]))")
 					UserDefaults.standard.set(result["acesss_token"]!, forKey: "access_token")
+					self.reddit.access_token = result["acesss_token"]!
 				})
 			} else{
 				print("Not refreshing because refreshed recently")

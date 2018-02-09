@@ -46,5 +46,6 @@ class NameRowController: NSObject {
 	
 	@IBAction func downvotePost() {
 		self.delegate?.didSelect(upvoteButton: self.upvoteButton, downvoteButton: self.downvoteButton, onCellWith: self.id, action: "downvote")
+		
 	}
 }
