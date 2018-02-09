@@ -74,9 +74,9 @@ class onboardOneController: UIViewController, WCSessionDelegate, SFSafariViewCon
 	func sessionDidDeactivate(_ session: WCSession) {
 		print("DEACTIVATED")
 	}
-	func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
-		print(message)
+	func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
 		if let launched = message["appLaunched"] as? Bool{
+			
 			if launched{
 				DispatchQueue.main.async {
 					if (UserDefaults.standard.object(forKey: "setup") as? Bool) != nil{
@@ -92,12 +92,13 @@ class onboardOneController: UIViewController, WCSessionDelegate, SFSafariViewCon
 					
 				}
 			}
+			replyHandler(["received": true])
 		}
 		if let setup = message["setup"] as? Bool{
 			if setup{
 				DispatchQueue.main.async {
 					self.connectButton.titleLabel?.text = "Connected to Reddit"
-
+					
 				}
 				UserDefaults.standard.set(true, forKey: "setup")
 				UserDefaults.standard.set(true, forKey: "connected")

@@ -14,17 +14,14 @@ class waitForiPhone: WKInterfaceController, WCSessionDelegate {
 
 	@IBOutlet var getStartedButton: WKInterfaceButton!
 	var wcSession: WCSession?
+	var timer = Timer()
+	
 	override func awake(withContext context: Any?) {
 		super.awake(withContext: context)
 		wcSession = WCSession.default
 		wcSession?.delegate = self
 		wcSession?.activate()
-//		getStartedButton.setEnabled(false)
-//		if let connected = UserDefaults.standard.object(forKey: "connected") as? Bool{
-//			if connected {
-//				getStartedButton.setEnabled(true)
-//			}
-//		}
+
 	}
 	
 	
@@ -45,7 +42,7 @@ class waitForiPhone: WKInterfaceController, WCSessionDelegate {
 				print("SHould enable")
 				if !setup{
 					print("moving away")
-					self.wcSession?.sendMessage(["setup":true], replyHandler: nil, errorHandler: { error in
+					self.wcSession?.sendMessage(["setup":true], replyHandler: {_ in}, errorHandler: { error in
 						print(error.localizedDescription)
 					})
 					UserDefaults.standard.set(true, forKey: "setup")
@@ -54,7 +51,7 @@ class waitForiPhone: WKInterfaceController, WCSessionDelegate {
 					self.setup = true
 					
 				}
-				self.wcSession?.sendMessage(["setup":true], replyHandler: nil, errorHandler: { error in
+				self.wcSession?.sendMessage(["setup":true], replyHandler: {_ in}, errorHandler: { error in
 					print(error.localizedDescription)
 				})
 				
@@ -76,7 +73,7 @@ class waitForiPhone: WKInterfaceController, WCSessionDelegate {
 				print("SHould enable")
 				if !setup{
 					print("moving away")
-					self.wcSession?.sendMessage(["setup":true], replyHandler: nil, errorHandler: { error in
+					self.wcSession?.sendMessage(["setup":true], replyHandler: {_ in}, errorHandler: { error in
 						print(error.localizedDescription)
 					})
 					UserDefaults.standard.set(true, forKey: "setup")
@@ -85,7 +82,7 @@ class waitForiPhone: WKInterfaceController, WCSessionDelegate {
 					self.setup = true
 					
 				}
-				self.wcSession?.sendMessage(["setup":true], replyHandler: nil, errorHandler: { error in
+				self.wcSession?.sendMessage(["setup":true], replyHandler: {_ in}, errorHandler: { error in
 					print(error.localizedDescription)
 				})
 				
@@ -101,8 +98,19 @@ class waitForiPhone: WKInterfaceController, WCSessionDelegate {
 		case .activated:
 			print("activated")
 			if (self.wcSession?.isReachable)!{
-				self.wcSession?.sendMessage(["appLaunched": true], replyHandler: nil, errorHandler: { error in
+				self.wcSession?.sendMessage(["appLaunched": true], replyHandler: {_ in}, errorHandler: { error in
 					print(error.localizedDescription)
+				})
+				timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: {_ in
+					self.wcSession?.sendMessage(["appLaunched": true], replyHandler: {reply in
+						if let success = reply["received"] as? Bool{
+							if success{
+								self.timer.invalidate()
+							}
+						}
+					}, errorHandler: { error in
+						print(error.localizedDescription)
+					})
 				})
 			} else{
 				print("Not reachable")
