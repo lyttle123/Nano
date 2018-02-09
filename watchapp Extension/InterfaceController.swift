@@ -29,8 +29,8 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 	var ids = [String]()
 	var imageDownloadMode = false
 	var showSubredditLabels = ["popular", "all", "home"]
-	var phrases = ["Popular", "All", "Funny"]
-	var suggestions = UserDefaults.standard.object(forKey: "phrases") as? [String] ?? ["Popular", "All", "Funny"]
+	var phrases = [String]()
+	var suggestions = UserDefaults.standard.object(forKey: "phrases") as? [String] ?? [String]()
 	var wcSession: WCSession?
 	var highResImage = UserDefaults.standard.object(forKey: "highResImage") as? Bool ?? false
 	var currentSubreddit = String()
@@ -91,7 +91,8 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 			}
 			
 		}else{
-			WKInterfaceController.reloadRootControllers(withNamesAndContexts: [("setup", AnyObject.self as AnyObject), ("page2", AnyObject.self as AnyObject)])
+			print("Loading")
+			WKInterfaceController.reloadRootControllers(withNamesAndContexts: [("setup", AnyObject.self as AnyObject), ("page2", AnyObject.self as AnyObject), ("tutorial1", AnyObject.self as AnyObject), ("tutorial2", AnyObject.self as AnyObject)])
 			
 		}
 		

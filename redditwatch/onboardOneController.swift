@@ -22,7 +22,7 @@ class onboardOneController: UIViewController, WCSessionDelegate, SFSafariViewCon
 	var wcSession: WCSession!
 	var reddit = RedditAPI()
 	var index = 0
-	var loadingStates = ["Banning /u/spez", "Spamming r/AppleWatch", "Pretending to fix bugs", "Baconing at midnight"]
+	var loadingStates = ["Banning /u/spez", "Spamming r/AppleWatch", "Pretending to fix bugs", "Baconing at midnight", "Editing comments"]
 	
 	override func viewWillAppear(_ animated: Bool) {
 		if let bool = UserDefaults.standard.object(forKey: "setup") as? Bool{
@@ -53,11 +53,8 @@ class onboardOneController: UIViewController, WCSessionDelegate, SFSafariViewCon
 		
 	}
 	@objc func changeState(){
-		print(index)
-		if index != loadingStates.count - 1{
-			self.connectButton.titleLabel?.text = loadingStates[index]
-		}
-		index += 1
+		self.connectButton.setTitle(loadingStates[Int(arc4random_uniform(UInt32(loadingStates.count)))], for: .normal)
+		
 	}
 	override func viewDidAppear(_ animated: Bool) {
 		wcSession = WCSession.default
@@ -74,9 +71,9 @@ class onboardOneController: UIViewController, WCSessionDelegate, SFSafariViewCon
 	func sessionDidDeactivate(_ session: WCSession) {
 		print("DEACTIVATED")
 	}
-	func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
+	func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+		print(message)
 		if let launched = message["appLaunched"] as? Bool{
-			
 			if launched{
 				DispatchQueue.main.async {
 					if (UserDefaults.standard.object(forKey: "setup") as? Bool) != nil{
@@ -92,13 +89,12 @@ class onboardOneController: UIViewController, WCSessionDelegate, SFSafariViewCon
 					
 				}
 			}
-			replyHandler(["received": true])
 		}
 		if let setup = message["setup"] as? Bool{
 			if setup{
 				DispatchQueue.main.async {
-					self.connectButton.titleLabel?.text = "Connected to Reddit"
-					
+					self.connectButton.setTitle("We did it Reddit", for: .normal)
+
 				}
 				UserDefaults.standard.set(true, forKey: "setup")
 				UserDefaults.standard.set(true, forKey: "connected")
@@ -114,7 +110,7 @@ class onboardOneController: UIViewController, WCSessionDelegate, SFSafariViewCon
 			if let success = reply["success"] as? Bool{
 				if success{
 					DispatchQueue.main.async {
-						self.connectButton.titleLabel?.text = "Connected to Reddit"
+						self.connectButton.setTitle("We did it Reddit!", for: .normal)
 						UserDefaults.standard.set(true, forKey: "setup")
 						UserDefaults.standard.set(true, forKey: "connected")
 						

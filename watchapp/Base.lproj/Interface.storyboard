@@ -36,11 +36,26 @@
             <objects>
                 <controller identifier="page2" id="Hv0-rJ-c07" customClass="waitForiPhone" customModule="watchapp_Extension">
                     <items>
-                        <label width="1" height="1" alignment="left" text="Please open RedditWatch on your iOS Device to setup" textAlignment="center" numberOfLines="0" id="zqq-gJ-q0U"/>
+                        <label width="1" height="1" alignment="left" textAlignment="center" numberOfLines="0" id="zqq-gJ-q0U">
+                            <string key="text">Please open RedditWatch on your iOS Device to setup
+
+--&gt; Tutorial</string>
+                        </label>
                     </items>
                 </controller>
             </objects>
             <point key="canvasLocation" x="465.53846153846155" y="-44.025641025641029"/>
+        </scene>
+        <!--tutorial1-->
+        <scene sceneID="LJB-E7-g80">
+            <objects>
+                <controller identifier="tutorial1" id="lU9-Vt-7Xr">
+                    <items>
+                        <label width="1" height="1" alignment="left" text="Force-touch while browsing a subreddit to change the current subreddit or sort the posts" textAlignment="center" numberOfLines="0" id="iAb-aa-BLK"/>
+                    </items>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="680" y="-46"/>
         </scene>
         <!--commentSort-->
         <scene sceneID="OY5-sb-MFj">
@@ -68,7 +83,7 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="763" y="-61"/>
+            <point key="canvasLocation" x="1098" y="-216"/>
         </scene>
         <!--interface-->
         <scene sceneID="aou-V4-d1y">
@@ -539,6 +554,17 @@
                 </controller>
             </objects>
             <point key="canvasLocation" x="710" y="346"/>
+        </scene>
+        <!--tutorial2-->
+        <scene sceneID="Dwv-G0-XXy">
+            <objects>
+                <controller identifier="tutorial2" id="Qkk-rV-GM4">
+                    <items>
+                        <label width="1" height="1" alignment="left" text="Force-Touch while reading the comments on a post to sort the comments differently" textAlignment="center" numberOfLines="0" id="pVC-eH-yUd"/>
+                    </items>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="904" y="-47"/>
         </scene>
     </scenes>
 </document>
