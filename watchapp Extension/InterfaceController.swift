@@ -18,6 +18,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 	
 	
 	@IBOutlet var redditTable: WKInterfaceTable!
+	@IBOutlet var loadingIndicator: WKInterfaceImage!
 	var reddit = RedditAPI()
 	var upvoted = false
 	var downvoted = false
@@ -36,12 +37,28 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 	var currentSort = String()
 	var setup = UserDefaults.standard.object(forKey: "setup") as? Bool ?? false
 	
-	
+	var loading: Bool{
+		set{
+			if newValue == true{
+				loadingIndicator.setImageNamed("Activity")
+				loadingIndicator.startAnimating()
+				loadingIndicator.setHidden(false)
+
+			} else{
+				loadingIndicator.stopAnimating()
+				loadingIndicator.setHidden(true)
+			}
+		}
+		get{
+			return loading
+		}
+	}
 	
 	override func awake(withContext context: Any?) {
 		super.awake(withContext: context)
 		invalidateUserActivity()
-		
+		loadingIndicator.setHidden(true)
+
 		//		let domain = Bundle.main.bundleIdentifier!
 		//		UserDefaults.standard.removePersistentDomain(forName: domain) //Prevent nasty 0 __pthread_kill SIGABRT kill
 		//		UserDefaults.standard.synchronize()
@@ -273,7 +290,9 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 		self.redditTable.setNumberOfRows(0, withRowType: "redditCell")
 		WKInterfaceDevice.current().play(WKHapticType.start)
 		reddit.access_token = UserDefaults.standard.object(forKey: "access_token") as! String
+		loading = true
 		reddit.getSubreddit(subreddit, sort: sort, completionHandler: { json in
+			self.loading = false
 			let children = json["data"]["children"].array
 			guard let child = children else{ return}
 			for element in child{

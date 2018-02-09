@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="13771" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
-    <device id="watch38" orientation="portrait">
+    <device id="watch42" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -75,6 +75,7 @@
             <objects>
                 <controller identifier="interface" id="AgC-eL-Hgc" customClass="InterfaceController" customModule="watchapp" customModuleProvider="target">
                     <items>
+                        <imageView width="1" alignment="center" verticalAlignment="center" image="Activity1" contentMode="center" id="Sbs-kE-WQK"/>
                         <table alignment="left" id="7TQ-iq-R1T">
                             <items>
                                 <tableRow identifier="redditCell" id="AmW-RG-yUR" customClass="NameRowController" customModule="watchapp_Extension">
@@ -242,11 +243,12 @@
                         </items>
                     </menu>
                     <connections>
+                        <outlet property="loadingIndicator" destination="Sbs-kE-WQK" id="82E-yq-Xai"/>
                         <outlet property="redditTable" destination="7TQ-iq-R1T" id="nej-aM-PzD"/>
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="170" y="286"/>
+            <point key="canvasLocation" x="157" y="364"/>
         </scene>
         <!--Posts-->
         <scene sceneID="PI6-05-8lD">
@@ -334,6 +336,7 @@
                         <label alignment="left" text="Comments" id="2lF-dX-hSB">
                             <fontDescription key="font" type="system" weight="semibold" pointSize="16"/>
                         </label>
+                        <imageView alignment="center" contentMode="center" id="Hhw-tv-8af"/>
                         <table alignment="left" id="hlc-ag-5jF">
                             <items>
                                 <tableRow identifier="commentCell" id="SBz-eR-690" customClass="commentController" customModule="watchapp_Extension">
@@ -389,6 +392,7 @@
                     <connections>
                         <outlet property="commentsTable" destination="hlc-ag-5jF" id="em4-Dh-3qE"/>
                         <outlet property="downvoteButton" destination="Gej-z4-U1l" id="Et2-QJ-b0O"/>
+                        <outlet property="loadingIndicator" destination="Hhw-tv-8af" id="JuI-tt-slt"/>
                         <outlet property="postAuthor" destination="OKp-rM-XiC" id="pLu-p3-EjP"/>
                         <outlet property="postComments" destination="aO3-dD-Sk3" id="GqO-N8-5DB"/>
                         <outlet property="postContent" destination="XYC-nm-30e" id="1Va-Kt-tvP"/>
@@ -418,14 +422,14 @@
                     </connections>
                 </notificationController>
             </objects>
-            <point key="canvasLocation" x="220" y="643"/>
+            <point key="canvasLocation" x="208" y="815"/>
         </scene>
         <!--Notification Controller-->
         <scene sceneID="ZPc-GJ-vnh">
             <objects>
                 <controller id="4sK-HA-Art" customClass="NotificationController" customModule="watchapp" customModuleProvider="target"/>
             </objects>
-            <point key="canvasLocation" x="468" y="643"/>
+            <point key="canvasLocation" x="466" y="815"/>
         </scene>
         <!--Posts-->
         <scene sceneID="M7N-WF-n0M">

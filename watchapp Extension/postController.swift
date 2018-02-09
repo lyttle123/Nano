@@ -24,6 +24,7 @@ class postController: WKInterfaceController {
 	@IBOutlet var commentsTable: WKInterfaceTable!
 	@IBOutlet var postImage: WKInterfaceImage!
 	@IBOutlet var postTime: WKInterfaceLabel!
+	@IBOutlet var loadingIndicator: WKInterfaceImage!
 	
 	var reddit = RedditAPI()
 	var saved = false
@@ -35,6 +36,22 @@ class postController: WKInterfaceController {
 	var ids = [String: Any]()
 	var idList = [String]()
 	var currentSort = "best"
+	var loading: Bool{
+		set{
+			if newValue == true{
+				loadingIndicator.setImageNamed("Activity")
+				loadingIndicator.startAnimating()
+				loadingIndicator.setHidden(false)
+				
+			} else{
+				loadingIndicator.stopAnimating()
+				loadingIndicator.setHidden(true)
+			}
+		}
+		get{
+			return self.loading
+		}
+	}
 	override func awake(withContext context: Any?) {
 		
 		
@@ -167,9 +184,10 @@ class postController: WKInterfaceController {
 		]
 		
 		print(sort)
+		loading = true
 		Alamofire.request(url!,  parameters: parameters)
 			.responseData { data in
-				
+				self.loading = false
 				if let data = data.data {
 					do {
 						let json = try JSON(data: data)
