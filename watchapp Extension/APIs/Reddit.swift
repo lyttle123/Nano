@@ -199,20 +199,23 @@ class RedditAPI{
 				}
 		}
 	}
-	func subscribe(to subreddit: String, action: String){
+	func subscribe(to subreddit: String, action: String, completionHandler: @escaping (_ success: Int) -> Void){
 		var headers = [
 			"Authorization": "bearer \(access_token)",
 			"User-Agent": "RedditWatch/0.1 by 123icebuggy",
 		]
 		let parameters = [
 			"action": action,
-			"skip_initial_defaults": true,
 			"sr_name": subreddit
 			] as [String : Any]
 		print(parameters)
-		Alamofire.request("https://oauth.reddit.com/api/subscribe", method: .post, parameters: parameters, headers: headers)
-			.responseString { str in
-				print(str.result.value)
-		}
+		let b = Alamofire.request("https://oauth.reddit.com/api/subscribe", method: .post, parameters: parameters, headers: headers)
+			.response(completionHandler: { response in
+				if let response = response.response{
+					completionHandler(response.statusCode)
+
+				}
+			})
+		
 	}
 }

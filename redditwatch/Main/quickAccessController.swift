@@ -90,9 +90,16 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 		if let sub = notification.userInfo?["text"] as? String{
 			savedSubs.append(sub)
 			UserDefaults.standard.set(savedSubs, forKey: "quickSubreddits")
-			reddit.subscribe(to: sub, action: "sub")
-			reloadSubscriptions()
-			sendSubredditsToWatch()
+			
+			reddit.subscribe(to: sub, action: "sub", completionHandler: {code in
+				if code == 200{
+					self.reloadSubscriptions()
+					self.sendSubredditsToWatch()
+				}
+			})
+			
+			
+			
 		} else{
 			print("Couldn't get sub")
 		}
@@ -144,15 +151,19 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 		let delete = UITableViewRowAction(style: UITableViewRowActionStyle.destructive, title: "Delete"){(UITableViewRowAction,NSIndexPath) -> Void in
 			print(NSIndexPath)
 			print(self.savedSubs[indexPath.row])
-			self.reddit.subscribe(to: self.savedSubs[indexPath.row], action: "unsub")
-			self.savedSubs.remove(at: indexPath.row)
-			self.subreddits.remove(at: indexPath.row)
-			print(self.savedSubs)
+			self.reddit.subscribe(to: self.savedSubs[indexPath.row], action: "unsub", completionHandler: {code in
+				if code == 200{
+					self.savedSubs.remove(at: indexPath.row)
+					self.subreddits.remove(at: indexPath.row)
+					print(self.savedSubs)
+					
+					UserDefaults.standard.set(self.savedSubs, forKey: "quickSubreddits")
+					self.quickAccessSubreddits.deleteRows(at: [indexPath], with: .automatic)
+					self.reloadSubscriptions()
+					self.sendSubredditsToWatch()
+				}
+			})
 			
-			UserDefaults.standard.set(self.savedSubs, forKey: "quickSubreddits")
-			self.quickAccessSubreddits.deleteRows(at: [indexPath], with: .automatic)
-			self.reloadSubscriptions()
-			self.sendSubredditsToWatch()
 		}
 		return [delete]
 	}
