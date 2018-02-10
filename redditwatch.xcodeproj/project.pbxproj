@@ -11,7 +11,7 @@
 		1C9B9B0805D053C70AB67070 /* Pods_watchapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21AD838E8EEDAD568E8A9D4C /* Pods_watchapp.framework */; };
 		7F610F5F30865063C155AC3B /* Pods_redditwatch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFABE425A7A35A00D128DCCD /* Pods_redditwatch.framework */; };
 		B7418402640724466648E5E2 /* Pods_redditwatchTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F5F8835333942FE76FC7E21 /* Pods_redditwatchTests.framework */; };
-		BE03034B1FFC55D50055353F /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE0303491FFC55B00055353F /* File.swift */; };
+		BE03034B1FFC55D50055353F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE0303491FFC55B00055353F /* Extensions.swift */; };
 		BE2406831FEA743000D92A34 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2406821FEA743000D92A34 /* AppDelegate.swift */; };
 		BE2406851FEA743000D92A34 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2406841FEA743000D92A34 /* ViewController.swift */; };
 		BE2406881FEA743000D92A34 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE2406861FEA743000D92A34 /* Main.storyboard */; };
@@ -39,7 +39,7 @@
 		BE4F9A021FFE34780094F0C8 /* Twitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4F9A011FFE34780094F0C8 /* Twitter.swift */; };
 		BE64A7A71FFDD8A2005B9350 /* waitForiPhone.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE64A7A61FFDD8A2005B9350 /* waitForiPhone.swift */; };
 		BE8B1FC120107A6D00D24D26 /* commentSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8B1FC020107A6D00D24D26 /* commentSort.swift */; };
-		BE8B1FC420107DDA00D24D26 /* sortCel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8B1FC220107D0C00D24D26 /* sortCel.swift */; };
+		BE8B1FC420107DDA00D24D26 /* sortCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8B1FC220107D0C00D24D26 /* sortCell.swift */; };
 		BE98F80220256C5600177AA0 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE98F80120256C5600177AA0 /* Extensions.swift */; };
 		BE98F80420257AE900177AA0 /* proController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE98F80320257AE900177AA0 /* proController.swift */; };
 		BEBA355F20282CFE00B2ADED /* Onboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEBA355E20282CFD00B2ADED /* Onboard.storyboard */; };
@@ -118,7 +118,7 @@
 		574D317AF5B46AE42DE27B9A /* Pods_redditwatchUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_redditwatchUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		63A6D1F3B6DF4235C5FDA57D /* Pods-watchapp Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-watchapp Extension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-watchapp Extension/Pods-watchapp Extension.debug.xcconfig"; sourceTree = "<group>"; };
 		6F5F8835333942FE76FC7E21 /* Pods_redditwatchTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_redditwatchTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BE0303491FFC55B00055353F /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		BE0303491FFC55B00055353F /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		BE24067F1FEA743000D92A34 /* redditwatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = redditwatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE2406821FEA743000D92A34 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BE2406841FEA743000D92A34 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -149,13 +149,13 @@
 		BE2406E01FEA9E3700D92A34 /* commentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = commentController.swift; sourceTree = "<group>"; };
 		BE2406E31FEB1E5300D92A34 /* subCommentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = subCommentController.swift; sourceTree = "<group>"; };
 		BE2D9DE82025D13F003C32A2 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		BE2D9DEA2026689B003C32A2 /* quickAccessController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = quickAccessController.swift; path = /Users/Will/Developer/redditwatch/redditwatch/quickAccessController.swift; sourceTree = "<absolute>"; };
+		BE2D9DEA2026689B003C32A2 /* quickAccessController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = quickAccessController.swift; path = /Users/Will/Developer/redditwatch/redditwatch/Main/quickAccessController.swift; sourceTree = "<absolute>"; };
 		BE2D9DEC2026E0CA003C32A2 /* handoffController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = handoffController.swift; sourceTree = "<group>"; };
 		BE2D9DEE2026EA5C003C32A2 /* thanksController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = thanksController.swift; sourceTree = "<group>"; };
 		BE4F9A011FFE34780094F0C8 /* Twitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Twitter.swift; sourceTree = "<group>"; };
 		BE64A7A61FFDD8A2005B9350 /* waitForiPhone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = waitForiPhone.swift; sourceTree = "<group>"; };
 		BE8B1FC020107A6D00D24D26 /* commentSort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = commentSort.swift; sourceTree = "<group>"; };
-		BE8B1FC220107D0C00D24D26 /* sortCel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sortCel.swift; sourceTree = "<group>"; };
+		BE8B1FC220107D0C00D24D26 /* sortCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sortCell.swift; sourceTree = "<group>"; };
 		BE98F80120256C5600177AA0 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		BE98F80320257AE900177AA0 /* proController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = proController.swift; sourceTree = "<group>"; };
 		BEBA355E20282CFD00B2ADED /* Onboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Onboard.storyboard; sourceTree = "<group>"; };
@@ -272,19 +272,13 @@
 		BE2406811FEA743000D92A34 /* redditwatch */ = {
 			isa = PBXGroup;
 			children = (
-				BE2D9DEC2026E0CA003C32A2 /* handoffController.swift */,
-				BE2D9DEA2026689B003C32A2 /* quickAccessController.swift */,
-				BE2406821FEA743000D92A34 /* AppDelegate.swift */,
-				BE2406841FEA743000D92A34 /* ViewController.swift */,
-				BE2406861FEA743000D92A34 /* Main.storyboard */,
-				BEBA355E20282CFD00B2ADED /* Onboard.storyboard */,
-				BEBA356020282D1900B2ADED /* onboardOneController.swift */,
-				BE2D9DEE2026EA5C003C32A2 /* thanksController.swift */,
+				BEF6BA94202E8CD800E2ACE0 /* Main */,
+				BEF6BA95202E8CE300E2ACE0 /* Delegates */,
+				BEF6BA93202E8CC100E2ACE0 /* Onboard */,
+				BEF6BA96202E8D1000E2ACE0 /* Extensions */,
 				BE2406891FEA743000D92A34 /* Assets.xcassets */,
 				BE24068B1FEA743000D92A34 /* LaunchScreen.storyboard */,
 				BE24068E1FEA743000D92A34 /* Info.plist */,
-				BE98F80120256C5600177AA0 /* Extensions.swift */,
-				BE98F80320257AE900177AA0 /* proController.swift */,
 			);
 			path = redditwatch;
 			sourceTree = "<group>";
@@ -310,14 +304,13 @@
 		BE2406B31FEA744300D92A34 /* watchapp */ = {
 			isa = PBXGroup;
 			children = (
-				BE2406B41FEA744300D92A34 /* Interface.storyboard */,
-				BE2406D91FEA753C00D92A34 /* NameRowController.swift */,
-				BE2406E01FEA9E3700D92A34 /* commentController.swift */,
+				BEF6BA98202E8D8100E2ACE0 /* Main */,
+				BEF6BA97202E8D7300E2ACE0 /* Cell Controllers */,
 				BE2406B71FEA744300D92A34 /* Assets.xcassets */,
 				BE2406B91FEA744300D92A34 /* Info.plist */,
 				BEC8390A202D6623006A1B83 /* loadingIndicator.xcassets */,
 				BE2406D81FEA753B00D92A34 /* watchapp-Bridging-Header.h */,
-				BE8B1FC220107D0C00D24D26 /* sortCel.swift */,
+				BE8B1FC220107D0C00D24D26 /* sortCell.swift */,
 			);
 			path = watchapp;
 			sourceTree = "<group>";
@@ -325,21 +318,108 @@
 		BE2406C21FEA744300D92A34 /* watchapp Extension */ = {
 			isa = PBXGroup;
 			children = (
-				BE8B1FC020107A6D00D24D26 /* commentSort.swift */,
-				BE0303491FFC55B00055353F /* File.swift */,
-				BE2406C31FEA744300D92A34 /* InterfaceController.swift */,
-				BE2406E31FEB1E5300D92A34 /* subCommentController.swift */,
-				BE4F9A011FFE34780094F0C8 /* Twitter.swift */,
-				BE64A7A61FFDD8A2005B9350 /* waitForiPhone.swift */,
-				BE2406DE1FEA8BB200D92A34 /* postController.swift */,
-				BE2406C51FEA744300D92A34 /* ExtensionDelegate.swift */,
-				BE2406C71FEA744300D92A34 /* NotificationController.swift */,
+				BEF6BA9A202E8DD200E2ACE0 /* Extensions */,
+				BEF6BA99202E8D9800E2ACE0 /* Interface Controllers */,
+				BEF6BA9B202E8DDD00E2ACE0 /* APIs */,
+				BEF6BA9C202E8DF600E2ACE0 /* Notifications */,
 				BE2406C91FEA744300D92A34 /* Assets.xcassets */,
 				BE2406CB1FEA744300D92A34 /* Info.plist */,
-				BE2406CC1FEA744300D92A34 /* PushNotificationPayload.apns */,
-				BEDF987B1FFD0B3E00BFBC99 /* Reddit.swift */,
 			);
 			path = "watchapp Extension";
+			sourceTree = "<group>";
+		};
+		BEF6BA93202E8CC100E2ACE0 /* Onboard */ = {
+			isa = PBXGroup;
+			children = (
+				BEBA355E20282CFD00B2ADED /* Onboard.storyboard */,
+				BEBA356020282D1900B2ADED /* onboardOneController.swift */,
+			);
+			path = Onboard;
+			sourceTree = "<group>";
+		};
+		BEF6BA94202E8CD800E2ACE0 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				BE2D9DEC2026E0CA003C32A2 /* handoffController.swift */,
+				BE2D9DEA2026689B003C32A2 /* quickAccessController.swift */,
+				BE2406841FEA743000D92A34 /* ViewController.swift */,
+				BE2406861FEA743000D92A34 /* Main.storyboard */,
+				BE2D9DEE2026EA5C003C32A2 /* thanksController.swift */,
+				BE98F80320257AE900177AA0 /* proController.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		BEF6BA95202E8CE300E2ACE0 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				BE2406821FEA743000D92A34 /* AppDelegate.swift */,
+			);
+			path = Delegates;
+			sourceTree = "<group>";
+		};
+		BEF6BA96202E8D1000E2ACE0 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				BE98F80120256C5600177AA0 /* Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		BEF6BA97202E8D7300E2ACE0 /* Cell Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				BE2406D91FEA753C00D92A34 /* NameRowController.swift */,
+				BE2406E01FEA9E3700D92A34 /* commentController.swift */,
+			);
+			path = "Cell Controllers";
+			sourceTree = "<group>";
+		};
+		BEF6BA98202E8D8100E2ACE0 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				BE2406B41FEA744300D92A34 /* Interface.storyboard */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		BEF6BA99202E8D9800E2ACE0 /* Interface Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				BE8B1FC020107A6D00D24D26 /* commentSort.swift */,
+				BE2406C31FEA744300D92A34 /* InterfaceController.swift */,
+				BE2406E31FEB1E5300D92A34 /* subCommentController.swift */,
+				BE64A7A61FFDD8A2005B9350 /* waitForiPhone.swift */,
+				BE2406DE1FEA8BB200D92A34 /* postController.swift */,
+			);
+			path = "Interface Controllers";
+			sourceTree = "<group>";
+		};
+		BEF6BA9A202E8DD200E2ACE0 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				BE0303491FFC55B00055353F /* Extensions.swift */,
+				BE2406C51FEA744300D92A34 /* ExtensionDelegate.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		BEF6BA9B202E8DDD00E2ACE0 /* APIs */ = {
+			isa = PBXGroup;
+			children = (
+				BE4F9A011FFE34780094F0C8 /* Twitter.swift */,
+				BEDF987B1FFD0B3E00BFBC99 /* Reddit.swift */,
+			);
+			path = APIs;
+			sourceTree = "<group>";
+		};
+		BEF6BA9C202E8DF600E2ACE0 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				BE2406C71FEA744300D92A34 /* NotificationController.swift */,
+				BE2406CC1FEA744300D92A34 /* PushNotificationPayload.apns */,
+			);
+			path = Notifications;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -847,8 +927,8 @@
 				BE64A7A71FFDD8A2005B9350 /* waitForiPhone.swift in Sources */,
 				BE2406E21FEA9EAF00D92A34 /* commentController.swift in Sources */,
 				BE8B1FC120107A6D00D24D26 /* commentSort.swift in Sources */,
-				BE03034B1FFC55D50055353F /* File.swift in Sources */,
-				BE8B1FC420107DDA00D24D26 /* sortCel.swift in Sources */,
+				BE03034B1FFC55D50055353F /* Extensions.swift in Sources */,
+				BE8B1FC420107DDA00D24D26 /* sortCell.swift in Sources */,
 				BE2406DB1FEA755000D92A34 /* NameRowController.swift in Sources */,
 				BE4F9A021FFE34780094F0C8 /* Twitter.swift in Sources */,
 				BE2406DF1FEA8BB200D92A34 /* postController.swift in Sources */,
