@@ -427,7 +427,7 @@ class postController: WKInterfaceController {
 		}
 	}
 	override func interfaceOffsetDidScrollToBottom() {
-		if loading {return}
+		if !loading {return}
 		guard let loadAfter = idList.last else {return}
 		print(loadAfter)
 		var previousCount = self.comments.count
