@@ -63,7 +63,7 @@ class RedditAPI{
 			})
 	}
 	func vote(_ direction: Int, id: String, rank: Int = 2,  type: String = "post"){
-		///Votes on posts with 3 states, 1 = upvote, 0 = neutral, = -1 = downvote
+		//Votes on posts with 3 states, 1 = upvote, 0 = neutral, = -1 = downvote
 		let types: [String: String] = ["post": "t3_", "comment": "t1_"]
 		let parameters = [
 			"dir": direction,
@@ -152,6 +152,28 @@ class RedditAPI{
 					print("wouldn't let data")
 				}
 		}
+	}
+	func getComments(subreddit: String, id: String, sort: String, after: String? = String(), completionHandler: @escaping (JSON) -> Void){
+		
+		let url = URL(string: "https://www.reddit.com/r/\(subreddit)/comments/\(id).json")
+		var parameters = [
+			"sort": sort.lowercased()
+		]
+		if let after = after{
+			var shouldLoadMore = !after.isEmpty //Inverse, because if it IS empty, we DON'T want to laod more
+			if shouldLoadMore{
+				parameters["after"] = "t1_\(after)"
+			}
+		}
+		print(parameters)
+		let b = Alamofire.request(url!,  parameters: parameters)
+			.responseData { data in
+				if let data = data.data{
+					completionHandler(JSON(data))
+					
+				}
+		}
+		debugPrint(b)
 	}
 	func getSubreddit(_ subreddit: String = "askreddit", sort: String = "hot", after: String? = String(), completionHandler: @escaping (JSON) -> Void){
 		var home = (subreddit.lowercased() == "home")

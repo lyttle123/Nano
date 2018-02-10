@@ -36,20 +36,26 @@ class postController: WKInterfaceController {
 	var ids = [String: Any]()
 	var idList = [String]()
 	var currentSort = "best"
+	var currentSubreddit = String()
+	var currentId = String()
+	
+	private var _loading: Bool!
 	var loading: Bool{
 		set{
 			if newValue == true{
 				loadingIndicator.setImageNamed("Activity")
 				loadingIndicator.startAnimating()
 				loadingIndicator.setHidden(false)
+				_loading = true
 				
 			} else{
 				loadingIndicator.stopAnimating()
 				loadingIndicator.setHidden(true)
+				_loading = false
 			}
 		}
 		get{
-			return self.loading
+			return _loading
 		}
 	}
 	override func awake(withContext context: Any?) {
@@ -90,7 +96,7 @@ class postController: WKInterfaceController {
 		if UserDefaults.standard.object(forKey: "shouldLoadImage") as! Bool{
 			if let imagedat = UserDefaults.standard.object(forKey: "selectedThumbnail") as? Data{
 				postImage.setImageData(imagedat)
-		
+				
 				
 			}
 			if var url = post["url"].string{
@@ -154,6 +160,8 @@ class postController: WKInterfaceController {
 		// Configure interface objects here.
 		if let subreddit = post["subreddit"].string, let id = post["id"].string {
 			getComments(subreddit: subreddit, id: id)
+			currentSubreddit = subreddit
+			currentId = id
 			
 			
 			updateUserActivity("com.willbishop.redditwatch.handoff", userInfo: ["current": id, "subreddit": subreddit], webpageURL: nil)
@@ -173,118 +181,103 @@ class postController: WKInterfaceController {
 	}
 	
 	func getComments(subreddit: String, id: String, sort: String = "best"){
-		let url = URL(string: "https://www.reddit.com/r/\(subreddit)/comments/\(id).json")
 		comments.removeAll()
 		ids.removeAll()
 		idList.removeAll()
 		
-		print(url!)
 		
-		let parameters = [
-			"sort": sort.lowercased()
-		]
-		
-		print(sort)
 		loading = true
-		Alamofire.request(url!,  parameters: parameters)
-			.responseData { data in
-				self.loading = false
-				if let data = data.data {
-					do {
-						let json = try JSON(data: data)
+		reddit.getComments(subreddit: subreddit, id: id, sort: sort, completionHandler: {json in
+			self.loading = false
+			
+			if let da = json.array?.last!["data"]["children"]{
+				for (_, element) in da.enumerated(){
+					
+					self.comments[element.1["data"]["id"].string!] = element.1["data"]
+					self.idList.append(element.1["data"]["id"].string!)
+				}
+			} else{
+				print("yeah no")
+			}
+			
+			self.commentsTable.setAlpha(0.0)
+			self.commentsTable.setNumberOfRows(self.comments.count, withRowType: "commentCell")
+			for (index, element) in self.idList.enumerated(){
+				var matches = [String]()
+				if let row = self.commentsTable.rowController(at: index) as? commentController{
+					if let stuff = self.comments[element]?.dictionary{
+						row.nameLabel.setText(stuff["body"]?.string?.dehtmlify())
 						
-						if let da = json.array?.last!["data"]["children"]{
-							for (_, element) in da.enumerated(){
+						if let score = stuff["score"]{
+							
+							row.scoreLabel.setText("↑ \(String(describing: score.int!)) |")
+						}
+						
+						if let gildedCount = stuff["gilded"]?.int{
+							if gildedCount > 0{
+								row.gildedIndicator.setHidden(false)
+								row.gildedIndicator.setText("\(gildedCount * "•")")
 								
-								self.comments[element.1["data"]["id"].string!] = element.1["data"]
-								self.idList.append(element.1["data"]["id"].string!)
-							}
-						} else{
-							print("yeah no")
-						}
-						
-						self.commentsTable.setAlpha(0.0)
-						self.commentsTable.setNumberOfRows(self.comments.count, withRowType: "commentCell")
-						for (index, element) in self.idList.enumerated(){
-							var matches = [String]()
-							if let row = self.commentsTable.rowController(at: index) as? commentController{
-								if let stuff = self.comments[element]?.dictionary{
-									row.nameLabel.setText(stuff["body"]?.string?.dehtmlify())
-									
-									if let score = stuff["score"]{
-										
-										row.scoreLabel.setText("↑ \(String(describing: score.int!)) |")
-									}
-									
-									if let gildedCount = stuff["gilded"]?.int{
-										if gildedCount > 0{
-											row.gildedIndicator.setHidden(false)
-											row.gildedIndicator.setText("\(gildedCount * "•")")
-											
-										} else{
-											row.gildedIndicator.setHidden(true)
-										}
-									} else
-									{
-										print("couldn't find gild")
-									}
-									if let rep = stuff["replies"]{
-										if let replyCount = rep["data"]["children"].array{
-											if let _ = replyCount.last!["data"]["body"].string{
-												row.replies = replyCount.count
-												row.replyCount.setText("\(String(describing: replyCount.count)) Replies")
-											} else{
-												row.replies = replyCount.count - 1
-												row.replyCount.setText("\(String(describing: replyCount.count - 1)) Replies")
-												
-											}
-											
-										}
-										
-									}
-									row.userLabel.setText(stuff["author"]?.string)
-									
-									if stuff["author"]?.string! == UserDefaults().string(forKey: "selectedAuthor"){
-										row.userLabel.setTextColor(UIColor(red:0.20, green:0.60, blue:0.86, alpha:1.0))
-									}
-									if (stuff["distinguished"]?.null) != nil{
-										
-									} else{
-										if let distin = stuff["distinguished"]?.string{
-											if distin == "moderator"{
-												row.userLabel.setTextColor(UIColor(red:0.18, green:0.80, blue:0.44, alpha:1.0))
-												
-											} else if distin == "admin"{
-												row.userLabel.setTextColor(UIColor(red:0.91, green:0.30, blue:0.24, alpha:1.0))
-
-											}
-											
-											
-										}
-										
-									}
-									
-									if let newTime = stuff["created_utc"]?.float{
-										row.timeLabel.setText(TimeInterval().differenceBetween(newTime))
-									}
-								} else{
-									print("you done stuffed it")
-								}
 							} else{
-								print("helllll no")
+								row.gildedIndicator.setHidden(true)
 							}
+						} else
+						{
+							print("couldn't find gild")
 						}
-						self.commentsTable.setAlpha(1.0)
-						WKInterfaceDevice.current().play(WKHapticType.stop)
+						if let rep = stuff["replies"]{
+							if let replyCount = rep["data"]["children"].array{
+								if let _ = replyCount.last!["data"]["body"].string{
+									row.replies = replyCount.count
+									row.replyCount.setText("\(String(describing: replyCount.count)) Replies")
+								} else{
+									row.replies = replyCount.count - 1
+									row.replyCount.setText("\(String(describing: replyCount.count - 1)) Replies")
+									
+								}
+								
+							}
+							
+						}
+						row.userLabel.setText(stuff["author"]?.string)
 						
+						if stuff["author"]?.string! == UserDefaults().string(forKey: "selectedAuthor"){
+							row.userLabel.setTextColor(UIColor(red:0.20, green:0.60, blue:0.86, alpha:1.0))
+						}
+						if (stuff["distinguished"]?.null) != nil{
+							
+						} else{
+							if let distin = stuff["distinguished"]?.string{
+								if distin == "moderator"{
+									row.userLabel.setTextColor(UIColor(red:0.18, green:0.80, blue:0.44, alpha:1.0))
+									
+								} else if distin == "admin"{
+									row.userLabel.setTextColor(UIColor(red:0.91, green:0.30, blue:0.24, alpha:1.0))
+									
+								}
+								
+								
+							}
+							
+						}
 						
-					} catch {
-						print("Swifty json messed up... though it's totally your fault")
+						if let newTime = stuff["created_utc"]?.float{
+							row.timeLabel.setText(TimeInterval().differenceBetween(newTime))
+						}
+					} else{
+						print("you done stuffed it")
 					}
 				} else{
-					print("wouldn't let")
+					print("helllll no")
 				}
-		}
+			}
+			self.commentsTable.setAlpha(1.0)
+			WKInterfaceDevice.current().play(WKHapticType.stop)
+			
+			
+			
+			
+		})
 		
 	}
 	override func willActivate() {
@@ -296,6 +289,7 @@ class postController: WKInterfaceController {
 			UserDefaults.standard.removeObject(forKey: currentPost["title"].string!)
 			if let subreddit = currentPost["subreddit"].string, let id = currentPost["id"].string {
 				if sort.lowercased() != currentSort{
+					print(sort)
 					getComments(subreddit: subreddit, id: id, sort: sort)
 					currentSort = sort.lowercased()
 					self.commentsTable.setNumberOfRows(0, withRowType: "commentCell")
@@ -397,13 +391,13 @@ class postController: WKInterfaceController {
 		presentTextInputController(withSuggestions: ["No"], allowedInputMode:  WKTextInputMode.plain) { (arr: [Any]?) in
 			if let arr = arr{
 				if let comment = arr.first as? String{
-				
+					
 					print(self.currentPost["id"].string!)
 					self.reddit.post(commentText: comment, parentId: (self.currentPost["id"].string!), completionHandler: {js in
 						
 						guard let dat = js["json"]["data"]["things"].array else{return}
 						guard let first = dat.first else {return}
-					
+						
 						let postedComment = first["data"]
 						
 						
@@ -431,6 +425,96 @@ class postController: WKInterfaceController {
 				}
 			}
 		}
+	}
+	override func interfaceOffsetDidScrollToBottom() {
+		if loading {return}
+		guard let loadAfter = idList.last else {return}
+		print(loadAfter)
+		var previousCount = self.comments.count
+		loading = true
+		reddit.getComments(subreddit: currentSubreddit, id: currentId, sort: currentSort, after: loadAfter, completionHandler: {json in
+			self.loading = false
+			guard let children = json.array?.last!["data"]["children"] else {return}
+			for (_, element) in children.enumerated(){
+				
+				self.comments[element.1["data"]["id"].string!] = element.1["data"]
+				self.idList.append(element.1["data"]["id"].string!)
+			}
+			
+			self.commentsTable.insertRows(at: IndexSet(previousCount ... previousCount + children.count - 1), withRowType: "commentCell")
+			for (index, element) in self.idList.dropFirst(previousCount).enumerated(){
+				
+				if let row = self.commentsTable.rowController(at: index + previousCount) as? commentController{
+					if let stuff = self.comments[element]?.dictionary{
+						row.nameLabel.setText(stuff["body"]?.string?.dehtmlify())
+						if let score = stuff["score"]{
+							
+							row.scoreLabel.setText("↑ \(String(describing: score.int!)) |")
+						}
+						
+						if let gildedCount = stuff["gilded"]?.int{
+							if gildedCount > 0{
+								row.gildedIndicator.setHidden(false)
+								row.gildedIndicator.setText("\(gildedCount * "•")")
+								
+							} else{
+								row.gildedIndicator.setHidden(true)
+							}
+						} else
+						{
+							print("couldn't find gild")
+						}
+						if let rep = stuff["replies"]{
+							if let replyCount = rep["data"]["children"].array{
+								if let _ = replyCount.last!["data"]["body"].string{
+									row.replies = replyCount.count
+									row.replyCount.setText("\(String(describing: replyCount.count)) Replies")
+								} else{
+									row.replies = replyCount.count - 1
+									row.replyCount.setText("\(String(describing: replyCount.count - 1)) Replies")
+									
+								}
+								
+							}
+							
+						}
+						row.userLabel.setText(stuff["author"]?.string)
+						
+						if stuff["author"]?.string! == UserDefaults().string(forKey: "selectedAuthor"){
+							row.userLabel.setTextColor(UIColor(red:0.20, green:0.60, blue:0.86, alpha:1.0))
+						}
+						if (stuff["distinguished"]?.null) != nil{
+							
+						} else{
+							if let distin = stuff["distinguished"]?.string{
+								if distin == "moderator"{
+									row.userLabel.setTextColor(UIColor(red:0.18, green:0.80, blue:0.44, alpha:1.0))
+									
+								} else if distin == "admin"{
+									row.userLabel.setTextColor(UIColor(red:0.91, green:0.30, blue:0.24, alpha:1.0))
+									
+								}
+								
+								
+							}
+							
+						}
+						
+						if let newTime = stuff["created_utc"]?.float{
+							row.timeLabel.setText(TimeInterval().differenceBetween(newTime))
+						}
+					} else{
+						print("you done stuffed it")
+					}
+				} else{
+					print("helllll no")
+				}
+			}
+			WKInterfaceDevice.current().play(WKHapticType.stop)
+			
+		})
+		
+		
 	}
 }
 

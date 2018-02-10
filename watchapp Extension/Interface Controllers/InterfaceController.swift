@@ -553,7 +553,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 	override func interfaceOffsetDidScrollToBottom() {
 		if loading {return} //If we're already loading posts, don't try again
 		let loadAfter = ids.last
-		
+		var previousCount = self.post.count
 		loading = true
 		reddit.getSubreddit(currentSubreddit, sort: currentSort, after: loadAfter, completionHandler: {json in
 			self.loading = false
@@ -567,10 +567,11 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 					
 					self.post[element["data"]["id"].string!] = element["data"]
 					self.ids.append(element["data"]["id"].string!)
+					print("Appending \(element["data"]["id"].string!)")
 					
 				}
 			}
-			for (index, _) in self.post.dropFirst(25).enumerated(){
+			for (index, _) in self.post.dropFirst(previousCount).enumerated(){
 				if let row = self.redditTable.rowController(at: index + (children?.count)!) as? NameRowController{
 					if let stuff = self.post[self.ids[index + (children?.count)!]]
 					{
@@ -692,8 +693,8 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 		
 	}
 	
+	
 }
-
 extension String{
 	
 	static func *(left: Int, right: String) -> String{

@@ -22,7 +22,7 @@ class onboardOneController: UIViewController, WCSessionDelegate, SFSafariViewCon
 	var wcSession: WCSession!
 	var reddit = RedditAPI()
 	var index = 0
-	var loadingStates = ["Banning /u/spez", "Spamming r/AppleWatch", "Pretending to fix bugs", "Baconing at midnight", "Editing comments", "lo hicimos reddit!", "Installing CO Detectors", ]
+	var loadingStates = ["Banning /u/spez", "Spamming r/AppleWatch", "Pretending to fix bugs", "Baconing at midnight", "Editing comments", "lo hicimos reddit!", "Installing CO Detectors", "Selling Loot Boxes", "Feeling a sense of pride and accomplisment"]
 	
 	override func viewWillAppear(_ animated: Bool) {
 		if let bool = UserDefaults.standard.object(forKey: "setup") as? Bool{

@@ -25,6 +25,7 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 		wcSession.delegate = self
 		wcSession.activate()
 		
+		self.navigationItem.rightBarButtonItem = self.editButtonItem
 		
 		subreddits.append("Add another subreddit")
 		quickAccessSubreddits.delegate = self
@@ -48,6 +49,10 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 		
         // Do any additional setup after loading the view.
     }
+	override func setEditing(_ editing: Bool, animated: Bool) {
+		super.setEditing(editing, animated: animated)
+		quickAccessSubreddits.setEditing(editing, animated: true)
+	}
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
