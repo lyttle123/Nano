@@ -202,13 +202,13 @@
                                             </group>
                                             <group width="1" alignment="left" id="DOc-o6-0C7">
                                                 <items>
-                                                    <button width="60" height="20" alignment="left" title="↑" id="mR3-ye-98b">
+                                                    <button width="60" height="25" alignment="left" title="↑" id="mR3-ye-98b">
                                                         <variation key="device=watch42mm" width="68"/>
                                                         <connections>
                                                             <action selector="upvotePost" destination="AmW-RG-yUR" id="k1j-0o-RZ8"/>
                                                         </connections>
                                                     </button>
-                                                    <button width="60" height="20" alignment="left" title="↓" id="5K6-uX-zmH">
+                                                    <button width="60" height="25" alignment="left" title="↓" id="5K6-uX-zmH">
                                                         <variation key="device=watch42mm" width="68"/>
                                                         <connections>
                                                             <action selector="downvotePost" destination="AmW-RG-yUR" id="rIq-eE-pqS"/>
