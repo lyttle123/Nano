@@ -436,7 +436,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 				
 			}
 			self.redditTable.setAlpha(1.0)
-			self.redditTable.scrollToRow(at: currentIndex)
+			self.redditTable.scrollToRow(at: currentIndex - 1)
 			WKInterfaceDevice.current().play(WKHapticType.stop)
 			
 			
