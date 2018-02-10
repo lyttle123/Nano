@@ -12,7 +12,7 @@ import SwiftyJSON
 import WatchKit
 
 class RedditAPI{
-
+	
 	var access_token: String
 	init(){
 		var temp = String()
@@ -25,7 +25,7 @@ class RedditAPI{
 	}
 	func getAccessToken(grantType: String, code: String, completionHandler: @escaping ([String: String]) -> Void){
 		///Returns an access token which can be used to perform actions on the users behalf
-
+		
 		var parameters = [
 			"grant_type": grantType,
 			"redirect_uri": "redditwatch://redirect"
@@ -73,7 +73,7 @@ class RedditAPI{
 		let headers = [
 			"Authorization": "bearer \(access_token)",
 			"User-Agent": "RedditWatch/0.1 by 123icebuggy",
-		]
+			]
 		print(headers)
 		let b = Alamofire.request("https://oauth.reddit.com/api/vote", method: .post, parameters: parameters, headers: headers)
 			.responseString(completionHandler: {response in
@@ -111,7 +111,7 @@ class RedditAPI{
 		let headers = [
 			"Authorization": "bearer \(access_token)",
 			"User-Agent": "RedditWatch/0.1 by 123icebuggy",
-		]
+			]
 		let types = ["post": "t3_", "comment": "t1_"]
 		
 		print("\(types[type]!	)\(parentId)")
@@ -158,7 +158,7 @@ class RedditAPI{
 		var headers = [
 			"Authorization": "bearer \(access_token)",
 			"User-Agent": "RedditWatch/0.1 by 123icebuggy",
-		]
+			]
 		var parameters = [String: Any]()
 		var url = URL(string: "https://www.reddit.com/r/\(subreddit)/\(sort).json")
 		if sort == "top"{
@@ -197,7 +197,22 @@ class RedditAPI{
 					}
 					
 				}
-			}
-		
+		}
+	}
+	func subscribe(to subreddit: String, action: String){
+		var headers = [
+			"Authorization": "bearer \(access_token)",
+			"User-Agent": "RedditWatch/0.1 by 123icebuggy",
+		]
+		let parameters = [
+			"action": action,
+			"skip_initial_defaults": true,
+			"sr_name": subreddit
+			] as [String : Any]
+		print(parameters)
+		Alamofire.request("https://oauth.reddit.com/api/subscribe", method: .post, parameters: parameters, headers: headers)
+			.responseString { str in
+				print(str.result.value)
+		}
 	}
 }

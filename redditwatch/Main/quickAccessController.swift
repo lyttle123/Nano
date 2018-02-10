@@ -26,7 +26,7 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 		wcSession.activate()
 		
 		
-		//subreddits.append("Add another subreddit")
+		subreddits.append("Add another subreddit")
 		quickAccessSubreddits.delegate = self
 		quickAccessSubreddits.dataSource = self
 		quickAccessSubreddits.tableFooterView = UIView()
@@ -37,19 +37,9 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 				print("Got back \(result)")
 				print("Saving \(String(describing: result["acesss_token"]))")
 				UserDefaults.standard.set(result["acesss_token"]!, forKey: "access_token")
-				self.reddit = RedditAPI()
+				self.reddit.access_token = result["acesss_token"]!
+				self.reloadSubscriptions()
 				
-				self.reddit.getSubscriptions(completionHandler: { js in
-					if let json = js{
-						if let array = json["data"]["children"].array{
-							self.savedSubs = (array.map {$0["data"]["display_name"].stringValue.lowercased()}).sorted()
-							self.subreddits = (array.map {$0["data"]["display_name"].stringValue.lowercased()}).sorted()
-							UserDefaults.standard.set(self.savedSubs, forKey: "quickSubreddits")
-							self.sendSubredditsToWatch()
-							self.quickAccessSubreddits.reloadData()
-						}
-					}
-				})
 			})
 			
 		} else{
@@ -62,6 +52,20 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+	func reloadSubscriptions(){
+		self.reddit.getSubscriptions(completionHandler: { js in
+			if let json = js{
+				if let array = json["data"]["children"].array{
+					self.savedSubs = (array.map {$0["data"]["display_name"].stringValue.lowercased()}).sorted()
+					self.subreddits = (array.map {$0["data"]["display_name"].stringValue.lowercased()}).sorted()
+					self.subreddits.append("Add another subreddit")
+					UserDefaults.standard.set(self.savedSubs, forKey: "quickSubreddits")
+					self.sendSubredditsToWatch()
+					self.quickAccessSubreddits.reloadData()
+				}
+			}
+		})
+	}
 	override func viewDidAppear(_ animated: Bool) {
 		tabBarController?.tabBar.tintColor = UIColor.flatColors.light.yellow
 	}
@@ -86,6 +90,8 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 		if let sub = notification.userInfo?["text"] as? String{
 			savedSubs.append(sub)
 			UserDefaults.standard.set(savedSubs, forKey: "quickSubreddits")
+			reddit.subscribe(to: sub, action: "sub")
+			reloadSubscriptions()
 			sendSubredditsToWatch()
 		} else{
 			print("Couldn't get sub")
@@ -137,11 +143,15 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 	func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
 		let delete = UITableViewRowAction(style: UITableViewRowActionStyle.destructive, title: "Delete"){(UITableViewRowAction,NSIndexPath) -> Void in
 			print(NSIndexPath)
+			print(self.savedSubs[indexPath.row])
+			self.reddit.subscribe(to: self.savedSubs[indexPath.row], action: "unsub")
 			self.savedSubs.remove(at: indexPath.row)
 			self.subreddits.remove(at: indexPath.row)
 			print(self.savedSubs)
+			
 			UserDefaults.standard.set(self.savedSubs, forKey: "quickSubreddits")
 			self.quickAccessSubreddits.deleteRows(at: [indexPath], with: .automatic)
+			self.reloadSubscriptions()
 			self.sendSubredditsToWatch()
 		}
 		return [delete]
@@ -150,7 +160,7 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 		if indexPath.row == subreddits.count - 1{ //If it's the last cell, don't edit it
 			return false
 		} else{ //CHANGE THIS TO TRUE
-			return false
+			return true
 		}
 	}
 
