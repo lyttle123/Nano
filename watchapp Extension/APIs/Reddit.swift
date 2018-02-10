@@ -35,8 +35,12 @@ class RedditAPI{
 		} else{
 			parameters["code"] = code
 		}
+		print("Getting")
 		Alamofire.request("https://www.reddit.com/api/v1/access_token", method: .post, parameters: parameters)
 			.authenticate(user: "uUgh0YyY_k_6ow", password: "")
+			.responseString {str in
+				print(str.result.value)
+			}
 			.responseJSON(completionHandler: {data in
 				if data.response?.statusCode == 200{
 					
@@ -149,7 +153,7 @@ class RedditAPI{
 				}
 		}
 	}
-	func getSubreddit(_ subreddit: String = "askreddit", sort: String = "hot", completionHandler: @escaping (JSON) -> Void){
+	func getSubreddit(_ subreddit: String = "askreddit", sort: String = "hot", after: String? = String(), completionHandler: @escaping (JSON) -> Void){
 		var home = (subreddit.lowercased() == "home")
 		var headers = [
 			"Authorization": "bearer \(access_token)",
@@ -179,9 +183,12 @@ class RedditAPI{
 		if !home{
 			headers = [String: String]()
 		}
-		print(url)
-		print(headers)
-		print(parameters)
+		if let after = after{
+			var shouldLoadMore = !after.isEmpty //Inverse, because if it IS empty, we DON'T want to laod more
+			if shouldLoadMore{
+				parameters["after"] = "t3_\(after)"
+			}
+		}
 		Alamofire.request(url!, parameters: parameters, headers: headers)
 			.responseData { dat in
 				if let dat = dat.data{
@@ -191,8 +198,6 @@ class RedditAPI{
 					
 				}
 			}
-		.responseString(completionHandler: {str in
-			print(str.result.value)
-		})
+		
 	}
 }

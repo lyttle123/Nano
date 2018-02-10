@@ -269,7 +269,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 		print(String(describing: error?.localizedDescription))
 		
 	}
-	func setupTable(_ subreddit: String = "askreddit", sort: String = "hot"){
+	func setupTable(_ subreddit: String = "askreddit", sort: String = "hot", after: String? = String()){
 		
 		self.setTitle(subreddit.lowercased())
 		
@@ -284,17 +284,19 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 		} else{
 			url = URL(string: "https://www.reddit.com/r/\(subreddit)/\(sort).json")
 		}
-		
-		names.removeAll()
-		images.removeAll()
-		ids.removeAll()
-		post.removeAll()
-		posts.removeAll()
-		self.redditTable.setNumberOfRows(0, withRowType: "redditCell")
+		if (after?.isEmpty)!{
+			names.removeAll()
+			images.removeAll()
+			ids.removeAll()
+			post.removeAll()
+			posts.removeAll()
+			
+		}
+		self.redditTable.setNumberOfRows(self.names.count, withRowType: "redditCell")
 		WKInterfaceDevice.current().play(WKHapticType.start)
 		reddit.access_token = UserDefaults.standard.object(forKey: "access_token") as! String
 		loading = true
-		reddit.getSubreddit(subreddit, sort: sort, completionHandler: { json in
+		reddit.getSubreddit(subreddit, sort: sort, after: after, completionHandler: { json in
 			self.loading = false
 			let children = json["data"]["children"].array
 			guard let child = children else{ return}
@@ -308,7 +310,11 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 					
 				}
 			}
-			self.redditTable.setAlpha(0.0)
+			if (after?.isEmpty)!{
+				print("Hiding")
+				self.redditTable.setAlpha(0.0)
+				
+			}
 			self.redditTable.setNumberOfRows(self.names.count, withRowType: "redditCell")
 			for (index, _) in self.post.enumerated(){
 				if let row = self.redditTable.rowController(at: index ) as? NameRowController{
@@ -556,6 +562,10 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 		}
 		
 		reddit.vote(dir, id: id)
+	}
+	override func interfaceOffsetDidScrollToBottom() {
+		let loadAfter = ids.last
+		setupTable(currentSubreddit, sort: currentSort, after: loadAfter)
 	}
 	
 }
