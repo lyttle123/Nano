@@ -269,7 +269,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 		print(String(describing: error?.localizedDescription))
 		
 	}
-	func setupTable(_ subreddit: String = "askreddit", sort: String = "hot", after: String? = String()){
+	func setupTable(_ subreddit: String = "askreddit", sort: String = "hot", after: String? = String(), currentIndex: Int = 0){
 		
 		self.setTitle(subreddit.lowercased())
 		
@@ -292,7 +292,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 			posts.removeAll()
 			
 		}
-		self.redditTable.setNumberOfRows(self.names.count, withRowType: "redditCell")
+		self.redditTable.setNumberOfRows(0, withRowType: "redditCell")
 		WKInterfaceDevice.current().play(WKHapticType.start)
 		reddit.access_token = UserDefaults.standard.object(forKey: "access_token") as! String
 		loading = true
@@ -436,6 +436,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 				
 			}
 			self.redditTable.setAlpha(1.0)
+			self.redditTable.scrollToRow(at: currentIndex)
 			WKInterfaceDevice.current().play(WKHapticType.stop)
 			
 			
@@ -565,7 +566,8 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 	}
 	override func interfaceOffsetDidScrollToBottom() {
 		let loadAfter = ids.last
-		setupTable(currentSubreddit, sort: currentSort, after: loadAfter)
+		setupTable(currentSubreddit, sort: currentSort, after: loadAfter, currentIndex: self.names.count)
+		
 	}
 	
 }
