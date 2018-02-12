@@ -57,7 +57,6 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 	}
 	
 	override func awake(withContext context: Any?) {
-		UserDefaults.standard.removeObject(forKey: "access_token")
 		super.awake(withContext: context)
 		invalidateUserActivity()
 		loadingIndicator.setHidden(true)
@@ -558,6 +557,9 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 		}
 		
 		reddit.vote(dir, id: id)
+	}
+	@IBAction func refreshSub() {
+		self.setupTable(currentSubreddit, sort: currentSort)
 	}
 	override func interfaceOffsetDidScrollToBottom() {
 		if loading {return} //If we're already loading posts, don't try again

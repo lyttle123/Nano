@@ -113,9 +113,11 @@ class onboardOneController: UIViewController, WCSessionDelegate, SFSafariViewCon
 						self.connectButton.setTitle("We did it Reddit!", for: .normal)
 						UserDefaults.standard.set(true, forKey: "setup")
 						UserDefaults.standard.set(true, forKey: "connected")
-						
+						DispatchQueue.main.async {
+							self.timer.invalidate()
+						}
 						self.connected()
-						self.timer.invalidate()
+						
 					}
 					
 				}
@@ -126,6 +128,7 @@ class onboardOneController: UIViewController, WCSessionDelegate, SFSafariViewCon
 		})
 		self.wcSession.transferUserInfo(result)
 	}
+	
 	@IBAction func connectToReddit(_ sender: Any) {
 		let callbackUrl  = "redditwatch://redirect"
 		let authURL = URL(string: "https://www.reddit.com/api/v1/authorize?client_id=uUgh0YyY_k_6ow&response_type=code&state=not_that_important&redirect_uri=redditwatch://redirect&duration=permanent&scope=identity%20edit%20flair%20history%20modconfig%20modflair%20modlog%20modposts%20modwiki%20mysubreddits%20privatemessages%20read%20report%20save%20submit%20subscribe%20vote%20wikiedit%20wikiread")

@@ -5,6 +5,9 @@
       location = "group:README.md">
    </FileRef>
    <FileRef
+      location = "group:changelog.txt">
+   </FileRef>
+   <FileRef
       location = "group:ISSUE_TEMPLATE.md">
    </FileRef>
    <FileRef

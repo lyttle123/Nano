@@ -255,6 +255,11 @@
                                     <action selector="changeSort" destination="AgC-eL-Hgc" id="Ari-Gt-rcS"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Refresh" icon="repeat" id="fn4-rh-yHT">
+                                <connections>
+                                    <action selector="refreshSub" destination="AgC-eL-Hgc" id="XBB-j5-cBN"/>
+                                </connections>
+                            </menuItem>
                         </items>
                     </menu>
                     <connections>

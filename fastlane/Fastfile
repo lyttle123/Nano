@@ -15,6 +15,7 @@ platform :ios do
   desc "Push a new beta build to TestFlight"
   lane :beta do
     build_app(workspace: "redditwatch.xcworkspace", scheme: "redditwatch")
+    changelog = File.read("../changelog.txt")
     upload_to_testflight
   end
 end
