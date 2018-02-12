@@ -57,6 +57,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 	}
 	
 	override func awake(withContext context: Any?) {
+		UserDefaults.standard.removeObject(forKey: "access_token")
 		super.awake(withContext: context)
 		invalidateUserActivity()
 		loadingIndicator.setHidden(true)
@@ -141,7 +142,9 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 			if shouldRefresh{
 				UserDefaults.standard.set(Date(), forKey: "lastRefresh")
 				print("Haven't refreshed access in atleast 30 mins")
+				reddit.loading = true
 				reddit.getAccessToken(grantType: "refresh_token", code: refresh_token, completionHandler: { result in
+					self.reddit.loading = false
 					print("Got back \(result)")
 					print("Saving \(String(describing: result["acesss_token"]))")
 					UserDefaults.standard.set(result["acesss_token"]!, forKey: "access_token")
@@ -295,7 +298,10 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 		}
 		self.redditTable.setNumberOfRows(0, withRowType: "redditCell")
 		WKInterfaceDevice.current().play(WKHapticType.start)
-		reddit.access_token = UserDefaults.standard.object(forKey: "access_token") as! String
+		if let token = UserDefaults.standard.object(forKey: "access_token") as? String{
+			reddit.access_token = token
+			
+		}
 		loading = true
 		reddit.getSubreddit(subreddit, sort: sort, after: after, completionHandler: { json in
 			self.loading = false

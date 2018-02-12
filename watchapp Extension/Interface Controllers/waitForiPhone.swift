@@ -11,7 +11,7 @@ import WatchConnectivity
 
 class waitForiPhone: WKInterfaceController, WCSessionDelegate {
 	var setup = UserDefaults.standard.object(forKey: "setup") as? Bool ?? false
-
+	var reddit = RedditAPI()
 	@IBOutlet var getStartedButton: WKInterfaceButton!
 	var wcSession: WCSession?
 	override func awake(withContext context: Any?) {
@@ -49,9 +49,10 @@ class waitForiPhone: WKInterfaceController, WCSessionDelegate {
 						print(error.localizedDescription)
 					})
 					UserDefaults.standard.set(true, forKey: "setup")
+					self.setup = true
 					WKInterfaceController.reloadRootControllers(withNamesAndContexts: [("interface", AnyObject.self as AnyObject)])
 					
-					self.setup = true
+					
 					
 				}
 				self.wcSession?.sendMessage(["setup":true], replyHandler: nil, errorHandler: { error in

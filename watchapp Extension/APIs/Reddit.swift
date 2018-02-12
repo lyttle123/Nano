@@ -14,6 +14,14 @@ import WatchKit
 class RedditAPI{
 	
 	var access_token: String
+	var loading: Bool?{
+		set{
+			UserDefaults.standard.set(newValue, forKey: "loading")
+		}
+		get{
+			return UserDefaults.standard.object(forKey: "loading") as? Bool
+		}
+	}
 	init(){
 		var temp = String()
 		if let token = UserDefaults.standard.object(forKey: "access_token") as? String{
@@ -211,14 +219,53 @@ class RedditAPI{
 				parameters["after"] = "t3_\(after)"
 			}
 		}
-		Alamofire.request(url!, parameters: parameters, headers: headers)
-			.responseData { dat in
-				if let dat = dat.data{
-					if let js = try? JSON(data: dat){
-						completionHandler(js)
+		var lastTime = Date()
+		if let lastRefresh = UserDefaults.standard.object(forKey: "lastRefresh") as? Date{
+			lastTime = lastRefresh
+		} else{
+			
+		}
+		let timeSince = Date().timeIntervalSince(lastTime)
+		if timeSince > 1800{
+			if let loading = loading{
+				if !loading{
+					if let refresh_token = UserDefaults.standard.object(forKey: "refresh_token") as? String{
+						getAccessToken(grantType: refresh_token, code: refresh_token, completionHandler: {result in
+							self.loading = false
+							print("Got back \(result)")
+							print("Saving \(String(describing: result["acesss_token"]))")
+							UserDefaults.standard.set(result["acesss_token"]!, forKey: "access_token")
+							self.access_token = result["acesss_token"]!
+							var headers = [
+								"Authorization": "bearer \(result["acesss_token"]!)",
+								"User-Agent": "RedditWatch/0.1 by 123icebuggy",
+								]
+							Alamofire.request(url!, parameters: parameters, headers: headers)
+								.responseData { dat in
+									if let dat = dat.data{
+										if let js = try? JSON(data: dat){
+											completionHandler(js)
+										}
+										
+									}
+							}
+							
+						})
+						
 					}
-					
 				}
+			}
+		} else{
+			Alamofire.request(url!, parameters: parameters, headers: headers)
+				.responseData { dat in
+					if let dat = dat.data{
+						if let js = try? JSON(data: dat){
+							completionHandler(js)
+						}
+						
+					}
+				}
+			
 		}
 	}
 	func subscribe(to subreddit: String, action: String, completionHandler: @escaping (_ success: Int) -> Void){
