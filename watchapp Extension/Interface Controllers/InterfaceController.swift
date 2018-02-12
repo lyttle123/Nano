@@ -300,7 +300,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 		WKInterfaceDevice.current().play(WKHapticType.start)
 		if let token = UserDefaults.standard.object(forKey: "access_token") as? String{
 			reddit.access_token = token
-			
+				
 		}
 		loading = true
 		reddit.getSubreddit(subreddit, sort: sort, after: after, completionHandler: { json in
