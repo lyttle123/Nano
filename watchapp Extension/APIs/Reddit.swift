@@ -256,7 +256,7 @@ class RedditAPI{
 				}
 			}
 		} else{
-			Alamofire.request(url!, parameters: parameters, headers: headers)
+			let b = Alamofire.request(url!, parameters: parameters, headers: headers)
 				.responseData { dat in
 					if let dat = dat.data{
 						if let js = try? JSON(data: dat){
@@ -265,7 +265,6 @@ class RedditAPI{
 						
 					}
 				}
-			
 		}
 	}
 	func subscribe(to subreddit: String, action: String, completionHandler: @escaping (_ success: Int) -> Void){

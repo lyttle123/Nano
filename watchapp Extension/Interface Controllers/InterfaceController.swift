@@ -300,7 +300,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 		WKInterfaceDevice.current().play(WKHapticType.start)
 		if let token = UserDefaults.standard.object(forKey: "access_token") as? String{
 			reddit.access_token = token
-				
+			
 		}
 		loading = true
 		reddit.getSubreddit(subreddit, sort: sort, after: after, completionHandler: { json in
@@ -558,28 +558,31 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 	}
 	override func interfaceOffsetDidScrollToBottom() {
 		if loading {return} //If we're already loading posts, don't try again
+		print("LOADING MORE")
 		let loadAfter = ids.last
-		var previousCount = self.post.count
+		let previousCount = self.post.count
 		loading = true
+		print(loadAfter)
 		reddit.getSubreddit(currentSubreddit, sort: currentSort, after: loadAfter, completionHandler: {json in
 			self.loading = false
 			let children = json["data"]["children"].array
 			self.redditTable.insertRows(at: IndexSet(self.names.count ... self.names.count + (children?.count)! - 1), withRowType: "redditCell") //From the current number of posts to the current number of posts + the number of new posts minus one because arrays start at zero
 			guard let child = children else{ return}
+			
 			for element in child{
 				
 				if !(element["data"]["stickied"].bool!){
 					self.names.append(element["data"]["title"].string!)
-					
 					self.post[element["data"]["id"].string!] = element["data"]
 					self.ids.append(element["data"]["id"].string!)
-					print("Appending \(element["data"]["id"].string!)")
 					
 				}
+				
 			}
+			print(child.count)
 			for (index, _) in self.post.dropFirst(previousCount).enumerated(){
-				if let row = self.redditTable.rowController(at: index + (children?.count)!) as? NameRowController{
-					if let stuff = self.post[self.ids[index + (children?.count)!]]
+				if let row = self.redditTable.rowController(at: index + self.post.count - 25) as? NameRowController{
+					if let stuff = self.post[self.ids[index + self.post.count - 25]]
 					{
 						
 						row.nameLabe.setText(stuff["title"].string!.dehtmlify())
