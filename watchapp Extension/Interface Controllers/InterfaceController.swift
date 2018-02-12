@@ -523,8 +523,11 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 	}
 	func didSelect(upvoteButton: WKInterfaceButton, downvoteButton: WKInterfaceButton, onCellWith id: String, action: String) {
 		print(id)
+		WKInterfaceDevice.current().play(.click)
+
 		var dir = 0
 		if action == "upvote" && !upvoted{
+			WKInterfaceDevice.current().play(.click)
 			print("Upvoting")
 			dir = 1
 			upvoted = true
@@ -558,12 +561,16 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 	}
 	override func interfaceOffsetDidScrollToBottom() {
 		if loading {return} //If we're already loading posts, don't try again
+		WKInterfaceDevice.current().play(.click)
+
 		print("LOADING MORE")
 		let loadAfter = ids.last
 		let previousCount = self.post.count
 		loading = true
 		print(loadAfter)
 		reddit.getSubreddit(currentSubreddit, sort: currentSort, after: loadAfter, completionHandler: {json in
+			WKInterfaceDevice.current().play(.success)
+
 			self.loading = false
 			let children = json["data"]["children"].array
 			self.redditTable.insertRows(at: IndexSet(self.names.count ... self.names.count + (children?.count)! - 1), withRowType: "redditCell") //From the current number of posts to the current number of posts + the number of new posts minus one because arrays start at zero
