@@ -339,7 +339,8 @@ This will load on app launch automatically</string>
 $1.99</string>
                                 </state>
                                 <connections>
-                                    <action selector="proNinetyNine:" destination="cDX-VI-Jxo" eventType="touchUpInside" id="auY-Ee-282"/>
+                                    <action selector="proTwoNinetyNine:" destination="cDX-VI-Jxo" eventType="touchDragInside" id="UGI-aj-y73"/>
+                                    <action selector="proTwoNinetyNine:" destination="cDX-VI-Jxo" eventType="touchUpInside" id="b4h-DF-xzO"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AoC-OD-Mhn">

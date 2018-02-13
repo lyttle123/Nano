@@ -149,6 +149,7 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 	}
 	
 	func sendSubredditsToWatch(){
+		wcSession.activate()
 		wcSession.sendMessage(["phrases": savedSubs], replyHandler: {eh in
 			print(eh)
 		}, errorHandler: { errror in
@@ -228,6 +229,7 @@ class quickSubredditCell: UITableViewCell, UITextFieldDelegate{
 	var subreddit: String?
 	
 	func update(){
+		subredditLabel.autocorrectionType = .no
 		subredditLabel.text = subreddit
 		subredditLabel.delegate = self
 	}

@@ -108,7 +108,7 @@ class proController: UIViewController, WCSessionDelegate {
 		SwiftyStoreKit.retrieveProductsInfo([bundleId + "." + purchase.rawValue], completion: {
 			result in
 			NetworkActivityIndicatorManager.networkOperationFinished()
-			//self.showAlert(alert: self.alertForProductRetrievalInfo(result: result))
+			self.showAlert(alert: self.alertForProductRetrievalInfo(result: result))
 			
 			
 		})
@@ -158,7 +158,7 @@ class proController: UIViewController, WCSessionDelegate {
 		SwiftyStoreKit.verifyReceipt(using: appleValidator, completion: {
 			result in
 			NetworkActivityIndicatorManager.networkOperationFinished()
-			//self.showAlert(alert: self.alertForVerifyReceipt(result: result))
+			self.showAlert(alert: self.alertForVerifyReceipt(result: result))
 			
 		})
 	}
@@ -177,7 +177,7 @@ class proController: UIViewController, WCSessionDelegate {
 				let myProductId = self.bundleId + "." + product.rawValue
 				if product == .proTwoNinetyNine{
 					let purchaseResult = SwiftyStoreKit.verifyPurchase(productId: myProductId, inReceipt: receipt)
-					//self.showAlert(alert: self.alertForVerifyPurchase(result: purchaseResult))
+					self.showAlert(alert: self.alertForVerifyPurchase(result: purchaseResult))
 				}
 			}
 		})
@@ -249,6 +249,14 @@ extension proController{
 			print("Restore Failed: \(result.restoreFailedPurchases)")
 			return alertWithTitle(title: "Restore Failed", message: "Unkown Error. Please contact developer")
 		} else if result.restoredPurchases.count > 0{
+			let confettiView = SAConfettiView(frame: self.view.bounds)
+			DispatchQueue.main.async {
+				UserDefaults.standard.set(true, forKey: "pro")
+			}
+			
+			print("SET")
+			self.view.addSubview(confettiView)
+			confettiView.startConfetti()
 			return alertWithTitle(title: "Purchases Restored!", message: "Thank for being a supporter or indie development!")
 		} else{
 			return alertWithTitle(title: "Waiiit a seccond", message: "You haven't bought anything")
