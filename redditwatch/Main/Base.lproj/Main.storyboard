@@ -75,7 +75,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="client" id="wfk-RF-Di8">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="client" id="wfk-RF-Di8">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wfk-RF-Di8" id="K8k-L6-u8x">
@@ -278,7 +278,7 @@ This will load on app launch automatically</string>
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="quickSubreddit" id="wZ5-3l-CS2" customClass="quickSubredditCell" customModule="redditwatch" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="quickSubreddit" id="wZ5-3l-CS2" customClass="quickSubredditCell" customModule="redditwatch" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wZ5-3l-CS2" id="nbb-qf-vIS">
@@ -332,25 +332,27 @@ This will load on app launch automatically</string>
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AoC-OD-Mhn">
-                                <rect key="frame" x="66" y="149.5" width="242" height="101.5"/>
-                                <string key="text">By purchasing RedditWatch Pro you not only unlock additional features for the app, but are supporting me as an individual developer</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="characterWrap" translatesAutoresizingMaskIntoConstraints="NO" id="fId-QX-Qaa">
-                                <rect key="frame" x="54" y="304" width="266" height="58"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="58" id="yUD-yS-ERn"/>
-                                </constraints>
-                                <state key="normal" title="Purchase RedditWatch Pro"/>
+                                <rect key="frame" x="27" y="525" width="321" height="48"/>
+                                <state key="normal">
+                                    <string key="title">  Pro
+$1.99</string>
+                                </state>
                                 <connections>
                                     <action selector="proNinetyNine:" destination="cDX-VI-Jxo" eventType="touchUpInside" id="auY-Ee-282"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AoC-OD-Mhn">
+                                <rect key="frame" x="39" y="94" width="297" height="162.5"/>
+                                <string key="text">By purchasing RedditWatch Pro you not only unlock additional features for the app, but are supporting me as an individual developer
+
+The Pro upgrade gets you support for unlimited subscriptions and handoff suport.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e9c-ar-d6P">
-                                <rect key="frame" x="123" y="535" width="129" height="30"/>
+                                <rect key="frame" x="96" y="581" width="184" height="30"/>
                                 <state key="normal" title="Restore Purchases"/>
                                 <connections>
                                     <action selector="restorePurchases:" destination="cDX-VI-Jxo" eventType="touchUpInside" id="XwF-S3-9x6"/>
@@ -359,21 +361,22 @@ This will load on app launch automatically</string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="AoC-OD-Mhn" firstAttribute="leading" secondItem="mbH-vG-g5D" secondAttribute="leading" constant="66" id="JO4-HK-W1x"/>
-                            <constraint firstItem="mbH-vG-g5D" firstAttribute="trailing" secondItem="AoC-OD-Mhn" secondAttribute="trailing" constant="67" id="Pdy-g5-MB2"/>
-                            <constraint firstItem="mbH-vG-g5D" firstAttribute="bottom" secondItem="e9c-ar-d6P" secondAttribute="bottom" constant="102" id="Wr9-fk-6gM"/>
-                            <constraint firstItem="fId-QX-Qaa" firstAttribute="centerY" secondItem="IMM-Cx-ME9" secondAttribute="centerY" id="eCN-yW-XQe"/>
-                            <constraint firstItem="mbH-vG-g5D" firstAttribute="trailing" secondItem="fId-QX-Qaa" secondAttribute="trailing" constant="55" id="fLB-zy-K1Z"/>
-                            <constraint firstItem="mbH-vG-g5D" firstAttribute="trailing" secondItem="e9c-ar-d6P" secondAttribute="trailing" constant="123" id="quj-hj-1b1"/>
-                            <constraint firstItem="e9c-ar-d6P" firstAttribute="leading" secondItem="mbH-vG-g5D" secondAttribute="leading" constant="123" id="rSw-1m-m0R"/>
-                            <constraint firstItem="fId-QX-Qaa" firstAttribute="leading" secondItem="mbH-vG-g5D" secondAttribute="leading" constant="54" id="tDR-39-fD3"/>
-                            <constraint firstItem="fId-QX-Qaa" firstAttribute="top" secondItem="AoC-OD-Mhn" secondAttribute="bottom" constant="53" id="ybv-Eg-SDi"/>
+                            <constraint firstItem="AoC-OD-Mhn" firstAttribute="top" secondItem="mbH-vG-g5D" secondAttribute="top" constant="74" id="0Gz-kk-aiF"/>
+                            <constraint firstItem="mbH-vG-g5D" firstAttribute="bottom" secondItem="e9c-ar-d6P" secondAttribute="bottom" constant="56" id="9xK-IR-9u8"/>
+                            <constraint firstItem="mbH-vG-g5D" firstAttribute="trailing" secondItem="e9c-ar-d6P" secondAttribute="trailing" constant="95" id="BT7-W6-ndD"/>
+                            <constraint firstItem="e9c-ar-d6P" firstAttribute="top" secondItem="fId-QX-Qaa" secondAttribute="bottom" constant="8" id="JMU-KI-dhS"/>
+                            <constraint firstItem="e9c-ar-d6P" firstAttribute="leading" secondItem="mbH-vG-g5D" secondAttribute="leading" constant="96" id="Ja6-cE-2Fe"/>
+                            <constraint firstItem="e9c-ar-d6P" firstAttribute="top" secondItem="fId-QX-Qaa" secondAttribute="bottom" constant="8" id="Mzj-7E-2KZ"/>
+                            <constraint firstItem="mbH-vG-g5D" firstAttribute="trailing" secondItem="fId-QX-Qaa" secondAttribute="trailing" constant="27" id="OMK-e9-AOj"/>
+                            <constraint firstItem="fId-QX-Qaa" firstAttribute="leading" secondItem="mbH-vG-g5D" secondAttribute="leading" constant="27" id="dEK-30-yjF"/>
+                            <constraint firstItem="mbH-vG-g5D" firstAttribute="trailing" secondItem="AoC-OD-Mhn" secondAttribute="trailing" constant="39" id="f63-Oc-rDD"/>
+                            <constraint firstItem="AoC-OD-Mhn" firstAttribute="leading" secondItem="mbH-vG-g5D" secondAttribute="leading" constant="39" id="nMU-8b-qlU"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="mbH-vG-g5D"/>
                     </view>
                     <connections>
                         <outlet property="proMessage" destination="AoC-OD-Mhn" id="NH2-8p-34C"/>
-                        <outlet property="proNinetyNine" destination="fId-QX-Qaa" id="ahz-G9-f4i"/>
+                        <outlet property="proTwoNinetyNine" destination="fId-QX-Qaa" id="kBX-V7-brf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wgA-hR-YWx" userLabel="First Responder" sceneMemberID="firstResponder"/>

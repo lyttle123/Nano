@@ -13,7 +13,7 @@ import SAConfettiView
 import WatchConnectivity
 
 enum RegisteredPurchase: String {
-	case proNinetyNine = "Pro"
+	case proTwoNinetyNine = "Pro"
 	
 }
 var sharedSecret = "82aa45026f5b4a07b34d20e3df60b317"
@@ -42,8 +42,8 @@ class proController: UIViewController, WCSessionDelegate {
 	
 	let bundleId = "com.willbishop.redditwatch"
 	var wcSession: WCSession!
-	@IBOutlet weak var proNinetyNine: UIButton!
-	var ProUnlock = RegisteredPurchase.proNinetyNine
+	@IBOutlet weak var proTwoNinetyNine: UIButton!
+	var ProUnlock = RegisteredPurchase.proTwoNinetyNine
 	
 	@IBOutlet weak var proMessage: UILabel!
 	override func viewDidLoad() {
@@ -60,13 +60,18 @@ class proController: UIViewController, WCSessionDelegate {
 		if let bool = UserDefaults.standard.object(forKey: "pro") as? Bool{
 			if bool{
 				print("SUCCESFUL")
-				self.proNinetyNine.setTitle("Purchased!", for: .normal)
+				self.proTwoNinetyNine.setTitle("Purchased!", for: .normal)
 				self.proMessage.text = "Thank you for supporting indie development"
-				self.proNinetyNine.isEnabled = false
+				self.proTwoNinetyNine.isEnabled = false
 				self.wcSession.sendMessage(["purchasedPro": true], replyHandler: { reply in
 					print(reply)
 					
 				})
+				let confettiView = SAConfettiView(frame: self.view.bounds)
+				
+				
+				self.view.addSubview(confettiView)
+				confettiView.startConfetti()
 				self.wcSession.transferUserInfo(["purchasedPro": true])
 				do{
 					try self.wcSession.updateApplicationContext(["purchasedPro": true])
@@ -79,7 +84,7 @@ class proController: UIViewController, WCSessionDelegate {
 			print("wouldn't let bool")
 		}
 	}
-	@IBAction func proNinetyNine(_ sender: Any) {
+	@IBAction func proTwoNinetyNine(_ sender: Any) {
 		print("Purchasing Pro")
 		purchase(purchase: ProUnlock)
 	}
@@ -122,8 +127,8 @@ class proController: UIViewController, WCSessionDelegate {
 				if let bool = UserDefaults.standard.object(forKey: "pro") as? Bool{
 					if bool{
 						print("SUCCESFUL")
-						self.proNinetyNine.setTitle("Purchased!", for: .normal)
-						self.proNinetyNine.isEnabled = false
+						self.proTwoNinetyNine.setTitle("Purchased!", for: .normal)
+						self.proTwoNinetyNine.isEnabled = false
 						self.wcSession.transferUserInfo(["purchasedPro": true])
 					}
 				}
@@ -170,7 +175,7 @@ class proController: UIViewController, WCSessionDelegate {
 				print(error.localizedDescription)
 			case .success(let receipt):
 				let myProductId = self.bundleId + "." + product.rawValue
-				if product == .proNinetyNine{
+				if product == .proTwoNinetyNine{
 					let purchaseResult = SwiftyStoreKit.verifyPurchase(productId: myProductId, inReceipt: receipt)
 					//self.showAlert(alert: self.alertForVerifyPurchase(result: purchaseResult))
 				}
