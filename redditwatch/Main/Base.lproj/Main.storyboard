@@ -343,10 +343,12 @@ $1.99</string>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AoC-OD-Mhn">
-                                <rect key="frame" x="39" y="94" width="297" height="162.5"/>
+                                <rect key="frame" x="39" y="94" width="297" height="203"/>
                                 <string key="text">By purchasing RedditWatch Pro you not only unlock additional features for the app, but are supporting me as an individual developer
 
-The Pro upgrade gets you support for unlimited subscriptions and handoff suport.</string>
+The Pro upgrade gets you support for unlimited subscriptions and handoff suport.
+
+ps. you also get confetti</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
