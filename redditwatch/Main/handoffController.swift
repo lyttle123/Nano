@@ -34,7 +34,26 @@ class handoffController: UIViewController, WCSessionDelegate, UITableViewDelegat
 		wcSession = WCSession.default
 		wcSession.delegate = self
 		wcSession.activate()
+		
     }
+	override func viewDidAppear(_ animated: Bool) {
+		if let proUpgrade = UserDefaults.standard.object(forKey: "Pro") as? Bool{
+			if !proUpgrade{
+				let alert = UIAlertController(title: "Handoff", message: "Handoff is a feature of the Pro upgrade", preferredStyle: .alert)
+				
+				self.present(alert, animated: true, completion: nil)
+			}
+		} else{
+			let alert = UIAlertController(title: "Handoff", message: "Handoff is a feature of the Pro upgrade", preferredStyle: .alert)
+			alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: {tapped in
+				
+			}))
+			alert.addAction(UIAlertAction(title: "Purchase Pro", style: .default, handler: {tapped in
+				self.navigationController?.pushViewController((self.storyboard?.instantiateViewController(withIdentifier: "proController"))!, animated: true)
+			}))
+			self.present(alert, animated: true, completion: nil)
+		}
+	}
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -62,7 +81,13 @@ class handoffController: UIViewController, WCSessionDelegate, UITableViewDelegat
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = clientTable.dequeueReusableCell(withIdentifier: "client")
 		cell?.textLabel?.text = availableClients[indexPath.row]
-		if availableClients[indexPath.row].lowercased() == selectedClient{
+		var pro: Bool
+		if let proUpgrade = UserDefaults.standard.object(forKey: "Pro") as? Bool{
+			pro = proUpgrade
+		}else{
+			pro = false
+		}
+		if availableClients[indexPath.row].lowercased() == selectedClient && pro{
 			UserDefaults.standard.set(availableClients[indexPath.row].lowercased(), forKey: "selectedClient")
 			print("Adding checkmark because \(availableClients[indexPath.row].lowercased()) == \(selectedClient)")
 			cell?.accessoryType = .checkmark
@@ -72,6 +97,7 @@ class handoffController: UIViewController, WCSessionDelegate, UITableViewDelegat
 		return cell!
 	}
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		
 		selectedClient = (clientTable.cellForRow(at: indexPath)?.textLabel?.text?.lowercased())!
 		print(selectedClient)
 		UserDefaults.standard.set(selectedClient, forKey: "selectedClient")

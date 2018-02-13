@@ -169,8 +169,15 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 	func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
 		print(message)
 		if let responsePhrases = message["phrases"] as? [String]{
+			print("SETTTTTTTING")
 			UserDefaults.standard.set(responsePhrases, forKey: "phrases")
 			phrases = responsePhrases
+			suggestions = responsePhrases
+		}
+		if let pro = message["purchasedPro"] as? Bool{
+			if pro{
+				UserDefaults.standard.set(true, forKey: "Pro")
+			}
 		}
 		if let should = message["defaultSubreddit"] as? Bool{
 			if should{
@@ -220,10 +227,23 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 			print("WOULDN'T LET")
 		}
 	}
+	func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
+		if let pro = applicationContext["purchasedPro"] as? Bool{
+			if pro{
+				UserDefaults.standard.set(true, forKey: "Pro")
+			}
+		}
+	}
 	func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any] = [:]) {
 		if let responsePhrases = userInfo["phrases"] as? [String]{
 			UserDefaults.standard.set(responsePhrases, forKey: "phrases")
 			phrases = responsePhrases
+			suggestions = responsePhrases
+		}
+		if let pro = userInfo["purchasedPro"] as? Bool{
+			if pro{
+				UserDefaults.standard.set(true, forKey: "Pro")
+			}
 		}
 		if let refesh_token = userInfo["refresh_token"] as? String{
 			print(refesh_token)

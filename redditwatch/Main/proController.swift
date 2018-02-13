@@ -9,6 +9,8 @@
 import UIKit
 import SwiftyStoreKit
 import StoreKit
+import SAConfettiView
+import WatchConnectivity
 
 enum RegisteredPurchase: String {
 	case proNinetyNine = "Pro"
@@ -36,27 +38,69 @@ class NetworkActivityIndicatorManager: NSObject {
 	}
 }
 
-class proController: UIViewController {
+class proController: UIViewController, WCSessionDelegate {
 	
 	let bundleId = "com.willbishop.redditwatch"
-	
+	var wcSession: WCSession!
 	@IBOutlet weak var proNinetyNine: UIButton!
 	var ProUnlock = RegisteredPurchase.proNinetyNine
 	
+	@IBOutlet weak var proMessage: UILabel!
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		SwiftyStoreKit.completeTransactions(completion: {purchase in
+			print(purchase)
+		})
+		wcSession = WCSession.default
+		wcSession.delegate = self
+		wcSession.activate()
+		if let bool = UserDefaults.standard.object(forKey: "Pro") as? Bool{
+			if bool{
+				print("SUCCESFUL")
+				self.proNinetyNine.setTitle("Purchased!", for: .normal)
+				self.proMessage.text = "Thank you for supporting indie development"
+				self.proNinetyNine.isEnabled = false
+				self.wcSession.sendMessage(["purchasedPro": true], replyHandler: { reply in
+					print(reply)
+					
+				})
+				self.wcSession.transferUserInfo(["purchasedPro": true])
+				do{
+					try self.wcSession.updateApplicationContext(["purchasedPro": true])
+					
+				} catch{
+					print(error.localizedDescription)
+				}
+			}
+		}
 	}
 	
 	@IBAction func proNinetyNine(_ sender: Any) {
+		print("Purchasing Pro")
 		purchase(purchase: ProUnlock)
 	}
+	@IBAction func restorePurchases(_ sender: Any) {
+		print("Restoring Purchases")
+		restorePurchase()
+	}
 	
+	func sessionDidBecomeInactive(_ session: WCSession) {
+		//
+	}
+	
+	func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+		print("Done")
+	}
+	func sessionDidDeactivate(_ session: WCSession) {
+		//
+	}
 	func getInfo(purchase: RegisteredPurchase){
 		NetworkActivityIndicatorManager.networkOperationStarted()
 		SwiftyStoreKit.retrieveProductsInfo([bundleId + "." + purchase.rawValue], completion: {
 			result in
 			NetworkActivityIndicatorManager.networkOperationFinished()
-			self.showAlert(alert: self.alertForProductRetrievalInfo(result: result))
+			//self.showAlert(alert: self.alertForProductRetrievalInfo(result: result))
+			
 			
 		})
 	}
@@ -71,6 +115,15 @@ class proController: UIViewController {
 					SwiftyStoreKit.finishTransaction(product.transaction)
 				}
 				self.showAlert(alert: self.alertForProductResult(result: result))
+				if let bool = UserDefaults.standard.object(forKey: "Pro") as? Bool{
+					if bool{
+						print("SUCCESFUL")
+						self.proNinetyNine.setTitle("Purchased!", for: .normal)
+						self.proNinetyNine.isEnabled = false
+						self.wcSession.transferUserInfo(["purchasedPro": true])
+						quickAccessController().reloadSubscriptions()
+					}
+				}
 			}
 			print(result)
 		})
@@ -97,7 +150,7 @@ class proController: UIViewController {
 		SwiftyStoreKit.verifyReceipt(using: appleValidator, completion: {
 			result in
 			NetworkActivityIndicatorManager.networkOperationFinished()
-			self.showAlert(alert: self.alertForVerifyReceipt(result: result))
+			//self.showAlert(alert: self.alertForVerifyReceipt(result: result))
 			
 		})
 	}
@@ -116,7 +169,7 @@ class proController: UIViewController {
 				let myProductId = self.bundleId + "." + product.rawValue
 				if product == .proNinetyNine{
 					let purchaseResult = SwiftyStoreKit.verifyPurchase(productId: myProductId, inReceipt: receipt)
-					self.showAlert(alert: self.alertForVerifyPurchase(result: purchaseResult))
+					//self.showAlert(alert: self.alertForVerifyPurchase(result: purchaseResult))
 				}
 			}
 		})
@@ -156,6 +209,10 @@ extension proController{
 		switch result{
 		case .success(let product):
 			print("Purchase Successful: \(product.productId)")
+			let confettiView = SAConfettiView(frame: self.view.bounds)
+			UserDefaults.standard.set(true, forKey: "Pro")
+			self.view.addSubview(confettiView)
+			confettiView.startConfetti()
 			return alertWithTitle(title: "Thank you", message: "Thank you for supporting indie development")
 		case .error(let error):
 			print("Purchase Failed: \(error)")
@@ -180,7 +237,7 @@ extension proController{
 			print("Restore Failed: \(result.restoreFailedPurchases)")
 			return alertWithTitle(title: "Restore Failed", message: "Unkown Error. Please contact developer")
 		} else if result.restoredPurchases.count > 0{
-			return alertWithTitle(title: "Purchases Restored!", message: "Hazzah!")
+			return alertWithTitle(title: "Purchases Restored!", message: "Thank for being a supporter or indie development!")
 		} else{
 			return alertWithTitle(title: "Waiiit a seccond", message: "You haven't bought anything")
 		}
@@ -188,7 +245,7 @@ extension proController{
 	
 	func alertForVerifyReceipt(result: VerifyReceiptResult) -> UIAlertController{
 		switch result{
-		case .success(let receipt):
+		case .success(let _):
 			return alertWithTitle(title: "Receipt Verified", message: "Receipt Verified Remotely")
 		case .error(let error):
 			return alertWithTitle(title: "Verify Failed", message: error.localizedDescription)
@@ -209,7 +266,7 @@ extension proController{
 		switch result{
 		case .notPurchased:
 			return alertWithTitle(title: "Product Not Purchaed", message: "Product was not purchased")
-		case .purchased(let item):
+		case .purchased(let _):
 			return alertWithTitle(title: "Purchased", message: "Thank you for purchasing")
 		}
 	}

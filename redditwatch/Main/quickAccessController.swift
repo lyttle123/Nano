@@ -9,7 +9,7 @@ import UIKit
 import WatchConnectivity
 
 class quickAccessController: UIViewController, UITableViewDataSource, UITableViewDelegate, WCSessionDelegate {
-
+	
 	
 	@IBOutlet weak var quickAccessSubreddits: UITableView!
 	var subreddits = UserDefaults.standard.object(forKey: "quickSubreddits") as? [String] ?? ["Popular","All","Funny"]
@@ -18,16 +18,27 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 	var reddit = RedditAPI()
 	
 	override func viewDidLoad() {
-        super.viewDidLoad()
-		
+
+		super.viewDidLoad()
+		UserDefaults.standard.removeObject(forKey: "Pro")
 
 		wcSession = WCSession.default
 		wcSession.delegate = self
 		wcSession.activate()
 		
 		self.navigationItem.rightBarButtonItem = self.editButtonItem
-		
-		subreddits.append("Add another subreddit")
+		if let bool = UserDefaults.standard.object(forKey: "Pro") as? Bool{
+			if bool{
+				subreddits.append("Add another subreddit")
+			} else{
+				subreddits.append("Pro users can add more than 5 subreddits")
+				
+			}
+			
+			
+		} else{
+			subreddits.append("Pro users can add more than 5 subreddits")
+		}
 		quickAccessSubreddits.delegate = self
 		quickAccessSubreddits.dataSource = self
 		quickAccessSubreddits.tableFooterView = UIView()
@@ -47,32 +58,60 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 			print("wouldn't let")
 		}
 		
-        // Do any additional setup after loading the view.
-    }
+		// Do any additional setup after loading the view.
+	}
 	override func setEditing(_ editing: Bool, animated: Bool) {
 		super.setEditing(editing, animated: animated)
 		quickAccessSubreddits.setEditing(editing, animated: true)
 	}
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+	override func didReceiveMemoryWarning() {
+		super.didReceiveMemoryWarning()
+		// Dispose of any resources that can be recreated.
+	}
+	
 	func reloadSubscriptions(){
 		self.reddit.getSubscriptions(completionHandler: { js in
 			if let json = js{
 				if let array = json["data"]["children"].array{
-					self.savedSubs = (array.map {$0["data"]["display_name"].stringValue.lowercased()}).sorted()
-					self.subreddits = (array.map {$0["data"]["display_name"].stringValue.lowercased()}).sorted()
-					self.subreddits.append("Add another subreddit")
-					UserDefaults.standard.set(self.savedSubs, forKey: "quickSubreddits")
-					self.sendSubredditsToWatch()
-					self.quickAccessSubreddits.reloadData()
+					let subs = (array.map {$0["data"]["display_name"].stringValue.lowercased()}).sorted()
+					if let bool = UserDefaults.standard.object(forKey: "Pro") as? Bool{
+						if bool{
+							self.savedSubs = subs
+							self.subreddits = subs
+							self.subreddits.append("Add another subreddit")
+							UserDefaults.standard.set(self.savedSubs, forKey: "quickSubreddits")
+							
+							self.sendSubredditsToWatch()
+							self.quickAccessSubreddits.reloadData()
+						} else{
+							print("Not pro")
+							self.savedSubs = Array(subs.dropLast(subs.count - 5))
+							self.subreddits = Array(subs.dropLast(subs.count - 5))
+							self.subreddits.append("Please purchase Pro to have more subscriptions")
+							UserDefaults.standard.set(self.savedSubs, forKey: "quickSubreddits")
+							self.sendSubredditsToWatch()
+							self.quickAccessSubreddits.reloadData()
+						}
+						
+						
+					} else{
+						print("Not pro")
+						self.savedSubs = Array(subs.dropLast(subs.count - 5))
+						print(self.savedSubs)
+						self.subreddits = Array(subs.dropLast(subs.count - 5))
+						self.subreddits.append("Please purchase Pro to have more subscriptions")
+						UserDefaults.standard.set(self.savedSubs, forKey: "quickSubreddits")
+						self.sendSubredditsToWatch()
+						self.quickAccessSubreddits.reloadData()
+					}
 				}
-			}
-		})
+			}})
 	}
+	
+	
 	override func viewDidAppear(_ animated: Bool) {
 		tabBarController?.tabBar.tintColor = UIColor.flatColors.light.yellow
+		self.reloadSubscriptions()
 	}
 	
 	func sessionDidBecomeInactive(_ session: WCSession) {
@@ -89,7 +128,7 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 		//
 		
 	}
-		
+	
 	@objc func loadSubreddits(_ notification: NSNotification){
 		
 		if let sub = notification.userInfo?["text"] as? String{
@@ -118,7 +157,7 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 		})
 		wcSession.transferUserInfo(["phrases": savedSubs])
 	}
-
+	
 	func numberOfSections(in tableView: UITableView) -> Int {
 		return 1
 	}
@@ -130,6 +169,7 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 		print(indexPath.row)
 		
 		cell.subreddit = subreddits[indexPath.row]
+		
 		cell.disableInput()
 		cell.update()
 		return cell
@@ -179,7 +219,7 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 			return true
 		}
 	}
-
+	
 	
 }
 
@@ -206,7 +246,7 @@ class quickSubredditCell: UITableViewCell, UITextFieldDelegate{
 			sub = sub.replacingOccurrences(of: "/", with: "")
 		}
 		NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadSubreddits"), object: nil, userInfo: ["text": textField.text!])
-
+		
 		return true
 	}
 	

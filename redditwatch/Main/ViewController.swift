@@ -27,7 +27,7 @@ class ViewController: UIViewController, WCSessionDelegate, SFSafariViewControlle
 	
 	@IBOutlet weak var proButton: UIButton!
 	override func viewWillAppear(_ animated: Bool) {
-		
+		UserDefaults.standard.removeObject(forKey: "Pro")
 		//proButton.isEnabled = false
 
 		defaultSubredditField.delegate = self
