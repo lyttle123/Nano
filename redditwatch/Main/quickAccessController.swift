@@ -16,6 +16,7 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 	var savedSubs = UserDefaults.standard.object(forKey: "quickSubreddits") as? [String] ?? ["Popular","All","Funny"]
 	var wcSession: WCSession!
 	var reddit = RedditAPI()
+	var height = CGFloat()
 	
 	override func viewDidLoad() {
 
@@ -24,7 +25,9 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 		wcSession = WCSession.default
 		wcSession.delegate = self
 		wcSession.activate()
-		
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+
 		self.navigationItem.rightBarButtonItem = self.editButtonItem
 		if let bool = UserDefaults.standard.object(forKey: "pro") as? Bool{
 			if bool{
@@ -58,6 +61,26 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 		}
 		
 		// Do any additional setup after loading the view.
+	}
+	
+	@objc func keyboardWillShow(notification: NSNotification) {
+		
+		if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue{
+			if height.isZero{
+				height = keyboardSize.height
+			}
+			if view.frame.origin.y == 0{
+				self.view.frame.origin.y -= height
+			}
+		}
+	}
+	
+	@objc func keyboardWillHide(notification: NSNotification) {
+		if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+			if view.frame.origin.y != 0 {
+				self.view.frame.origin.y += height
+			}
+		}
 	}
 	override func setEditing(_ editing: Bool, animated: Bool) {
 		super.setEditing(editing, animated: animated)
@@ -129,7 +152,7 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 	}
 	
 	@objc func loadSubreddits(_ notification: NSNotification){
-		
+		self.view.endEditing(true)
 		if let sub = notification.userInfo?["text"] as? String{
 			savedSubs.append(sub)
 			UserDefaults.standard.set(savedSubs, forKey: "quickSubreddits")
@@ -237,7 +260,7 @@ class quickSubredditCell: UITableViewCell, UITextFieldDelegate{
 		subredditLabel.isUserInteractionEnabled = false
 	}
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-		subredditLabel.resignFirstResponder()
+		
 		guard var sub = textField.text else {return false}
 		
 		if sub.range(of: "r/") != nil{
