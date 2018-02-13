@@ -48,7 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		return true
 	}
 	func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
-		if let pro = UserDefaults.standard.object(forKey: "Pro") as? Bool{
+		if let pro = UserDefaults.standard.object(forKey: "pro") as? Bool{
 			if pro{
 				
 				if let id = userActivity.userInfo!["current"] as? String, let sub = userActivity.userInfo!["subreddit"] as? String{
@@ -80,8 +80,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 					print("Would let id: \(userActivity.userInfo!)")
 				}
 				
+			} else{
+				let alert = UIAlertController(title: "Handoff", message: "Handoff is a feature of the Pro upgrade", preferredStyle: .alert)
+				alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: {tapped in
+					
+				}))
+				
+				UIApplication.shared.keyWindow?.rootViewController!.present(alert, animated: true, completion: nil)
 			}
 			
+		} else{
+			let alert = UIAlertController(title: "Handoff", message: "Handoff is a feature of the Pro upgrade", preferredStyle: .alert)
+			alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: {tapped in
+				
+			}))
+			
+			UIApplication.shared.keyWindow?.rootViewController!.present(alert, animated: true, completion: nil)
 		}
 		return true
 		

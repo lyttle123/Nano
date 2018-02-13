@@ -20,14 +20,13 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 	override func viewDidLoad() {
 
 		super.viewDidLoad()
-		UserDefaults.standard.removeObject(forKey: "Pro")
 
 		wcSession = WCSession.default
 		wcSession.delegate = self
 		wcSession.activate()
 		
 		self.navigationItem.rightBarButtonItem = self.editButtonItem
-		if let bool = UserDefaults.standard.object(forKey: "Pro") as? Bool{
+		if let bool = UserDefaults.standard.object(forKey: "pro") as? Bool{
 			if bool{
 				subreddits.append("Add another subreddit")
 			} else{
@@ -74,7 +73,7 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 			if let json = js{
 				if let array = json["data"]["children"].array{
 					let subs = (array.map {$0["data"]["display_name"].stringValue.lowercased()}).sorted()
-					if let bool = UserDefaults.standard.object(forKey: "Pro") as? Bool{
+					if let bool = UserDefaults.standard.object(forKey: "pro") as? Bool{
 						if bool{
 							self.savedSubs = subs
 							self.subreddits = subs

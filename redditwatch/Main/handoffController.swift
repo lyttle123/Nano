@@ -37,7 +37,7 @@ class handoffController: UIViewController, WCSessionDelegate, UITableViewDelegat
 		
     }
 	override func viewDidAppear(_ animated: Bool) {
-		if let proUpgrade = UserDefaults.standard.object(forKey: "Pro") as? Bool{
+		if let proUpgrade = UserDefaults.standard.object(forKey: "pro") as? Bool{
 			if !proUpgrade{
 				let alert = UIAlertController(title: "Handoff", message: "Handoff is a feature of the Pro upgrade", preferredStyle: .alert)
 				
@@ -82,7 +82,7 @@ class handoffController: UIViewController, WCSessionDelegate, UITableViewDelegat
 		let cell = clientTable.dequeueReusableCell(withIdentifier: "client")
 		cell?.textLabel?.text = availableClients[indexPath.row]
 		var pro: Bool
-		if let proUpgrade = UserDefaults.standard.object(forKey: "Pro") as? Bool{
+		if let proUpgrade = UserDefaults.standard.object(forKey: "pro") as? Bool{
 			pro = proUpgrade
 		}else{
 			pro = false

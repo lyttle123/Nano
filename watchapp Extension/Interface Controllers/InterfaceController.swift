@@ -485,8 +485,11 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 	func changeSub(){
 		DispatchQueue.main.async {
 			print("CHANGING")
-			
-			
+			if self.suggestions[0] != "home"{
+				self.suggestions.insert("home", at: 0)
+				self.suggestions.insert("all", at: 1)
+				self.suggestions.insert("popular", at: 2)
+			}
 			self.presentTextInputController(withSuggestions: self.suggestions, allowedInputMode:   WKTextInputMode.plain) { (arr: [Any]?) in
 				print(arr)
 				if let input = arr?.first as? String{

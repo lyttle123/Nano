@@ -54,7 +54,10 @@ class proController: UIViewController, WCSessionDelegate {
 		wcSession = WCSession.default
 		wcSession.delegate = self
 		wcSession.activate()
-		if let bool = UserDefaults.standard.object(forKey: "Pro") as? Bool{
+		
+	}
+	override func viewWillAppear(_ animated: Bool) {
+		if let bool = UserDefaults.standard.object(forKey: "pro") as? Bool{
 			if bool{
 				print("SUCCESFUL")
 				self.proNinetyNine.setTitle("Purchased!", for: .normal)
@@ -72,9 +75,10 @@ class proController: UIViewController, WCSessionDelegate {
 					print(error.localizedDescription)
 				}
 			}
+		} else{
+			print("wouldn't let bool")
 		}
 	}
-	
 	@IBAction func proNinetyNine(_ sender: Any) {
 		print("Purchasing Pro")
 		purchase(purchase: ProUnlock)
@@ -115,13 +119,12 @@ class proController: UIViewController, WCSessionDelegate {
 					SwiftyStoreKit.finishTransaction(product.transaction)
 				}
 				self.showAlert(alert: self.alertForProductResult(result: result))
-				if let bool = UserDefaults.standard.object(forKey: "Pro") as? Bool{
+				if let bool = UserDefaults.standard.object(forKey: "pro") as? Bool{
 					if bool{
 						print("SUCCESFUL")
 						self.proNinetyNine.setTitle("Purchased!", for: .normal)
 						self.proNinetyNine.isEnabled = false
 						self.wcSession.transferUserInfo(["purchasedPro": true])
-						quickAccessController().reloadSubscriptions()
 					}
 				}
 			}
@@ -210,7 +213,11 @@ extension proController{
 		case .success(let product):
 			print("Purchase Successful: \(product.productId)")
 			let confettiView = SAConfettiView(frame: self.view.bounds)
-			UserDefaults.standard.set(true, forKey: "Pro")
+			DispatchQueue.main.async {
+				UserDefaults.standard.set(true, forKey: "pro")
+			}
+			
+			print("SET")
 			self.view.addSubview(confettiView)
 			confettiView.startConfetti()
 			return alertWithTitle(title: "Thank you", message: "Thank you for supporting indie development")
