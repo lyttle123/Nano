@@ -62,7 +62,7 @@ class RedditAPI{
 							tokens = ["access_token": json["access_token"].string!, "refresh_token": json["refresh_token"].string!]
 							
 						} else{
-							tokens["acesss_token"] = json["access_token"].string!
+							tokens["access_token"] = json["access_token"].string!
 						}
 						completionHandler(tokens)
 						
@@ -248,11 +248,11 @@ class RedditAPI{
 							getAccessToken(grantType: refresh_token, code: refresh_token, completionHandler: {result in
 								self.loading = false
 								print("Got back \(result)")
-								print("Saving \(String(describing: result["acesss_token"]))")
-								UserDefaults.standard.set(result["acesss_token"]!, forKey: "access_token")
-								self.access_token = result["acesss_token"]!
+								print("Saving \(String(describing: result["access_token"]))")
+								UserDefaults.standard.set(result["access_token"]!, forKey: "access_token")
+								self.access_token = result["access_token"]!
 								var headers = [
-									"Authorization": "bearer \(result["acesss_token"]!)",
+									"Authorization": "bearer \(result["access_token"]!)",
 									"User-Agent": "RedditWatch/0.1 by 123icebuggy",
 									]
 								Alamofire.request(url!, parameters: parameters, headers: headers)

@@ -48,9 +48,9 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 		if let refresh_token = UserDefaults.standard.object(forKey: "refresh_token") as? String{
 			reddit.getAccessToken(grantType: "refresh_token", code: refresh_token, completionHandler: { result in
 				print("Got back \(result)")
-				print("Saving \(String(describing: result["acesss_token"]))")
-				UserDefaults.standard.set(result["acesss_token"]!, forKey: "access_token")
-				self.reddit.access_token = result["acesss_token"]!
+				print("Saving \(String(describing: result["access_token"]))")
+				UserDefaults.standard.set(result["access_token"]!, forKey: "access_token")
+				self.reddit.access_token = result["access_token"]!
 				self.reloadSubscriptions()
 				
 			})

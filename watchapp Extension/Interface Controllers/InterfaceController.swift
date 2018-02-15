@@ -60,27 +60,21 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, voteButtonD
 		super.awake(withContext: context)
 		invalidateUserActivity()
 		loadingIndicator.setHidden(true)
-		print(context)
 		if setup{
 			suggestions.insert("home", at: 0)
 			suggestions.insert("all", at: 1)
 			suggestions.insert("popular", at: 2)
-			print("setup")
 			if let should = UserDefaults.standard.object(forKey: "shouldLoadDefaultSubreddit") as? Bool{
 				if should{
 					if let sub = UserDefaults.standard.object(forKey: "defaultSubreddit") as? String{
-						print("Setting")
 						setupTable(sub, sort: "hot")
 					} else{
-						print("woulnd't let")
 						changeSubreddit()
 					}
 				} else{
-					print("Shouldn't")
 					changeSubreddit()
 				}
 			} else{
-				print("not setup")
 				
 				changeSubreddit()
 				
@@ -130,7 +124,6 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, voteButtonD
 		if timeSince > 1800{
 			shouldRefresh = true
 		}
-		print(timeSince)
 		
 		if let refresh_token = UserDefaults.standard.object(forKey: "refresh_token") as? String{
 			if shouldRefresh{
@@ -140,9 +133,9 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, voteButtonD
 				reddit.getAccessToken(grantType: "refresh_token", code: refresh_token, completionHandler: { result in
 					self.reddit.loading = false
 					print("Got back \(result)")
-					print("Saving \(String(describing: result["acesss_token"]))")
-					UserDefaults.standard.set(result["acesss_token"]!, forKey: "access_token")
-					self.reddit.access_token = result["acesss_token"]!
+					print("Saving \(String(describing: result["access_token"]))")
+					UserDefaults.standard.set(result["access_token"]!, forKey: "access_token")
+					self.reddit.access_token = result["access_token"]!
 				})
 			} else{
 				print("Not refreshing because refreshed recently")
@@ -190,7 +183,6 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, voteButtonD
 			UserDefaults.standard.set(highres, forKey: "highResImage")
 			highResImage = highres
 		}
-		print("RECEIVED")
 		
 		if let refesh_token = message["refresh_token"] as? String{
 			print(refesh_token)
@@ -218,8 +210,6 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, voteButtonD
 				UserDefaults.standard.set(true, forKey: "setup")
 				
 			}
-		} else{
-			print("WOULDN'T LET")
 		}
 	}
 	func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
