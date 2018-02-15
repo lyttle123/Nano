@@ -94,9 +94,12 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, voteButtonD
 	override func willActivate() {
 		// This method is called when watch view controller is about to be visible to user
 		super.willActivate()
-		wcSession = WCSession.default
-		wcSession?.delegate = self
-		wcSession?.activate()
+		if WCSession.isSupported(){
+			wcSession = WCSession.default
+			wcSession?.delegate = self
+			wcSession?.activate()
+			
+		} 
 		
 		if let sort = UserDefaults.standard.object(forKey: currentSubreddit + "sort") as? String{
 			UserDefaults.standard.removeObject(forKey: currentSubreddit + "sort")

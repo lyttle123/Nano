@@ -49,9 +49,17 @@ class ViewController: UIViewController, WCSessionDelegate, SFSafariViewControlle
 		super.viewDidLoad()
 		tabBarController?.tabBar.tintColor = UIColor.flatColors.light.blue
 		
-		wcSession = WCSession.default
-		wcSession.delegate = self
-		wcSession.activate()
+		if WCSession.isSupported(){
+			wcSession = WCSession.default
+			wcSession.delegate = self
+			wcSession.activate()
+			
+		} else{
+			let alert = UIAlertController(title: "Watch Connectivty is not supported", message: "Your device is not compatible with Watch Connctivty", preferredStyle: .alert)
+			
+			alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+			UIApplication.shared.keyWindow?.rootViewController!.present(alert, animated: true, completion: nil)
+		}
 		
 		// Do any additional setup after loading the view, typically from a nib.
 		

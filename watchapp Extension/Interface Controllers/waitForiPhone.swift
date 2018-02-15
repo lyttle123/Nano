@@ -17,9 +17,12 @@ class waitForiPhone: WKInterfaceController, WCSessionDelegate {
 	let sender = sendData()
 	override func awake(withContext context: Any?) {
 		super.awake(withContext: context)
-		wcSession = WCSession.default
-		wcSession?.delegate = self
-		wcSession?.activate()
+		if WCSession.isSupported(){
+			wcSession = WCSession.default
+			wcSession?.delegate = self
+			wcSession?.activate()
+			
+		} 
 	}
 	
 	

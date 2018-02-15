@@ -21,9 +21,17 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 	override func viewDidLoad() {
 
 		super.viewDidLoad()
-		wcSession = WCSession.default
-		wcSession.delegate = self
-		wcSession.activate()
+		if WCSession.isSupported(){
+			wcSession = WCSession.default
+			wcSession.delegate = self
+			wcSession.activate()
+			
+		} else{
+			let alert = UIAlertController(title: "Watch Connectivty is not supported", message: "Your device is not compatible with Watch Connctivty", preferredStyle: .alert)
+			
+			alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+			UIApplication.shared.keyWindow?.rootViewController!.present(alert, animated: true, completion: nil)
+		}
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
 

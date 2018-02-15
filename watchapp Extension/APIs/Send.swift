@@ -56,9 +56,12 @@ class sendData: NSObject, WCSessionDelegate{
 	}
 	override init() {
 		super.init()
-		wcSession = WCSession.default
-		wcSession?.delegate = self
-		wcSession?.activate()
+		if WCSession.isSupported(){
+			wcSession = WCSession.default
+			wcSession?.delegate = self
+			wcSession?.activate()
+			
+		}
 	}
 	
 	

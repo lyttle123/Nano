@@ -31,9 +31,17 @@ class handoffController: UIViewController, WCSessionDelegate, UITableViewDelegat
 		clientTable.delegate = self
 		clientTable.dataSource = self
         // Do any additional setup after loading the view.
-		wcSession = WCSession.default
-		wcSession.delegate = self
-		wcSession.activate()
+		if WCSession.isSupported(){
+			wcSession = WCSession.default
+			wcSession.delegate = self
+			wcSession.activate()
+			
+		} else{
+			let alert = UIAlertController(title: "Watch Connectivty is not supported", message: "Your device is not compatible with Watch Connctivty", preferredStyle: .alert)
+			
+			alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+			UIApplication.shared.keyWindow?.rootViewController!.present(alert, animated: true, completion: nil)
+		}
 		
     }
 	override func viewDidAppear(_ animated: Bool) {

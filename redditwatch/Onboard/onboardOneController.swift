@@ -57,9 +57,17 @@ class onboardOneController: UIViewController, WCSessionDelegate, SFSafariViewCon
 		
 	}
 	override func viewDidAppear(_ animated: Bool) {
-		wcSession = WCSession.default
-		wcSession.delegate = self
-		wcSession.activate()
+		if WCSession.isSupported(){
+			wcSession = WCSession.default
+			wcSession.delegate = self
+			wcSession.activate()
+			
+		} else{
+			let alert = UIAlertController(title: "Watch Connectivty is not supported", message: "Your device is not compatible with Watch Connctivty", preferredStyle: .alert)
+		
+			alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+			UIApplication.shared.keyWindow?.rootViewController!.present(alert, animated: true, completion: nil)
+		}
 	}
 	func sessionDidBecomeInactive(_ session: WCSession) {
 		print("INACTIVATE")
@@ -104,7 +112,17 @@ class onboardOneController: UIViewController, WCSessionDelegate, SFSafariViewCon
 		}
 	}
 	func sendToWatch(result: [String: Any]){
-		wcSession.activate()
+		if WCSession.isSupported(){
+			wcSession = WCSession.default
+			wcSession.delegate = self
+			wcSession.activate()
+			
+		} else{
+			let alert = UIAlertController(title: "Watch Connectivty is not supported", message: "Your device is not compatible with Watch Connctivty", preferredStyle: .alert)
+			
+			alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+			UIApplication.shared.keyWindow?.rootViewController!.present(alert, animated: true, completion: nil)
+		}
 		
 		self.wcSession.sendMessage(result, replyHandler: { reply in
 			if let success = reply["success"] as? Bool{
