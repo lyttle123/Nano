@@ -29,20 +29,27 @@ class sendData: NSObject, WCSessionDelegate{
 	
 	var wcSession: WCSession?
 	
-	func superSend(data: [String: Any], reliable: Bool = false){
+	func superSend(data: [String: Any], reliable: Bool = false, completionHandler: @escaping (_ finished: Bool) -> Void){
 		wcSession?.sendMessage(data, replyHandler: {reply in
 			print(reply)
+			completionHandler(true)
 		}, errorHandler: {error in
 			print(error.localizedDescription)
 			if error != nil{
 				self.wcSession?.transferUserInfo(data)
+				completionHandler(true)
+
 			}
 		})
 		if reliable{
 			do {
 				try wcSession?.updateApplicationContext(data)
+				completionHandler(true)
+
 			} catch{
 				print(error.localizedDescription)
+				completionHandler(false)
+
 			}
 			
 		}

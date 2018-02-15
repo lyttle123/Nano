@@ -283,15 +283,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, voteButtonD
 		
 		self.currentSubreddit = subreddit
 		self.currentSort = sort
-		var parameters = [String: Any]()
-		var url = URL(string: "https://www.reddit.com/r/\(subreddit)/\(sort).json")
-		if sort == "top"{
-			url = URL(string: "https://www.reddit.com/r/\(subreddit)/\(sort).json")
-			parameters["t"] = "all"
-			
-		} else{
-			url = URL(string: "https://www.reddit.com/r/\(subreddit)/\(sort).json")
-		}
+		
 		if (after?.isEmpty)!{
 			names.removeAll()
 			images.removeAll()
@@ -477,7 +469,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, voteButtonD
 				self.suggestions.insert("popular", at: 2)
 			}
 			self.presentTextInputController(withSuggestions: self.suggestions, allowedInputMode:   WKTextInputMode.plain) { (arr: [Any]?) in
-				print(arr)
+				print(arr ?? "Failed")
 				if let input = arr?.first as? String{
 					self.setupTable(input.lowercased().replacingOccurrences(of: " ", with: ""))
 				} else{
@@ -578,7 +570,6 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, voteButtonD
 		let loadAfter = ids.last
 		let previousCount = self.post.count
 		loading = true
-		print(loadAfter)
 		reddit.getSubreddit(currentSubreddit, sort: currentSort, after: loadAfter, completionHandler: {json in
 			WKInterfaceDevice.current().play(.success)
 

@@ -75,7 +75,7 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 	}
 	
 	@objc func keyboardWillHide(notification: NSNotification) {
-		if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+		if let _ = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
 			if view.frame.origin.y != 0 {
 				self.view.frame.origin.y += height
 			}
@@ -172,7 +172,9 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 	
 	func sendSubredditsToWatch(){
 		
-		sendData().superSend(data: ["phrases": savedSubs])
+		sendData().superSend(data: ["phrases": savedSubs], completionHandler: {finished in
+			print(finished)
+		})
 	}
 	
 	func numberOfSections(in tableView: UITableView) -> Int {
@@ -260,7 +262,7 @@ class quickSubredditCell: UITableViewCell, UITextFieldDelegate{
 		if sub.range(of: "r/") != nil{
 			sub = sub.replacingOccurrences(of: "r/", with: "")
 		}
-		if sub.characters.first == "/"{
+		if sub.first == "/"{
 			sub = sub.replacingOccurrences(of: "/", with: "")
 		}
 		NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadSubreddits"), object: nil, userInfo: ["text": textField.text!])

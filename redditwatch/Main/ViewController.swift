@@ -84,10 +84,15 @@ class ViewController: UIViewController, WCSessionDelegate, SFSafariViewControlle
 				print("Setting to on")
 				UserDefaults.standard.set(true, forKey: "switchState")
 				
-				sendData().superSend(data: ["defaultSubreddit": true])
+				sendData().superSend(data: ["defaultSubreddit": true], completionHandler: {finished in
+					print(finished)
+				})
 				defaultSubredditField.isEnabled = true
 			} else{
-				sendData().superSend(data: ["defaultSubreddit": false])
+				sendData().superSend(data: ["defaultSubreddit": false], completionHandler: {finished in
+					print("Finished")
+					
+				})
 				print("Print setting to false")
 				UserDefaults.standard.set(false, forKey: "switchState")
 				defaultSubredditField.isEnabled = false
@@ -107,9 +112,13 @@ class ViewController: UIViewController, WCSessionDelegate, SFSafariViewControlle
 			switch sender.isOn{
 			case true:
 				UserDefaults.standard.set(true, forKey: "highResImage")
-				sendData().superSend(data: ["highResImage": true])
+				sendData().superSend(data: ["highResImage": true], completionHandler: {finished in
+					print(finished)
+				})
 			case false:
-				sendData().superSend(data: ["highResImage": false])
+				sendData().superSend(data: ["highResImage": false], completionHandler: {finished in
+					print(finished)
+				})
 				UserDefaults.standard.set(false, forKey: "highResImage")
 			}
 		}
@@ -126,7 +135,10 @@ class ViewController: UIViewController, WCSessionDelegate, SFSafariViewControlle
 		} else if textField.tag == 3{
 			if let sub = textField.text{
 				
-				sendData().superSend(data: ["defaultSubreddit": sub])
+				sendData().superSend(data: ["defaultSubreddit": sub], completionHandler: {finished in
+					print(finished)
+					
+				})
 				
 			}
 		}

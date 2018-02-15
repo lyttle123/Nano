@@ -63,7 +63,9 @@ class proController: UIViewController, WCSessionDelegate {
 				self.proTwoNinetyNine.setTitle("Purchased!", for: .normal)
 				self.proMessage.text = "Thank you for supporting indie development"
 				self.proTwoNinetyNine.isEnabled = false
-				sendData().superSend(data: ["purchasedPro": true])
+				sendData().superSend(data: ["purchasedPro": true], completionHandler: {finished in
+					print(finished)
+				})
 				let confettiView = SAConfettiView(frame: self.view.bounds)
 				
 				
