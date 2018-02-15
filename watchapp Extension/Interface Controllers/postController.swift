@@ -175,10 +175,28 @@ class postController: WKInterfaceController {
 	override func willDisappear() {
 		
 		Alamofire.SessionManager.default.session.getTasksWithCompletionHandler { (sessionDataTask, uploadData, downloadData) in
-			sessionDataTask.forEach {print($0.description)}
-			sessionDataTask.forEach { $0.cancel() }
-			uploadData.forEach { $0.cancel() }
-			downloadData.forEach { $0.cancel() }
+			sessionDataTask.forEach {
+				if let url = $0.originalRequest?.url?.absoluteString{
+					if url.range(of: "thumbs.redditmedia.com") == nil && url.range(of: "api/comment") == nil{
+						$0.cancel()
+					}
+				}
+				
+			}
+			uploadData.forEach {
+				if let url = $0.originalRequest?.url?.absoluteString{
+					if url.range(of: "thumbs.redditmedia.com") == nil && url.range(of: "api/comment") == nil{
+						$0.cancel()
+					}
+				}
+			}
+			downloadData.forEach {
+				if let url = $0.originalRequest?.url?.absoluteString{
+					if url.range(of: "thumbs.redditmedia.com") == nil && url.range(of: "api/comment") == nil{
+						$0.cancel()
+					}
+				}
+			}
 		}
 	}
 	

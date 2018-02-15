@@ -89,11 +89,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "watchapp Extension/Interface Controllers/postController.swift"
-            timestampString = "540388461.646943"
+            timestampString = "540388841.649508"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "553"
-            endingLineNumber = "553">
+            startingLineNumber = "571"
+            endingLineNumber = "571">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
