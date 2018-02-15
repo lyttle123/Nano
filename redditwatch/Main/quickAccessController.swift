@@ -21,7 +21,6 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 	override func viewDidLoad() {
 
 		super.viewDidLoad()
-
 		wcSession = WCSession.default
 		wcSession.delegate = self
 		wcSession.activate()
@@ -172,13 +171,8 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 	}
 	
 	func sendSubredditsToWatch(){
-		wcSession.activate()
-		wcSession.sendMessage(["phrases": savedSubs], replyHandler: {eh in
-			print(eh)
-		}, errorHandler: { errror in
-			print(errror)
-		})
-		wcSession.transferUserInfo(["phrases": savedSubs])
+		
+		sendData().superSend(data: ["phrases": savedSubs])
 	}
 	
 	func numberOfSections(in tableView: UITableView) -> Int {

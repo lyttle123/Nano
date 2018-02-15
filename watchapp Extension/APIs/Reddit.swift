@@ -132,158 +132,173 @@ class RedditAPI{
 		
 		let b = Alamofire.request("https://oauth.reddit.com/api/comment", method: .post, parameters: parameters, headers: headers)
 			.responseJSON{ js in
-				if (200 ... 299).contains(js.response!.statusCode){ //Only attempt to process it if we already KNOW it's succesful
-					completionHandler(try! JSON(data: js.data!))
-				} else{
-					#if os(watchOS) //Only try to vibrate if on watchOS
-						WKInterfaceDevice.current().play(WKHapticType.failure) //Notify user of failure
-					#endif
-					
-				}
-				
-			}
-			.response { reponse in
-				print("Got \(String(describing: reponse.response?.statusCode))")
-		}
-		debugPrint(b)
-	}
-	func getSubscriptions(completionHandler: @escaping (JSON?) -> Void){
-		let headers = [
-			"Authorization": "bearer \(access_token)",
-			"User-Agent": "RedditWatch/0.1 by 123icebuggy",
-			]
-		Alamofire.request("https://oauth.reddit.com/subreddits/mine/subscriber", headers: headers)
-			.responseJSON { dat in
-				if let data = dat.data{
-					completionHandler(try? JSON(data: data))
-				} else{
-					print("wouldn't let data")
-				}
-		}
-	}
-	func getComments(subreddit: String, id: String, sort: String, after: String? = String(), completionHandler: @escaping (JSON) -> Void){
-		
-		let url = URL(string: "https://www.reddit.com/r/\(subreddit)/comments/\(id).json")
-		var parameters = [
-			"sort": sort.lowercased()
-		]
-		if let after = after{
-			var shouldLoadMore = !after.isEmpty //Inverse, because if it IS empty, we DON'T want to laod more
-			if shouldLoadMore{
-				parameters["after"] = "t1_\(after)"
-			}
-		}
-		print(parameters)
-		let b = Alamofire.request(url!,  parameters: parameters)
-			.responseData { data in
-				if let data = data.data{
-					completionHandler(JSON(data))
-					
-				}
-		}
-		debugPrint(b)
-	}
-	func getSubreddit(_ subreddit: String = "askreddit", sort: String = "hot", after: String? = String(), completionHandler: @escaping (JSON) -> Void){
-		var home = (subreddit.lowercased() == "home")
-		var headers = [
-			"Authorization": "bearer \(access_token)",
-			"User-Agent": "RedditWatch/0.1 by 123icebuggy",
-			]
-		var parameters = [String: Any]()
-		var url = URL(string: "https://www.reddit.com/r/\(subreddit)/\(sort).json")
-		if sort == "top"{
-			url = URL(string: "https://www.reddit.com/r/\(subreddit)/\(sort).json")
-			parameters["t"] = "all"
-			
-		} else{
-			url = URL(string: "https://www.reddit.com/r/\(subreddit)/\(sort).json")
-		}
-		if subreddit.lowercased() == "home"{
-			url = URL(string: "https://oauth.reddit.com")
-		}
-		if sort == "top"{
-			if home{
-				url = URL(string: "https://oauth.reddit.com" + "/\(sort)")
-			}
-		} else if sort != "hot"{
-			if home{
-				url = URL(string: "https://oauth.reddit.com" + "/\(sort)")
-			}
-		}
-		if !home{
-			headers = [String: String]()
-		}
-		if let after = after{
-			var shouldLoadMore = !after.isEmpty //Inverse, because if it IS empty, we DON'T want to laod more
-			if shouldLoadMore{
-				parameters["after"] = "t3_\(after)"
-			}
-		}
-		var lastTime = Date()
-		if let lastRefresh = UserDefaults.standard.object(forKey: "lastRefresh") as? Date{
-			lastTime = lastRefresh
-		} else{
-			
-		}
-		let timeSince = Date().timeIntervalSince(lastTime)
-		if timeSince > 1800 && subreddit.lowercased() != "home"{
-			if let loading = loading{
-				if !loading{
-					if let refresh_token = UserDefaults.standard.object(forKey: "refresh_token") as? String{
-						getAccessToken(grantType: refresh_token, code: refresh_token, completionHandler: {result in
-							self.loading = false
-							print("Got back \(result)")
-							print("Saving \(String(describing: result["acesss_token"]))")
-							UserDefaults.standard.set(result["acesss_token"]!, forKey: "access_token")
-							self.access_token = result["acesss_token"]!
-							var headers = [
-								"Authorization": "bearer \(result["acesss_token"]!)",
-								"User-Agent": "RedditWatch/0.1 by 123icebuggy",
-								]
-							Alamofire.request(url!, parameters: parameters, headers: headers)
-								.responseData { dat in
-									if let dat = dat.data{
-										if let js = try? JSON(data: dat){
-											completionHandler(js)
-										}
-										
-									}
-							}
+				guard let response = js.response else {return}
+				if (200 ... 299).contains(response.statusCode){ //Only attempt to process it if we already KNOW it's succesful
+					if let data = js.data{
+						do{
+							let json = try JSON(data: data)
+							completionHandler(json)
+								
 							
-						})
-						
-					}
-				}
-			}
-		} else{
-			let b = Alamofire.request(url!, parameters: parameters, headers: headers)
-				.responseData { dat in
-					if let dat = dat.data{
-						if let js = try? JSON(data: dat){
-							completionHandler(js)
+						} catch{
+							print("Couldn't serialize JSON")
 						}
 						
 					}
+					else{
+						#if os(watchOS) //Only try to vibrate if on watchOS
+							WKInterfaceDevice.current().play(WKHapticType.failure) //Notify user of failure
+						#endif
+						
+					}
+					
+					}
+					
 				}
+				
+			
+				.response { reponse in
+					print("Got \(String(describing: reponse.response?.statusCode))")
+				}
+				debugPrint(b)
 		}
-	}
-	func subscribe(to subreddit: String, action: String, completionHandler: @escaping (_ success: Int) -> Void){
-		var headers = [
-			"Authorization": "bearer \(access_token)",
-			"User-Agent": "RedditWatch/0.1 by 123icebuggy",
-		]
-		let parameters = [
-			"action": action,
-			"sr_name": subreddit
-			] as [String : Any]
-		print(parameters)
-		let b = Alamofire.request("https://oauth.reddit.com/api/subscribe", method: .post, parameters: parameters, headers: headers)
-			.response(completionHandler: { response in
-				if let response = response.response{
-					completionHandler(response.statusCode)
-
+		func getSubscriptions(completionHandler: @escaping (JSON?) -> Void){
+			let headers = [
+				"Authorization": "bearer \(access_token)",
+				"User-Agent": "RedditWatch/0.1 by 123icebuggy",
+				]
+			Alamofire.request("https://oauth.reddit.com/subreddits/mine/subscriber", headers: headers)
+				.responseJSON { dat in
+					if let data = dat.data{
+						completionHandler(try? JSON(data: data))
+					} else{
+						print("wouldn't let data")
+					}
+			}
+		}
+		func getComments(subreddit: String, id: String, sort: String, after: String? = String(), completionHandler: @escaping (JSON) -> Void){
+			
+			let url = URL(string: "https://www.reddit.com/r/\(subreddit)/comments/\(id).json")
+			var parameters = [
+				"sort": sort.lowercased()
+			]
+			if let after = after{
+				var shouldLoadMore = !after.isEmpty //Inverse, because if it IS empty, we DON'T want to laod more
+				if shouldLoadMore{
+					parameters["after"] = "t1_\(after)"
 				}
-			})
-		
-	}
+			}
+			print(parameters)
+			let b = Alamofire.request(url!,  parameters: parameters)
+				.responseData { data in
+					if let data = data.data{
+						completionHandler(JSON(data))
+						
+					}
+			}
+			debugPrint(b)
+		}
+		func getSubreddit(_ subreddit: String = "askreddit", sort: String = "hot", after: String? = String(), completionHandler: @escaping (JSON) -> Void){
+			var home = (subreddit.lowercased() == "home")
+			var headers = [
+				"Authorization": "bearer \(access_token)",
+				"User-Agent": "RedditWatch/0.1 by 123icebuggy",
+				]
+			var parameters = [String: Any]()
+			var url = URL(string: "https://www.reddit.com/r/\(subreddit)/\(sort).json")
+			if sort == "top"{
+				url = URL(string: "https://www.reddit.com/r/\(subreddit)/\(sort).json")
+				parameters["t"] = "all"
+				
+			} else{
+				url = URL(string: "https://www.reddit.com/r/\(subreddit)/\(sort).json")
+			}
+			if subreddit.lowercased() == "home"{
+				url = URL(string: "https://oauth.reddit.com")
+			}
+			if sort == "top"{
+				if home{
+					url = URL(string: "https://oauth.reddit.com" + "/\(sort)")
+				}
+			} else if sort != "hot"{
+				if home{
+					url = URL(string: "https://oauth.reddit.com" + "/\(sort)")
+				}
+			}
+			if !home{
+				headers = [String: String]()
+			}
+			if let after = after{
+				var shouldLoadMore = !after.isEmpty //Inverse, because if it IS empty, we DON'T want to laod more
+				if shouldLoadMore{
+					parameters["after"] = "t3_\(after)"
+				}
+			}
+			var lastTime = Date()
+			if let lastRefresh = UserDefaults.standard.object(forKey: "lastRefresh") as? Date{
+				lastTime = lastRefresh
+			} else{
+				
+			}
+			let timeSince = Date().timeIntervalSince(lastTime)
+			if timeSince > 1800 && subreddit.lowercased() != "home"{
+				if let loading = loading{
+					if !loading{
+						if let refresh_token = UserDefaults.standard.object(forKey: "refresh_token") as? String{
+							getAccessToken(grantType: refresh_token, code: refresh_token, completionHandler: {result in
+								self.loading = false
+								print("Got back \(result)")
+								print("Saving \(String(describing: result["acesss_token"]))")
+								UserDefaults.standard.set(result["acesss_token"]!, forKey: "access_token")
+								self.access_token = result["acesss_token"]!
+								var headers = [
+									"Authorization": "bearer \(result["acesss_token"]!)",
+									"User-Agent": "RedditWatch/0.1 by 123icebuggy",
+									]
+								Alamofire.request(url!, parameters: parameters, headers: headers)
+									.responseData { dat in
+										if let dat = dat.data{
+											if let js = try? JSON(data: dat){
+												completionHandler(js)
+											}
+											
+										}
+								}
+								
+							})
+							
+						}
+					}
+				}
+			} else{
+				let b = Alamofire.request(url!, parameters: parameters, headers: headers)
+					.responseData { dat in
+						if let dat = dat.data{
+							if let js = try? JSON(data: dat){
+								completionHandler(js)
+							}
+							
+						}
+				}
+			}
+		}
+		func subscribe(to subreddit: String, action: String, completionHandler: @escaping (_ success: Int) -> Void){
+			var headers = [
+				"Authorization": "bearer \(access_token)",
+				"User-Agent": "RedditWatch/0.1 by 123icebuggy",
+				]
+			let parameters = [
+				"action": action,
+				"sr_name": subreddit
+				] as [String : Any]
+			print(parameters)
+			let b = Alamofire.request("https://oauth.reddit.com/api/subscribe", method: .post, parameters: parameters, headers: headers)
+				.response(completionHandler: { response in
+					if let response = response.response{
+						completionHandler(response.statusCode)
+						
+					}
+				})
+			
+		}
 }

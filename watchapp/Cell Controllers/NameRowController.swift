@@ -8,12 +8,12 @@
 
 import WatchKit
 
-protocol customDelegate: NSObjectProtocol {
+protocol voteButtonDelegate: NSObjectProtocol {
 	func didSelect(upvoteButton: WKInterfaceButton, downvoteButton: WKInterfaceButton, onCellWith id: String, action: String)
 }
 
 class NameRowController: NSObject {
-	weak var delegate: customDelegate?
+	weak var delegate: voteButtonDelegate?
 	var index: Int = 0
 	
 	@IBOutlet var nameLabe: WKInterfaceLabel!

@@ -173,7 +173,9 @@ class postController: WKInterfaceController {
 	}
 	
 	override func willDisappear() {
+		
 		Alamofire.SessionManager.default.session.getTasksWithCompletionHandler { (sessionDataTask, uploadData, downloadData) in
+			sessionDataTask.forEach {print($0.description)}
 			sessionDataTask.forEach { $0.cancel() }
 			uploadData.forEach { $0.cancel() }
 			downloadData.forEach { $0.cancel() }
@@ -201,7 +203,7 @@ class postController: WKInterfaceController {
 			}
 			
 			self.commentsTable.setAlpha(0.0)
-			self.commentsTable.setNumberOfRows(self.comments.count, withRowType: "commentCell")
+			self.commentsTable.setNumberOfRows(self.comments.count - 1, withRowType: "commentCell")
 			for (index, element) in self.idList.enumerated(){
 				var matches = [String]()
 				if let row = self.commentsTable.rowController(at: index) as? commentController{

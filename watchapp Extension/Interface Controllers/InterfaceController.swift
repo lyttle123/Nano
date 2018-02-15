@@ -12,7 +12,7 @@ import SwiftyJSON
 import WatchConnectivity
 import Alamofire
 
-class InterfaceController: WKInterfaceController, WCSessionDelegate, customDelegate{
+class InterfaceController: WKInterfaceController, WCSessionDelegate, voteButtonDelegate{
 	
 	
 	
@@ -60,12 +60,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 		super.awake(withContext: context)
 		invalidateUserActivity()
 		loadingIndicator.setHidden(true)
-
-		//		let domain = Bundle.main.bundleIdentifier!
-		//		UserDefaults.standard.removePersistentDomain(forName: domain) //Prevent nasty 0 __pthread_kill SIGABRT kill
-		//		UserDefaults.standard.synchronize()
-		print("we back bitche")
-		
+		print(context)
 		if setup{
 			suggestions.insert("home", at: 0)
 			suggestions.insert("all", at: 1)
@@ -322,6 +317,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, customDeleg
 			
 		}
 		loading = true
+		
 		reddit.getSubreddit(subreddit, sort: sort, after: after, completionHandler: { json in
 			self.loading = false
 			let children = json["data"]["children"].array

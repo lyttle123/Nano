@@ -75,7 +75,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="client" id="wfk-RF-Di8">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="client" id="wfk-RF-Di8">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wfk-RF-Di8" id="K8k-L6-u8x">
@@ -278,7 +278,7 @@ This will load on app launch automatically</string>
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="quickSubreddit" id="wZ5-3l-CS2" customClass="quickSubredditCell" customModule="redditwatch" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="quickSubreddit" id="wZ5-3l-CS2" customClass="quickSubredditCell" customModule="redditwatch" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wZ5-3l-CS2" id="nbb-qf-vIS">
@@ -324,10 +324,10 @@ This will load on app launch automatically</string>
             </objects>
             <point key="canvasLocation" x="-100" y="90"/>
         </scene>
-        <!--Pro-->
+        <!--Pro Upgrade-->
         <scene sceneID="cY3-0V-b5t">
             <objects>
-                <viewController storyboardIdentifier="proController" title="Pro" id="cDX-VI-Jxo" customClass="proController" customModule="redditwatch" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="proController" title="Pro Upgrade" id="cDX-VI-Jxo" customClass="proController" customModule="redditwatch" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="IMM-Cx-ME9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

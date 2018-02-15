@@ -83,14 +83,11 @@ class ViewController: UIViewController, WCSessionDelegate, SFSafariViewControlle
 			if switchSub.isOn{
 				print("Setting to on")
 				UserDefaults.standard.set(true, forKey: "switchState")
-				wcSession.sendMessage(["defaultSubreddit": true], replyHandler: {reply in }, errorHandler: { errror in
-					print(errror)
-				})
+				
+				sendData().superSend(data: ["defaultSubreddit": true])
 				defaultSubredditField.isEnabled = true
 			} else{
-				wcSession.sendMessage(["defaultSubreddit": false], replyHandler: {reply in }, errorHandler: { errror in
-					print(errror)
-				})
+				sendData().superSend(data: ["defaultSubreddit": false])
 				print("Print setting to false")
 				UserDefaults.standard.set(false, forKey: "switchState")
 				defaultSubredditField.isEnabled = false
@@ -110,9 +107,9 @@ class ViewController: UIViewController, WCSessionDelegate, SFSafariViewControlle
 			switch sender.isOn{
 			case true:
 				UserDefaults.standard.set(true, forKey: "highResImage")
-				wcSession.sendMessage(["highResImage": true], replyHandler: {reply in }, errorHandler: nil)
+				sendData().superSend(data: ["highResImage": true])
 			case false:
-				wcSession.sendMessage(["highResImage": false], replyHandler: {reply in }, errorHandler: nil)
+				sendData().superSend(data: ["highResImage": false])
 				UserDefaults.standard.set(false, forKey: "highResImage")
 			}
 		}
@@ -128,9 +125,8 @@ class ViewController: UIViewController, WCSessionDelegate, SFSafariViewControlle
 			//Placeholder
 		} else if textField.tag == 3{
 			if let sub = textField.text{
-				wcSession.sendMessage(["defaultSubreddit": sub], replyHandler: {reply in }, errorHandler: { errror in
-					print(errror)
-				})
+				
+				sendData().superSend(data: ["defaultSubreddit": sub])
 				
 			}
 		}
