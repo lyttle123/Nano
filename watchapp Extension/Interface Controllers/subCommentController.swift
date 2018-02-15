@@ -156,12 +156,9 @@ class subCommentController: WKInterfaceController {
 	override func table(_ table: WKInterfaceTable, didSelectRowAt rowIndex: Int) {
 		
 		if let _ = repliesTable.rowController(at: rowIndex) as? commentController{
-			//if row.replies > 0{ //Temporarily disabling crash-detection until fix to bug where replies to replies couldn't be viewed
 			WKInterfaceDevice.current().play(WKHapticType.click)
 			self.pushController(withName: "subComment", context: comments[idList[rowIndex]])
-			//} else{
-				WKInterfaceDevice.current().play(WKHapticType.failure)
-			//}
+			
 		}
     }
 	@IBOutlet var upvoteButton: WKInterfaceButton!

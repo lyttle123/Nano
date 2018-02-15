@@ -14,17 +14,12 @@ class waitForiPhone: WKInterfaceController, WCSessionDelegate {
 	var reddit = RedditAPI()
 	@IBOutlet var getStartedButton: WKInterfaceButton!
 	var wcSession: WCSession?
+	let sender = sendData()
 	override func awake(withContext context: Any?) {
 		super.awake(withContext: context)
 		wcSession = WCSession.default
 		wcSession?.delegate = self
 		wcSession?.activate()
-//		getStartedButton.setEnabled(false)
-//		if let connected = UserDefaults.standard.object(forKey: "connected") as? Bool{
-//			if connected {
-//				getStartedButton.setEnabled(true)
-//			}
-//		}
 	}
 	
 	
@@ -45,8 +40,12 @@ class waitForiPhone: WKInterfaceController, WCSessionDelegate {
 				print("SHould enable")
 				if !setup{
 					print("moving away")
-					self.wcSession?.sendMessage(["setup":true], replyHandler: nil, errorHandler: { error in
-						print(error.localizedDescription)
+					wcSession?.sendMessage(["setup": true], replyHandler: nil, errorHandler: {error in
+						if error != nil{
+							print("ERERERERERERERERERERERERERERER")
+							print(error.localizedDescription)
+							self.sender.superSend(data: ["setup": "true"], reliable: true)
+						}
 					})
 					UserDefaults.standard.set(true, forKey: "setup")
 					self.setup = true
@@ -55,9 +54,7 @@ class waitForiPhone: WKInterfaceController, WCSessionDelegate {
 					
 					
 				}
-				self.wcSession?.sendMessage(["setup":true], replyHandler: nil, errorHandler: { error in
-					print(error.localizedDescription)
-				})
+				sender.superSend(data: ["setup": true])
 				
 				
 			}
@@ -77,18 +74,15 @@ class waitForiPhone: WKInterfaceController, WCSessionDelegate {
 				print("SHould enable")
 				if !setup{
 					print("moving away")
-					self.wcSession?.sendMessage(["setup":true], replyHandler: nil, errorHandler: { error in
-						print(error.localizedDescription)
-					})
+					sender.superSend(data: ["setup": true])
 					UserDefaults.standard.set(true, forKey: "setup")
 					WKInterfaceController.reloadRootControllers(withNamesAndContexts: [("interface", AnyObject.self as AnyObject)])
 					
 					self.setup = true
 					
 				}
-				self.wcSession?.sendMessage(["setup":true], replyHandler: nil, errorHandler: { error in
-					print(error.localizedDescription)
-				})
+				
+				sender.superSend(data: ["setup": true])
 				
 				
 			}
@@ -102,9 +96,7 @@ class waitForiPhone: WKInterfaceController, WCSessionDelegate {
 		case .activated:
 			print("activated")
 			if (self.wcSession?.isReachable)!{
-				self.wcSession?.sendMessage(["appLaunched": true], replyHandler: nil, errorHandler: { error in
-					print(error.localizedDescription)
-				})
+				sender.superSend(data: ["appLaunched": true])
 			} else{
 				print("Not reachable")
 			}

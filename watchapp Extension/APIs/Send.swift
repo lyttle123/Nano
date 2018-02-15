@@ -29,17 +29,22 @@ class sendData: NSObject, WCSessionDelegate{
 	
 	var wcSession: WCSession?
 	
-	func superSend(data: [String: Any]){
+	func superSend(data: [String: Any], reliable: Bool = false){
 		wcSession?.sendMessage(data, replyHandler: {reply in
 			print(reply)
 		}, errorHandler: {error in
 			print(error.localizedDescription)
+			if error != nil{
+				self.wcSession?.transferUserInfo(data)
+			}
 		})
-		wcSession?.transferUserInfo(data)
-		do {
-			try wcSession?.updateApplicationContext(data)
-		} catch{
-			print(error.localizedDescription)
+		if reliable{
+			do {
+				try wcSession?.updateApplicationContext(data)
+			} catch{
+				print(error.localizedDescription)
+			}
+			
 		}
 	}
 	override init() {

@@ -177,23 +177,29 @@ class postController: WKInterfaceController {
 		Alamofire.SessionManager.default.session.getTasksWithCompletionHandler { (sessionDataTask, uploadData, downloadData) in
 			sessionDataTask.forEach {
 				if let url = $0.originalRequest?.url?.absoluteString{
+					print(url)
 					if url.range(of: "thumbs.redditmedia.com") == nil && url.range(of: "api/comment") == nil{
 						$0.cancel()
+						print("Cancelled \(url)")
 					}
 				}
 				
 			}
 			uploadData.forEach {
 				if let url = $0.originalRequest?.url?.absoluteString{
+					print(url)
 					if url.range(of: "thumbs.redditmedia.com") == nil && url.range(of: "api/comment") == nil{
 						$0.cancel()
+						print("Cancelled \(url)")
 					}
 				}
 			}
 			downloadData.forEach {
 				if let url = $0.originalRequest?.url?.absoluteString{
+					print(url)
 					if url.range(of: "thumbs.redditmedia.com") == nil && url.range(of: "api/comment") == nil{
 						$0.cancel()
+						print("Cancelled \(url)")
 					}
 				}
 			}
