@@ -292,7 +292,7 @@ class postController: WKInterfaceController {
 				}
 			}
 			self.commentsTable.setAlpha(1.0)
-			WKInterfaceDevice.current().play(WKHapticType.stop)
+			WKInterfaceDevice.current().play(.success)
 			
 			
 			
@@ -532,8 +532,7 @@ class postController: WKInterfaceController {
 					print("helllll no")
 				}
 			}
-			WKInterfaceDevice.current().play(WKHapticType.stop)
-			
+			WKInterfaceDevice.current().play(.success)
 		})
 		
 		
