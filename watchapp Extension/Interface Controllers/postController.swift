@@ -127,7 +127,7 @@ class postController: WKInterfaceController {
 								if let b = UIImage.gifImageWithData(data){
 									print("Gif")
 									self.postImage.setImage(b)
-									self.postImage.setRelativeHeight(b.breadthRect.height, withAdjustment: 0)
+									self.postImage.sizeToFitWidth()
 									self.postImage.startAnimating()
 								}
 							} else{
