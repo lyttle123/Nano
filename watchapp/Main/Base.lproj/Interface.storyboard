@@ -138,9 +138,7 @@
                                                     <label alignment="left" text="postName" textAlignment="left" numberOfLines="0" id="d1w-pC-oNz"/>
                                                 </items>
                                             </group>
-                                            <imageView width="120" alignment="left" id="0gQ-PJ-ULH">
-                                                <variation key="device=watch42mm" width="138"/>
-                                            </imageView>
+                                            <imageView width="1" alignment="left" id="0gQ-PJ-ULH"/>
                                             <group width="1" alignment="left" layout="vertical" radius="5" id="CoP-x3-BzE">
                                                 <items>
                                                     <group width="1" alignment="left" id="HF3-0a-jvd">
@@ -295,7 +293,7 @@
                             <fontDescription key="font" type="system" weight="semibold" pointSize="16"/>
                         </label>
                         <label width="136" alignment="left" text="Post Title" numberOfLines="0" id="XYC-nm-30e"/>
-                        <imageView alignment="left" id="wIb-5o-dFo">
+                        <imageView width="1" alignment="left" image="pic" id="wIb-5o-dFo">
                             <gestureRecognizers>
                                 <tapGestureRecognizer id="o2x-e4-dhP">
                                     <connections>
@@ -399,6 +397,18 @@
                                                 </items>
                                             </group>
                                         </items>
+                                        <gestureRecognizers>
+                                            <longPressGestureRecognizer id="nVj-3J-oJg">
+                                                <connections>
+                                                    <action selector="heldComment:" destination="SBz-eR-690" id="TTy-77-TPo"/>
+                                                </connections>
+                                            </longPressGestureRecognizer>
+                                            <panGestureRecognizer id="W1z-ef-BTu">
+                                                <connections>
+                                                    <action selector="didSwipe:" destination="SBz-eR-690" id="Lfp-GN-Mgb"/>
+                                                </connections>
+                                            </panGestureRecognizer>
+                                        </gestureRecognizers>
                                     </group>
                                     <connections>
                                         <outlet property="gildedIndicator" destination="jGM-Af-DIK" id="zY6-vD-517"/>

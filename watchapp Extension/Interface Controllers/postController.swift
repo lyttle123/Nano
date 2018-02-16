@@ -13,6 +13,8 @@ import Alamofire
 
 class postController: WKInterfaceController {
 	
+	
+	
 	@IBOutlet var postComments: WKInterfaceLabel!
 	@IBOutlet var postScore: WKInterfaceLabel!
 	@IBOutlet var postAuthor: WKInterfaceLabel!
@@ -66,6 +68,8 @@ class postController: WKInterfaceController {
 		downvoteButton.setHidden(true)
 		upvoteButton.setHidden(true)
 		savePostButton.setHidden(true)
+	
+		
 		guard let post = context as? JSON else{
 			InterfaceController().becomeCurrentPage()
 			return
@@ -96,6 +100,9 @@ class postController: WKInterfaceController {
 		if UserDefaults.standard.object(forKey: "shouldLoadImage") as! Bool{
 			if let imagedat = UserDefaults.standard.object(forKey: "selectedThumbnail") as? Data{
 				postImage.setImageData(imagedat)
+				if let image = UIImage(data: imagedat){
+					postImage.setRelativeHeight(image.breadthRect.height, withAdjustment: 0)
+				}
 				
 				
 			}
@@ -120,7 +127,7 @@ class postController: WKInterfaceController {
 								if let b = UIImage.gifImageWithData(data){
 									print("Gif")
 									self.postImage.setImage(b)
-									
+									self.postImage.setRelativeHeight(b.breadthRect.height, withAdjustment: 0)
 									self.postImage.startAnimating()
 								}
 							} else{
@@ -128,7 +135,9 @@ class postController: WKInterfaceController {
 								if image != nil{
 									print("setting \(String(describing: image))")
 									self.postImage.setImage(image)
-									
+									self.postImage.sizeToFitHeight()
+								} else{
+									print("Sizing now")
 								}
 							}
 							
@@ -229,7 +238,7 @@ class postController: WKInterfaceController {
 			self.commentsTable.setAlpha(0.0)
 			self.commentsTable.setNumberOfRows(self.comments.count - 1, withRowType: "commentCell")
 			for (index, element) in self.idList.enumerated(){
-				var matches = [String]()
+				_ = [String]()
 				if let row = self.commentsTable.rowController(at: index) as? commentController{
 					if let stuff = self.comments[element]?.dictionary{
 						row.nameLabel.setText(stuff["body"]?.string?.dehtmlify())
@@ -458,7 +467,7 @@ class postController: WKInterfaceController {
 		if loading {return}
 		guard let loadAfter = idList.last else {return}
 		print(loadAfter)
-		var previousCount = self.comments.count
+		let previousCount = self.comments.count
 		loading = true
 		reddit.getComments(subreddit: currentSubreddit, id: currentId, sort: currentSort, after: loadAfter, completionHandler: {json in
 			self.loading = false

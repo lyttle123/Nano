@@ -8,8 +8,9 @@
 
 import WatchKit
 
-class commentController: NSObject {
 
+
+class commentController: NSObject {
 	@IBOutlet var gildedIndicator: WKInterfaceLabel!
 	@IBOutlet var userLabel: WKInterfaceLabel!
 	@IBOutlet var nameLabel: WKInterfaceLabel!

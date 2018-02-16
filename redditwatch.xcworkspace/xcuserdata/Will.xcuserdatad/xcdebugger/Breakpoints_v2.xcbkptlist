@@ -89,11 +89,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "watchapp Extension/Interface Controllers/postController.swift"
-            timestampString = "540425142.932387"
+            timestampString = "540478117.762784"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "576"
-            endingLineNumber = "576">
+            startingLineNumber = "585"
+            endingLineNumber = "585"
+            landmarkName = "WKInterfaceButton"
+            landmarkType = "21">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
