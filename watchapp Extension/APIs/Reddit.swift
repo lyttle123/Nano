@@ -241,7 +241,7 @@ class RedditAPI{
 				
 			}
 			let timeSince = Date().timeIntervalSince(lastTime)
-			if timeSince > 1800 && subreddit.lowercased() != "home"{
+			if timeSince > 1800 && subreddit.lowercased() == "home"{
 				if let loading = loading{
 					if !loading{
 						if let refresh_token = UserDefaults.standard.object(forKey: "refresh_token") as? String{

@@ -293,7 +293,7 @@
                             <fontDescription key="font" type="system" weight="semibold" pointSize="16"/>
                         </label>
                         <label width="136" alignment="left" text="Post Title" numberOfLines="0" id="XYC-nm-30e"/>
-                        <imageView width="1" alignment="left" image="pic" id="wIb-5o-dFo">
+                        <imageView width="1" alignment="left" id="wIb-5o-dFo">
                             <gestureRecognizers>
                                 <tapGestureRecognizer id="o2x-e4-dhP">
                                     <connections>
@@ -302,6 +302,7 @@
                                 </tapGestureRecognizer>
                             </gestureRecognizers>
                         </imageView>
+                        <movie width="1" height="100" alignment="left" id="Cct-bG-IOO"/>
                         <label alignment="left" numberOfLines="0" id="db8-mH-ghL">
                             <fontDescription key="font" type="system" pointSize="13"/>
                         </label>
@@ -427,6 +428,7 @@
                         <outlet property="commentsTable" destination="hlc-ag-5jF" id="em4-Dh-3qE"/>
                         <outlet property="downvoteButton" destination="Gej-z4-U1l" id="Et2-QJ-b0O"/>
                         <outlet property="loadingIndicator" destination="Hhw-tv-8af" id="JuI-tt-slt"/>
+                        <outlet property="movieControl" destination="Cct-bG-IOO" id="jpS-cD-aGS"/>
                         <outlet property="postAuthor" destination="OKp-rM-XiC" id="pLu-p3-EjP"/>
                         <outlet property="postComments" destination="aO3-dD-Sk3" id="GqO-N8-5DB"/>
                         <outlet property="postContent" destination="XYC-nm-30e" id="1Va-Kt-tvP"/>

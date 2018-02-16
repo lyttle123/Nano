@@ -15,6 +15,7 @@ class postController: WKInterfaceController {
 	
 	
 	
+	@IBOutlet var movieControl: WKInterfaceMovie!
 	@IBOutlet var postComments: WKInterfaceLabel!
 	@IBOutlet var postScore: WKInterfaceLabel!
 	@IBOutlet var postAuthor: WKInterfaceLabel!
@@ -107,6 +108,8 @@ class postController: WKInterfaceController {
 				
 			}
 			if var url = post["url"].string{
+				var shouldLoad = true
+				
 				if url.range(of: "imgur") != nil && url.range(of: "i.imgur") == nil && url.range(of: "/a/") == nil{ //If it's an imgur post, that isn't an album, but also is not a direct link
 					let id = url.components(separatedBy: ".com/").last!
 					url = "https://i.imgur.com/\(id).png" //Make it one
@@ -117,11 +120,30 @@ class postController: WKInterfaceController {
 				if url.range(of: "https") == nil{
 					url = url.replacingOccurrences(of: "http://", with: "https://")
 				}
+				if url.range(of: "gifv") != nil{
+					shouldLoad = false
+					url = url.replacingOccurrences(of: "gifv", with: "mp4")
+					
+				}
 				print("Downloading")
+				print(url)
+				if !shouldLoad{
+					self.postImage.setHidden(true)
+					movieControl.setMovieURL(URL(string: url)!)
+					movieControl.setLoops(true)
+					if let imagedat = UserDefaults.standard.object(forKey: "selectedThumbnail") as? Data{
+						let img = WKImage(imageData: imagedat)
+							movieControl.setPosterImage(img)
+					}
+					
+				} else{
+					movieControl.setHidden(true)
+				}
 				
-				Alamofire.request(url)
+				if shouldLoad{
+					Alamofire.request(url)
 					.responseData { imageData in
-						
+
 						if let data = imageData.data{
 							if post["post_hint"].string! == "image" && url.range(of: "gif") != nil{
 								if let b = UIImage.gifImageWithData(data){
@@ -140,19 +162,21 @@ class postController: WKInterfaceController {
 									print("Sizing now")
 								}
 							}
-							
-							
+
+
 						} else{
 							self.progressLabel.setText("Incompatible Website")
 							print("couldn't make image")
 						}
 					}
-					
+
 					.downloadProgress { progress in
 						self.progressLabel.setText("Downloading \(String(progress.fractionCompleted * 100).prefix(4))%")
 						if progress.fractionCompleted == 1.0{
 							self.progressLabel.setHidden(true)
 						}
+					}
+					
 				}
 			}
 		}
