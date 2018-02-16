@@ -69,7 +69,7 @@ class postController: WKInterfaceController {
 		downvoteButton.setHidden(true)
 		upvoteButton.setHidden(true)
 		savePostButton.setHidden(true)
-	
+		
 		
 		guard let post = context as? JSON else{
 			InterfaceController().becomeCurrentPage()
@@ -129,12 +129,14 @@ class postController: WKInterfaceController {
 				print(url)
 				if !shouldLoad{
 					self.postImage.setHidden(true)
+					
 					movieControl.setMovieURL(URL(string: url)!)
 					movieControl.setLoops(true)
 					if let imagedat = UserDefaults.standard.object(forKey: "selectedThumbnail") as? Data{
 						let img = WKImage(imageData: imagedat)
-							movieControl.setPosterImage(img)
+						movieControl.setPosterImage(img)
 					}
+					
 					
 				} else{
 					movieControl.setHidden(true)
@@ -142,39 +144,39 @@ class postController: WKInterfaceController {
 				
 				if shouldLoad{
 					Alamofire.request(url)
-					.responseData { imageData in
-
-						if let data = imageData.data{
-							if post["post_hint"].string! == "image" && url.range(of: "gif") != nil{
-								if let b = UIImage.gifImageWithData(data){
-									print("Gif")
-									self.postImage.setImage(b)
-									self.postImage.sizeToFitWidth()
-									self.postImage.startAnimating()
-								}
-							} else{
-								let image = UIImage(data: data)
-								if image != nil{
-									print("setting \(String(describing: image))")
-									self.postImage.setImage(image)
-									self.postImage.sizeToFitHeight()
+						.responseData { imageData in
+							
+							if let data = imageData.data{
+								if post["post_hint"].string! == "image" && url.range(of: "gif") != nil{
+									if let b = UIImage.gifImageWithData(data){
+										print("Gif")
+										self.postImage.setImage(b)
+										self.postImage.sizeToFitWidth()
+										self.postImage.startAnimating()
+									}
 								} else{
-									print("Sizing now")
+									let image = UIImage(data: data)
+									if image != nil{
+										print("setting \(String(describing: image))")
+										self.postImage.setImage(image)
+										self.postImage.sizeToFitHeight()
+									} else{
+										print("Sizing now")
+									}
 								}
+								
+								
+							} else{
+								self.progressLabel.setText("Incompatible Website")
+								print("couldn't make image")
 							}
-
-
-						} else{
-							self.progressLabel.setText("Incompatible Website")
-							print("couldn't make image")
 						}
-					}
-
-					.downloadProgress { progress in
-						self.progressLabel.setText("Downloading \(String(progress.fractionCompleted * 100).prefix(4))%")
-						if progress.fractionCompleted == 1.0{
-							self.progressLabel.setHidden(true)
-						}
+						
+						.downloadProgress { progress in
+							self.progressLabel.setText("Downloading \(String(progress.fractionCompleted * 100).prefix(4))%")
+							if progress.fractionCompleted == 1.0{
+								self.progressLabel.setHidden(true)
+							}
 					}
 					
 				}
