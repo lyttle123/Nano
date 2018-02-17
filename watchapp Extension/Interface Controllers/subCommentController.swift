@@ -55,7 +55,7 @@ class subCommentController: WKInterfaceController {
                     }
 					if let replyCount = comment["replies"]["data"]["children"].array{
 						if let _ = replyCount.last!["data"]["body"].string{
-							row.replies = replyCount.count
+							row.replies = 4
 							row.replyCount.setText("\(String(describing: replyCount.count)) Replies")
 						} else{
 							row.replies = replyCount.count - 1

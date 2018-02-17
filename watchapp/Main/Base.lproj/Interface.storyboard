@@ -430,6 +430,7 @@
                         <outlet property="loadingIndicator" destination="Hhw-tv-8af" id="JuI-tt-slt"/>
                         <outlet property="movieControl" destination="Cct-bG-IOO" id="jpS-cD-aGS"/>
                         <outlet property="postAuthor" destination="OKp-rM-XiC" id="pLu-p3-EjP"/>
+                        <outlet property="postCommentButton" destination="4Ex-Xb-yZO" id="FIN-hb-5fk"/>
                         <outlet property="postComments" destination="aO3-dD-Sk3" id="GqO-N8-5DB"/>
                         <outlet property="postContent" destination="XYC-nm-30e" id="1Va-Kt-tvP"/>
                         <outlet property="postImage" destination="wIb-5o-dFo" id="c4X-cu-erW"/>

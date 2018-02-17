@@ -515,7 +515,8 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, voteButtonD
 				print("Should attach image")
 				UserDefaults.standard.set(true, forKey: "shouldLoadImage")
 				UserDefaults.standard.set(ids[rowIndex], forKey: "selectedId")
-				UserDefaults.standard.set(UIImagePNGRepresentation(images[rowIndex]!), forKey: "selectedThumbnail")
+				UserDefaults.standard.set(UIImagePNGRepresentation(images[rowIndex]!), forKey: "selectedThumbnail" + ids[rowIndex])
+				
 				self.pushController(withName: "lorem", context: post[ids[rowIndex]])
 			} else{
 				UserDefaults.standard.set(false, forKey: "shouldLoadImage")

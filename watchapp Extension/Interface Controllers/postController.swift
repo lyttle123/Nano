@@ -15,6 +15,7 @@ class postController: WKInterfaceController {
 	
 	
 	
+	@IBOutlet var postCommentButton: WKInterfaceButton!
 	@IBOutlet var movieControl: WKInterfaceMovie!
 	@IBOutlet var postComments: WKInterfaceLabel!
 	@IBOutlet var postScore: WKInterfaceLabel!
@@ -65,6 +66,7 @@ class postController: WKInterfaceController {
 		
 		
 		super.awake(withContext: context)
+		
 		addMenuItem(with: WKMenuItemIcon.info, title: "Change Sort", action: #selector(changeSort))
 		downvoteButton.setHidden(true)
 		upvoteButton.setHidden(true)
@@ -99,7 +101,7 @@ class postController: WKInterfaceController {
 			postComments.setText("\(replies) Comments")
 		}
 		if UserDefaults.standard.object(forKey: "shouldLoadImage") as! Bool{
-			if let imagedat = UserDefaults.standard.object(forKey: "selectedThumbnail") as? Data{
+			if let imagedat = UserDefaults.standard.object(forKey: "selectedThumbnail" + (UserDefaults.standard.object(forKey: "selectedId") as! String)) as? Data{
 				postImage.setImageData(imagedat)
 				if let image = UIImage(data: imagedat){
 					postImage.setRelativeHeight(image.breadthRect.height, withAdjustment: 0)
@@ -107,80 +109,86 @@ class postController: WKInterfaceController {
 				
 				
 			}
-			if var url = post["url"].string{
-				var shouldLoad = true
-				
-				if url.range(of: "imgur") != nil && url.range(of: "i.imgur") == nil && url.range(of: "/a/") == nil{ //If it's an imgur post, that isn't an album, but also is not a direct link
-					let id = url.components(separatedBy: ".com/").last!
-					url = "https://i.imgur.com/\(id).png" //Make it one
-				}
-				if url.range(of: "http") == nil{
-					url = "https://" + url
-				}
-				if url.range(of: "https") == nil{
-					url = url.replacingOccurrences(of: "http://", with: "https://")
-				}
-				if url.range(of: "gifv") != nil{
-					shouldLoad = false
-					url = url.replacingOccurrences(of: "gifv", with: "mp4")
-					
-				}
-				print("Downloading")
-				print(url)
-				if !shouldLoad{
-					self.postImage.setHidden(true)
-					
-					movieControl.setMovieURL(URL(string: url)!)
-					movieControl.setLoops(true)
-					if let imagedat = UserDefaults.standard.object(forKey: "selectedThumbnail") as? Data{
-						let img = WKImage(imageData: imagedat)
-						movieControl.setPosterImage(img)
-					}
-					
-					
-				} else{
-					movieControl.setHidden(true)
-				}
-				
-				if shouldLoad{
-					Alamofire.request(url)
-						.responseData { imageData in
-							
-							if let data = imageData.data{
-								if post["post_hint"].string! == "image" && url.range(of: "gif") != nil{
-									if let b = UIImage.gifImageWithData(data){
-										print("Gif")
-										self.postImage.setImage(b)
-										self.postImage.sizeToFitWidth()
-										self.postImage.startAnimating()
-									}
-								} else{
-									let image = UIImage(data: data)
-									if image != nil{
-										print("setting \(String(describing: image))")
-										self.postImage.setImage(image)
-										self.postImage.sizeToFitHeight()
-									} else{
-										print("Sizing now")
-									}
-								}
-								
-								
-							} else{
-								self.progressLabel.setText("Incompatible Website")
-								print("couldn't make image")
-							}
-						}
-						
-						.downloadProgress { progress in
-							self.progressLabel.setText("Downloading \(String(progress.fractionCompleted * 100).prefix(4))%")
-							if progress.fractionCompleted == 1.0{
-								self.progressLabel.setHidden(true)
-							}
-					}
-					
-				}
+			
+		}
+		if var url = post["url"].string{
+			var shouldLoad = true
+			
+			if url.range(of: "imgur") != nil && url.range(of: "i.imgur") == nil && url.range(of: "/a/") == nil{ //If it's an imgur post, that isn't an album, but also is not a direct link
+				let id = url.components(separatedBy: ".com/").last!
+				url = "https://i.imgur.com/\(id).png" //Make it one
 			}
+			if url.range(of: "http") == nil{
+				url = "https://" + url
+			}
+			if url.range(of: "https") == nil{
+				url = url.replacingOccurrences(of: "http://", with: "https://")
+			}
+			if url.range(of: "gifv") != nil && url.range(of: "imgur") != nil{
+				shouldLoad = false
+				url = url.replacingOccurrences(of: "gifv", with: "mp4")
+				
+			}
+			
+			print("Downloading")
+			print(url)
+			if !shouldLoad{
+				shouldLoad = false
+				self.postImage.setHidden(true)
+				movieControl.setMovieURL(URL(string: url)!)
+				movieControl.setLoops(true)
+				
+				if let imagedat = UserDefaults.standard.object(forKey: "selectedThumbnail" + (UserDefaults.standard.object(forKey: "selectedId") as! String)) as? Data{
+					let img = WKImage(imageData: imagedat)
+					movieControl.setPosterImage(img)
+				}
+				
+				
+			} else{
+				movieControl.setHidden(true)
+			}
+			
+			if shouldLoad{
+				Alamofire.request(url)
+					.responseData { imageData in
+						
+						if let data = imageData.data{
+							if post["post_hint"].string! == "image" && url.range(of: "gif") != nil{
+								if let b = UIImage.gifImageWithData(data){
+									print("Gif")
+									self.postImage.setImage(b)
+									self.postImage.sizeToFitWidth()
+									self.postImage.startAnimating()
+								}
+							} else{
+								let image = UIImage(data: data)
+								if image != nil{
+									print("setting \(String(describing: image))")
+									self.postImage.setImage(image)
+									self.postImage.sizeToFitHeight()
+								} else{
+									print("Sizing now")
+								}
+							}
+							
+							
+						} else{
+							self.progressLabel.setText("Incompatible Website")
+							print("couldn't make image")
+						}
+					}
+					
+					.downloadProgress { progress in
+						self.progressLabel.setText("Downloading \(String(progress.fractionCompleted * 100).prefix(4))%")
+						if progress.fractionCompleted == 1.0{
+							self.progressLabel.setHidden(true)
+						}
+				}
+				
+			}
+			
+		} else{
+			movieControl.setHidden(true)
 		}
 		currentPost = post
 		UserDefaults.standard.set(post["author"].string, forKey: "selectedAuthor")
@@ -449,6 +457,19 @@ class postController: WKInterfaceController {
 		
 	}
 	@IBAction func postComment() {
+		if let pro = UserDefaults.standard.object(forKey: "pro") as? Bool{
+			if !pro{
+				self.presentAlert(withTitle: "Post Comment is a Pro feature", message: "Posting a comment requires the Pro upgrade from the iOS app", preferredStyle: .alert, actions: [WKAlertAction.init(title: "Ok", style: .default, handler: {
+					
+				})])
+				return
+			}
+		} else{
+			self.presentAlert(withTitle: "Post Comment is a Pro feature", message: "Posting a comment requires the Pro upgrade from the iOS app", preferredStyle: .alert, actions: [WKAlertAction.init(title: "Ok", style: .default, handler: {
+				
+			})])
+			return
+		}
 		presentTextInputController(withSuggestions: ["No"], allowedInputMode:  WKTextInputMode.plain) { (arr: [Any]?) in
 			if let arr = arr{
 				if let comment = arr.first as? String{
