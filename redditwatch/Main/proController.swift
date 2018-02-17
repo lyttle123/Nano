@@ -43,6 +43,7 @@ class proController: UIViewController, WCSessionDelegate {
 	let bundleId = "com.willbishop.redditwatch"
 	var wcSession: WCSession!
 	@IBOutlet weak var proTwoNinetyNine: UIButton!
+	@IBOutlet weak var restoreButton: UIButton!
 	var ProUnlock = RegisteredPurchase.proTwoNinetyNine
 	
 	@IBOutlet weak var proMessage: UILabel!
@@ -63,6 +64,8 @@ class proController: UIViewController, WCSessionDelegate {
 				self.proTwoNinetyNine.setTitle("Purchased!", for: .normal)
 				self.proMessage.text = "Thank you for supporting indie development"
 				self.proTwoNinetyNine.isEnabled = false
+				self.restoreButton.isEnabled = false
+				
 				sendData().superSend(data: ["purchasedPro": true], completionHandler: {finished in
 					print(finished)
 				})
@@ -127,7 +130,9 @@ class proController: UIViewController, WCSessionDelegate {
 					if bool{
 						print("SUCCESFUL")
 						self.proTwoNinetyNine.setTitle("Purchased!", for: .normal)
+						self.proMessage.text = "Thank you for supporting indie development"
 						self.proTwoNinetyNine.isEnabled = false
+						self.restoreButton.isEnabled = false
 						self.wcSession.transferUserInfo(["purchasedPro": true])
 					}
 				}
@@ -220,7 +225,10 @@ extension proController{
 			DispatchQueue.main.async {
 				UserDefaults.standard.set(true, forKey: "pro")
 			}
-			
+			self.proTwoNinetyNine.setTitle("Purchased!", for: .normal)
+			self.proMessage.text = "Thank you for supporting indie development"
+			self.proTwoNinetyNine.isEnabled = false
+			self.restoreButton.isEnabled = false
 			print("SET")
 			self.view.addSubview(confettiView)
 			confettiView.startConfetti()
@@ -252,6 +260,10 @@ extension proController{
 			DispatchQueue.main.async {
 				UserDefaults.standard.set(true, forKey: "pro")
 			}
+			self.proTwoNinetyNine.setTitle("Purchased!", for: .normal)
+			self.proMessage.text = "Thank you for supporting indie development"
+			self.proTwoNinetyNine.isEnabled = false
+			self.restoreButton.isEnabled = false
 			
 			print("SET")
 			self.view.addSubview(confettiView)

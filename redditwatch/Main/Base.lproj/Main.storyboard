@@ -380,6 +380,7 @@ ps. you also get confetti</string>
                     <connections>
                         <outlet property="proMessage" destination="AoC-OD-Mhn" id="NH2-8p-34C"/>
                         <outlet property="proTwoNinetyNine" destination="fId-QX-Qaa" id="kBX-V7-brf"/>
+                        <outlet property="restoreButton" destination="e9c-ar-d6P" id="XLg-Zd-kMh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wgA-hR-YWx" userLabel="First Responder" sceneMemberID="firstResponder"/>
