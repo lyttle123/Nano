@@ -167,7 +167,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, voteButtonD
 		}
 		if let pro = message["purchasedPro"] as? Bool{
 			if pro{
-				UserDefaults.standard.set(true, forKey: "Pro")
+				UserDefaults.standard.set(true, forKey: "pro")
 			}
 		}
 		if let should = message["defaultSubreddit"] as? Bool{
@@ -218,7 +218,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, voteButtonD
 	func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
 		if let pro = applicationContext["purchasedPro"] as? Bool{
 			if pro{
-				UserDefaults.standard.set(true, forKey: "Pro")
+				UserDefaults.standard.set(true, forKey: "pro")
 			}
 		}
 	}
@@ -230,7 +230,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, voteButtonD
 		}
 		if let pro = userInfo["purchasedPro"] as? Bool{
 			if pro{
-				UserDefaults.standard.set(true, forKey: "Pro")
+				UserDefaults.standard.set(true, forKey: "pro")
 			}
 		}
 		if let refesh_token = userInfo["refresh_token"] as? String{

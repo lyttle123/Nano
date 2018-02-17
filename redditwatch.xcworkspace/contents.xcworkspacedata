@@ -11,7 +11,7 @@
       location = "group:ISSUE_TEMPLATE.md">
    </FileRef>
    <FileRef
-      location = "group:redditwatch.xcodeproj">
+      location = "group:/Users/Will/Developer/redditwatch/Nano.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

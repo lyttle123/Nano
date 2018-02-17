@@ -38,7 +38,7 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 		self.navigationItem.rightBarButtonItem = self.editButtonItem
 		if let bool = UserDefaults.standard.object(forKey: "pro") as? Bool{
 			if bool{
-				subreddits.append("Add another subreddit")
+				subreddits.append("Add another subscription")
 			} else{
 				subreddits.append("Pro users can add more than 5 subreddits")
 				
@@ -107,7 +107,7 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 						if bool{
 							self.savedSubs = subs
 							self.subreddits = subs
-							self.subreddits.append("Add another subreddit")
+							self.subreddits.append("Add another subscription")
 							UserDefaults.standard.set(self.savedSubs, forKey: "quickSubreddits")
 							
 							self.sendSubredditsToWatch()
@@ -208,8 +208,8 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 		
 		
 		guard let cell = quickAccessSubreddits.cellForRow(at: indexPath) as? quickSubredditCell else {return}
-		if cell.subredditLabel.text == "Add another subreddit"{
-			subreddits.append("Add another subreddit")
+		if cell.subredditLabel.text == "Add another subscription"{
+			subreddits.append("Add another subscription")
 			quickAccessSubreddits.insertRows(at: [newIndex], with: .automatic)
 			
 			cell.subredditLabel.isUserInteractionEnabled = true
@@ -220,7 +220,7 @@ class quickAccessController: UIViewController, UITableViewDataSource, UITableVie
 		}
 	}
 	func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-		let delete = UITableViewRowAction(style: UITableViewRowActionStyle.destructive, title: "Delete"){(UITableViewRowAction,NSIndexPath) -> Void in
+		let delete = UITableViewRowAction(style: UITableViewRowActionStyle.destructive, title: "Unsubscribe"){(UITableViewRowAction,NSIndexPath) -> Void in
 			print(NSIndexPath)
 			print(self.savedSubs[indexPath.row])
 			self.reddit.subscribe(to: self.savedSubs[indexPath.row], action: "unsub", completionHandler: {code in

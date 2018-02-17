@@ -570,7 +570,7 @@
 					};
 				};
 			};
-			buildConfigurationList = BE24067A1FEA742F00D92A34 /* Build configuration list for PBXProject "redditwatch" */;
+			buildConfigurationList = BE24067A1FEA742F00D92A34 /* Build configuration list for PBXProject "Nano" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -1299,7 +1299,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		BE24067A1FEA742F00D92A34 /* Build configuration list for PBXProject "redditwatch" */ = {
+		BE24067A1FEA742F00D92A34 /* Build configuration list for PBXProject "Nano" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BE2406A51FEA743000D92A34 /* Debug */,

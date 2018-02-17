@@ -153,13 +153,25 @@ class postController: WKInterfaceController {
 					.responseData { imageData in
 						
 						if let data = imageData.data{
-							if post["post_hint"].string! == "image" && url.range(of: "gif") != nil{
-								if let b = UIImage.gifImageWithData(data){
-									print("Gif")
-									self.postImage.setImage(b)
-									self.postImage.sizeToFitWidth()
-									self.postImage.startAnimating()
+							if let hint = post["post_hint"].string{
+								if hint == "image" && url.range(of: "gif") != nil{
+									if let b = UIImage.gifImageWithData(data){
+										print("Gif")
+										self.postImage.setImage(b)
+										self.postImage.sizeToFitWidth()
+										self.postImage.startAnimating()
+									}
+								} else{
+									let image = UIImage(data: data)
+									if image != nil{
+										print("setting \(String(describing: image))")
+										self.postImage.setImage(image)
+										self.postImage.sizeToFitHeight()
+									} else{
+										print("Sizing now")
+									}
 								}
+							
 							} else{
 								let image = UIImage(data: data)
 								if image != nil{
