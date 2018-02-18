@@ -150,7 +150,7 @@
 		BE2406E01FEA9E3700D92A34 /* commentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = commentController.swift; sourceTree = "<group>"; };
 		BE2406E31FEB1E5300D92A34 /* subCommentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = subCommentController.swift; sourceTree = "<group>"; };
 		BE2D9DE82025D13F003C32A2 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		BE2D9DEA2026689B003C32A2 /* quickAccessController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = quickAccessController.swift; path = /Users/Will/Developer/redditwatch/redditwatch/Main/quickAccessController.swift; sourceTree = "<absolute>"; };
+		BE2D9DEA2026689B003C32A2 /* quickAccessController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = quickAccessController.swift; path = /Users/Will/Developer/redditwatch/Nano/Main/quickAccessController.swift; sourceTree = "<absolute>"; };
 		BE2D9DEC2026E0CA003C32A2 /* handoffController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = handoffController.swift; sourceTree = "<group>"; };
 		BE2D9DEE2026EA5C003C32A2 /* thanksController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = thanksController.swift; sourceTree = "<group>"; };
 		BE4F9A011FFE34780094F0C8 /* Twitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Twitter.swift; sourceTree = "<group>"; };
@@ -247,9 +247,9 @@
 		BE2406761FEA742F00D92A34 = {
 			isa = PBXGroup;
 			children = (
-				BE2406811FEA743000D92A34 /* redditwatch */,
-				BE2406B31FEA744300D92A34 /* watchapp */,
-				BE2406C21FEA744300D92A34 /* watchapp Extension */,
+				BE2406811FEA743000D92A34 /* Nano */,
+				BE2406B31FEA744300D92A34 /* Nano Watchapp */,
+				BE2406C21FEA744300D92A34 /* Nano Extension */,
 				BE2406801FEA743000D92A34 /* Products */,
 				3923084CC1636C735C5815EC /* Pods */,
 				70F6FBAC0A97962DEB52FDFE /* Frameworks */,
@@ -270,7 +270,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		BE2406811FEA743000D92A34 /* redditwatch */ = {
+		BE2406811FEA743000D92A34 /* Nano */ = {
 			isa = PBXGroup;
 			children = (
 				BEF6BA94202E8CD800E2ACE0 /* Main */,
@@ -281,7 +281,7 @@
 				BE24068B1FEA743000D92A34 /* LaunchScreen.storyboard */,
 				BE24068E1FEA743000D92A34 /* Info.plist */,
 			);
-			path = redditwatch;
+			path = Nano;
 			sourceTree = "<group>";
 		};
 		BE2406961FEA743000D92A34 /* redditwatchTests */ = {
@@ -302,7 +302,7 @@
 			path = redditwatchUITests;
 			sourceTree = "<group>";
 		};
-		BE2406B31FEA744300D92A34 /* watchapp */ = {
+		BE2406B31FEA744300D92A34 /* Nano Watchapp */ = {
 			isa = PBXGroup;
 			children = (
 				BEF6BA98202E8D8100E2ACE0 /* Main */,
@@ -312,10 +312,10 @@
 				BE2406D81FEA753B00D92A34 /* watchapp-Bridging-Header.h */,
 				BE8B1FC220107D0C00D24D26 /* sortCell.swift */,
 			);
-			path = watchapp;
+			path = "Nano Watchapp";
 			sourceTree = "<group>";
 		};
-		BE2406C21FEA744300D92A34 /* watchapp Extension */ = {
+		BE2406C21FEA744300D92A34 /* Nano Extension */ = {
 			isa = PBXGroup;
 			children = (
 				BEF6BA9A202E8DD200E2ACE0 /* Extensions */,
@@ -325,7 +325,7 @@
 				BE2406C91FEA744300D92A34 /* Assets.xcassets */,
 				BE2406CB1FEA744300D92A34 /* Info.plist */,
 			);
-			path = "watchapp Extension";
+			path = "Nano Extension";
 			sourceTree = "<group>";
 		};
 		BEF6BA93202E8CC100E2ACE0 /* Onboard */ = {
@@ -1106,7 +1106,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D8D2NQ6572;
-				INFOPLIST_FILE = redditwatch/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Nano/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				"OTHER_SWIFT_FLAGS[sdk=iphonesimulator*]" = "$(inherited)";
@@ -1128,7 +1128,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D8D2NQ6572;
-				INFOPLIST_FILE = redditwatch/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Nano/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				"OTHER_SWIFT_FLAGS[sdk=iphonesimulator*]" = "$(inherited)";
@@ -1218,7 +1218,7 @@
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D8D2NQ6572;
-				INFOPLIST_FILE = "watchapp Extension/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Nano Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.willbishop.redditwatch.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
@@ -1237,7 +1237,7 @@
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D8D2NQ6572;
-				INFOPLIST_FILE = "watchapp Extension/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Nano Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.willbishop.redditwatch.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
@@ -1259,7 +1259,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D8D2NQ6572;
 				IBSC_MODULE = watchapp_Extension;
-				INFOPLIST_FILE = watchapp/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Nano Watchapp/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.willbishop.redditwatch.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1283,7 +1283,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D8D2NQ6572;
 				IBSC_MODULE = watchapp_Extension;
-				INFOPLIST_FILE = watchapp/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Nano Watchapp/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.willbishop.redditwatch.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -13,10 +13,10 @@ import SAConfettiView
 import WatchConnectivity
 
 enum RegisteredPurchase: String {
-	case proTwoNinetyNine = "Pro"
+	case proTwoNinetyNine = "pro"
 	
 }
-var sharedSecret = "82aa45026f5b4a07b34d20e3df60b317"
+var sharedSecret = "bdb25ff85c3f4b9ca4fb9193e8cc4a42"
 
 class NetworkActivityIndicatorManager: NSObject {
 	private static var loadingCount = 0
@@ -40,7 +40,7 @@ class NetworkActivityIndicatorManager: NSObject {
 
 class proController: UIViewController, WCSessionDelegate {
 	
-	let bundleId = "com.willbishop.redditwatch"
+	let bundleId = "com.willbishop.nano"
 	var wcSession: WCSession!
 	@IBOutlet weak var proTwoNinetyNine: UIButton!
 	@IBOutlet weak var restoreButton: UIButton!
