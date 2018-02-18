@@ -10,7 +10,6 @@ import WatchConnectivity
 
 class quickAccessController: UIViewController, UITableViewDataSource, UITableViewDelegate, WCSessionDelegate {
 	
-	
 	@IBOutlet weak var quickAccessSubreddits: UITableView!
 	var subreddits = UserDefaults.standard.object(forKey: "quickSubreddits") as? [String] ?? ["Popular","All","Funny"]
 	var savedSubs = UserDefaults.standard.object(forKey: "quickSubreddits") as? [String] ?? ["Popular","All","Funny"]
