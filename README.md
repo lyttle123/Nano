@@ -1,7 +1,7 @@
-# RedditWatch
+# Nano
 A Reddit client for the Apple Watch
 
-I got annoyed by not being able to distract myself whenever I wanted, and thought "Hey, you know what's a good idea? Strap Reddit to your wrist, so you never get anything done", and thus the creatively named "RedditWatch" was born.
+Nano is a new Reddit client for the Apple Watch. It's feature packed with GIF Support, Inline Twitter, Voting and Commenting, and so much more.
 
 
 
