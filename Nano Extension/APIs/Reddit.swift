@@ -46,9 +46,7 @@ class RedditAPI{
 		print("Getting")
 		Alamofire.request("https://www.reddit.com/api/v1/access_token", method: .post, parameters: parameters)
 			.authenticate(user: "uUgh0YyY_k_6ow", password: "")
-			.responseString {str in
-				print(str.result.value)
-			}
+			
 			.responseJSON(completionHandler: {data in
 				if data.response?.statusCode == 200{
 					
@@ -241,11 +239,12 @@ class RedditAPI{
 				
 			}
 			let timeSince = Date().timeIntervalSince(lastTime)
-			if timeSince > 1800 && subreddit.lowercased() == "home"{
+			if subreddit.lowercased() == "home"{
 				if let loading = loading{
+				
 					if !loading{
 						if let refresh_token = UserDefaults.standard.object(forKey: "refresh_token") as? String{
-							getAccessToken(grantType: refresh_token, code: refresh_token, completionHandler: {result in
+							getAccessToken(grantType: "refresh_token", code: refresh_token, completionHandler: {result in
 								self.loading = false
 								print("Got back \(result)")
 								print("Saving \(String(describing: result["access_token"]))")
@@ -255,6 +254,8 @@ class RedditAPI{
 									"Authorization": "bearer \(result["access_token"]!)",
 									"User-Agent": "RedditWatch/0.1 by 123icebuggy",
 									]
+								print(url)
+								print("Getting now")
 								Alamofire.request(url!, parameters: parameters, headers: headers)
 									.responseData { dat in
 										if let dat = dat.data{
@@ -268,6 +269,8 @@ class RedditAPI{
 							})
 							
 						}
+					} else{
+						print("FALSE FALSE FALSE")
 					}
 				}
 			} else{

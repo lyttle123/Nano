@@ -324,10 +324,10 @@ This will load on app launch automatically</string>
             </objects>
             <point key="canvasLocation" x="-100" y="90"/>
         </scene>
-        <!--Pro Upgrade-->
+        <!--Nano Pro-->
         <scene sceneID="cY3-0V-b5t">
             <objects>
-                <viewController storyboardIdentifier="proController" title="Pro Upgrade" id="cDX-VI-Jxo" customClass="proController" customModule="redditwatch" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="proController" title="Nano Pro" id="cDX-VI-Jxo" customClass="proController" customModule="redditwatch" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="IMM-Cx-ME9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -345,7 +345,7 @@ $1.99</string>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AoC-OD-Mhn">
                                 <rect key="frame" x="39" y="94" width="297" height="203"/>
-                                <string key="text">By purchasing RedditWatch Pro you not only unlock additional features for the app, but are supporting me as an individual developer
+                                <string key="text">By purchasing Nano Pro you not only unlock additional features for the app, but are supporting me as an individual developer
 
 The Pro upgrade gets you support for unlimited subscriptions and handoff suport.
 

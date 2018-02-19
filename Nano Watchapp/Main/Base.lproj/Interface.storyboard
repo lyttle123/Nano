@@ -17,7 +17,7 @@
                         <group width="1" height="1" alignment="left" id="ogn-Jy-rZ9">
                             <items>
                                 <label width="1" height="1" alignment="left" textAlignment="center" numberOfLines="0" id="4ID-Es-4ua">
-                                    <string key="text">Welcome to RedditWatch! 
+                                    <string key="text">Welcome to Nano! 
  Please swipe to the next page to get started</string>
                                 </label>
                             </items>
@@ -37,7 +37,7 @@
                 <controller identifier="page2" id="Hv0-rJ-c07" customClass="waitForiPhone" customModule="watchapp_Extension">
                     <items>
                         <label width="1" height="1" alignment="left" textAlignment="center" numberOfLines="0" id="zqq-gJ-q0U">
-                            <string key="text">Please open RedditWatch on your iOS Device to setup
+                            <string key="text">Please open Nano on your iOS Device to setup
 
 --&gt; Tutorial</string>
                         </label>

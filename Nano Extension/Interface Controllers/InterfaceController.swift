@@ -198,14 +198,14 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, voteButtonD
 				
 				if !setup{
 					print("Moving away")
-					WKInterfaceController.reloadRootControllers(withNamesAndContexts: [("interface", AnyObject.self as AnyObject)])
-					self.changeSub()
+					
 					self.wcSession?.sendMessage(["setup":true], replyHandler: nil, errorHandler: { error in
 						print(error.localizedDescription)
 						UserDefaults.standard.set(true, forKey: "setup")
 						
 					})
 					self.setup = true
+					WKInterfaceController.reloadRootControllers(withNamesAndContexts: [("interface", AnyObject.self as AnyObject)])
 					
 				}
 				
@@ -243,13 +243,13 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, voteButtonD
 				print("SHould enable")
 				if !setup{
 					print("moving away")
-					WKInterfaceController.reloadRootControllers(withNamesAndContexts: [("interface", AnyObject.self as AnyObject)])
-					self.changeSub()
 					self.wcSession?.sendMessage(["setup":true], replyHandler: nil, errorHandler: { error in
 						print(error.localizedDescription)
 					})
 					UserDefaults.standard.set(true, forKey: "setup")
 					self.setup = true
+					WKInterfaceController.reloadRootControllers(withNamesAndContexts: [("interface", AnyObject.self as AnyObject)])
+					
 					
 				}
 				self.wcSession?.sendMessage(["setup":true], replyHandler: nil, errorHandler: { error in
@@ -478,8 +478,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, voteButtonD
 				} else{
 					print(self.currentSubreddit)
 					if self.currentSubreddit.isEmpty{
-						WKInterfaceDevice.current().play(WKHapticType.failure)
-						self.changeSubreddit()
+						self.setupTable("home", sort: "hot")
 						
 					}
 				}
