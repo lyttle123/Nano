@@ -239,9 +239,9 @@ class RedditAPI{
 				
 			}
 			let timeSince = Date().timeIntervalSince(lastTime)
-			if subreddit.lowercased() == "home"{
+			if timeSince > 1800 && subreddit.lowercased() == "home"{
+				print("Need to get token firt")
 				if let loading = loading{
-				
 					if !loading{
 						if let refresh_token = UserDefaults.standard.object(forKey: "refresh_token") as? String{
 							getAccessToken(grantType: "refresh_token", code: refresh_token, completionHandler: {result in
@@ -254,8 +254,6 @@ class RedditAPI{
 									"Authorization": "bearer \(result["access_token"]!)",
 									"User-Agent": "RedditWatch/0.1 by 123icebuggy",
 									]
-								print(url)
-								print("Getting now")
 								Alamofire.request(url!, parameters: parameters, headers: headers)
 									.responseData { dat in
 										if let dat = dat.data{
@@ -269,8 +267,6 @@ class RedditAPI{
 							})
 							
 						}
-					} else{
-						print("FALSE FALSE FALSE")
 					}
 				}
 			} else{
