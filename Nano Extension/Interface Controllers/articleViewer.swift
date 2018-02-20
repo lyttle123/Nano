@@ -18,7 +18,10 @@ class articleViewer: WKInterfaceController {
 			if let title = context["title"] as? String{
 				articleTitle.setText(title)
 			}
-			if let content = context["content"] as? String{
+			if var content = context["content"] as? String{
+				if content.count > 4931{
+					content = content.prefix(4850) + "...\n\nContinue reading on iPhone"
+				}
 				articleContent.setText(content)
 			}
 			if let image = context["image"] as? UIImage{

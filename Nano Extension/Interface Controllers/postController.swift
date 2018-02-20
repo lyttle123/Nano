@@ -251,8 +251,10 @@ class postController: WKInterfaceController {
 					.downloadProgress {progress in
 						self.progressLabel.setHidden(false)
 						let progresss = String(progress.fractionCompleted * Double(100)).prefix(4)
-						
-						self.progressLabel.setText("Downloading \(progresss)%")
+						if progress.fractionCompleted > 0.0{
+							self.progressLabel.setText("Downloading \(progresss)%")
+							
+						}
 						if progress.fractionCompleted == 1.0{
 							self.progressLabel.setHidden(true)
 						}
