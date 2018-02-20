@@ -291,6 +291,7 @@ class postController: WKInterfaceController {
 			print("wouldn't let")
 		}
 	}
+	
 	func getText(html: String) -> [String: Any]{
 		do {
 			let doc: Document = try SwiftSoup.parse(html)
@@ -321,6 +322,7 @@ class postController: WKInterfaceController {
 		}
 	}
 	override func willDisappear() {
+		UserDefaults.standard.removeObject(forKey: "selectedThumbnail" + currentId)
 		
 		Alamofire.SessionManager.default.session.getTasksWithCompletionHandler { (sessionDataTask, uploadData, downloadData) in
 			sessionDataTask.forEach {

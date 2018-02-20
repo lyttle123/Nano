@@ -444,6 +444,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, voteButtonD
 						}
 						
 					}
+					
 				}
 				
 				
@@ -451,6 +452,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, voteButtonD
 			}
 			self.redditTable.setAlpha(1.0)
 			self.redditTable.scrollToRow(at: currentIndex - 1)
+			
 			WKInterfaceDevice.current().play(.success)
 			
 			
