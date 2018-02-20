@@ -10,6 +10,7 @@ import WatchKit
 import Foundation
 import SwiftyJSON
 import Alamofire
+import SwiftSoup
 
 class postController: WKInterfaceController {
 	
@@ -29,6 +30,9 @@ class postController: WKInterfaceController {
 	@IBOutlet var postImage: WKInterfaceImage!
 	@IBOutlet var postTime: WKInterfaceLabel!
 	@IBOutlet var loadingIndicator: WKInterfaceImage!
+	@IBOutlet var articleHousing: WKInterfaceGroup!
+	@IBOutlet var articleDomain: WKInterfaceLabel!
+	@IBOutlet var articleTitle: WKInterfaceLabel!
 	
 	var reddit = RedditAPI()
 	var saved = false
@@ -42,7 +46,7 @@ class postController: WKInterfaceController {
 	var currentSort = "best"
 	var currentSubreddit = String()
 	var currentId = String()
-	
+	var articleContents = [String: Any]()
 	private var _loading: Bool!
 	var loading: Bool{
 		set{
@@ -71,7 +75,7 @@ class postController: WKInterfaceController {
 		downvoteButton.setHidden(true)
 		upvoteButton.setHidden(true)
 		savePostButton.setHidden(true)
-		
+		articleHousing.setHidden(true)
 		
 		guard let post = context as? JSON else{
 			InterfaceController().becomeCurrentPage()
@@ -79,7 +83,7 @@ class postController: WKInterfaceController {
 			
 			
 		}
-		
+	
 		if let connected = UserDefaults.standard.object(forKey: "connected") as? Bool{
 			if connected {
 				downvoteButton.setHidden(false)
@@ -118,12 +122,6 @@ class postController: WKInterfaceController {
 				let id = url.components(separatedBy: ".com/").last!
 				url = "https://i.imgur.com/\(id).png" //Make it one
 			}
-			if url.range(of: "http") == nil{
-				url = "https://" + url
-			}
-			if url.range(of: "https") == nil{
-				url = url.replacingOccurrences(of: "http://", with: "https://")
-			}
 			if url.range(of: "gifv") != nil && url.range(of: "imgur") != nil{
 				shouldLoad = false
 				url = url.replacingOccurrences(of: "gifv", with: "mp4")
@@ -141,6 +139,7 @@ class postController: WKInterfaceController {
 				if let imagedat = UserDefaults.standard.object(forKey: "selectedThumbnail" + (UserDefaults.standard.object(forKey: "selectedId") as! String)) as? Data{
 					let img = WKImage(imageData: imagedat)
 					movieControl.setPosterImage(img)
+					
 				}
 				
 				
@@ -149,9 +148,14 @@ class postController: WKInterfaceController {
 			}
 			
 			if shouldLoad{
+				print(url)
+				self.progressLabel.setHidden(false)
+				self.progressLabel.setText("Downloading...")
 				Alamofire.request(url)
-					.responseData { imageData in
-						
+					.response { imageData in
+						self.progressLabel.setHidden(true)
+						print(imageData.data)
+						print("FINISHED")
 						if let data = imageData.data{
 							if let hint = post["post_hint"].string{
 								if hint == "image" && url.range(of: "gif") != nil{
@@ -169,17 +173,72 @@ class postController: WKInterfaceController {
 										self.postImage.sizeToFitHeight()
 									} else{
 										print("Sizing now")
+										if let text = String.init(data: data, encoding: String.Encoding.utf8) {
+											self.articleHousing.setHidden(false)
+											print(text)
+											var stuff = self.getText(html: text)
+											print(stuff)
+											if stuff["error"] == nil{
+												self.articleDomain.setText(imageData.request?.url?.host)
+												self.articleTitle.setText("Read Article")
+												if let content = stuff["content"] as? String{
+													if content.count as Int > 0{
+														self.articleHousing.setHidden(false)
+													} else{
+														self.articleHousing.setHidden(true)
+													}
+												}
+												if UserDefaults.standard.object(forKey: "shouldLoadImage") as! Bool{
+													if let imagedat = UserDefaults.standard.object(forKey: "selectedThumbnail" + (UserDefaults.standard.object(forKey: "selectedId") as! String)) as? Data{
+														let image = UIImage(data: imagedat)
+														stuff["image"] = image
+														
+													}
+													
+												}
+												self.articleContents = stuff
+												
+											}
+										}
 									}
 								}
 							
 							} else{
+								print("NO IMAGE")
 								let image = UIImage(data: data)
 								if image != nil{
 									print("setting \(String(describing: image))")
 									self.postImage.setImage(image)
 									self.postImage.sizeToFitHeight()
 								} else{
-									print("Sizing now")
+									print("MAKING ARTICLE")
+									if let text = String.init(data: data, encoding: String.Encoding.utf8) {
+										
+										var stuff = self.getText(html: text)
+										if let content = stuff["content"] as? String{
+											if content.count as Int > 0{
+												self.articleHousing.setHidden(false)
+											} else{
+												self.articleHousing.setHidden(true)
+											}
+										}
+										if stuff["error"] == nil{
+											
+											self.articleDomain.setText(imageData.request?.url?.host)
+											
+											self.articleTitle.setText("Read Article")
+											if UserDefaults.standard.object(forKey: "shouldLoadImage") as! Bool{
+												if let imagedat = UserDefaults.standard.object(forKey: "selectedThumbnail" + (UserDefaults.standard.object(forKey: "selectedId") as! String)) as? Data{
+													let image = UIImage(data: imagedat)
+													stuff["image"] = image
+													
+												}
+												
+											}
+											self.articleContents = stuff
+											
+										}
+									}
 								}
 							}
 							
@@ -189,13 +248,17 @@ class postController: WKInterfaceController {
 							print("couldn't make image")
 						}
 					}
-					
-					.downloadProgress { progress in
-						self.progressLabel.setText("Downloading \(String(progress.fractionCompleted * 100).prefix(4))%")
+					.downloadProgress {progress in
+						self.progressLabel.setHidden(false)
+						let progresss = String(progress.fractionCompleted * Double(100)).prefix(4)
+						
+						self.progressLabel.setText("Downloading \(progresss)%")
 						if progress.fractionCompleted == 1.0{
 							self.progressLabel.setHidden(true)
 						}
 				}
+					
+				
 				
 			}
 			
@@ -226,7 +289,35 @@ class postController: WKInterfaceController {
 			print("wouldn't let")
 		}
 	}
-	
+	func getText(html: String) -> [String: Any]{
+		do {
+			let doc: Document = try SwiftSoup.parse(html)
+			var article = [String]()
+			var returners = [String: String]()
+			try? doc.select("p").forEach {
+				let text = try? $0.text()
+				let components = text?.components(separatedBy: .whitespacesAndNewlines)
+				if components!.count > 3{
+					article.append(try! $0.text())
+				}
+				
+			
+			}
+			returners["content"] = article.joined(separator: "\n\n")
+			if let title = try? doc.title(){
+				returners["title"] = title
+			}
+			
+			return returners
+			
+		} catch Exception.Error(let _, let message) {
+			print(message)
+			return ["error": message]
+		} catch {
+			print("error")
+			return ["error": "Unknown Error"]
+		}
+	}
 	override func willDisappear() {
 		
 		Alamofire.SessionManager.default.session.getTasksWithCompletionHandler { (sessionDataTask, uploadData, downloadData) in
@@ -611,6 +702,12 @@ class postController: WKInterfaceController {
 		
 		
 	}
+	@IBAction func readArticle(_ sender: Any) {
+		if !articleContents.isEmpty{
+			self.pushController(withName: "articleViewer", context: articleContents)
+			
+		}
+	}
 }
 
 extension String{
@@ -631,6 +728,7 @@ extension String{
 		return replacement
 		
 	}
+	
 }
 
 extension WKInterfaceButton {

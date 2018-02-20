@@ -186,6 +186,10 @@
                                                 </items>
                                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             </group>
+                                            <label alignment="left" text="Label" id="gUx-34-P6g">
+                                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="font" type="system" pointSize="10"/>
+                                            </label>
                                             <group width="1" alignment="left" id="SW0-W7-XB4">
                                                 <items>
                                                     <label alignment="left" text="100000" id="xrS-Sc-4S3">
@@ -223,6 +227,7 @@
                                         <outlet property="nsfwIndicator" destination="vy6-n0-pbF" id="HaD-RX-voh"/>
                                         <outlet property="postAuthor" destination="xgV-8f-Y9j" id="7R4-7q-cE6"/>
                                         <outlet property="postCommentCount" destination="UdK-AY-RoU" id="Obq-5I-NGw"/>
+                                        <outlet property="postDomain" destination="gUx-34-P6g" id="RPB-wX-XVo"/>
                                         <outlet property="postFlair" destination="eku-zY-Mtt" id="VtG-SW-eOQ"/>
                                         <outlet property="postImage" destination="0gQ-PJ-ULH" id="e4G-ia-WSY"/>
                                         <outlet property="postScore" destination="xrS-Sc-4S3" id="EKG-jx-LzL"/>
@@ -293,15 +298,25 @@
                             <fontDescription key="font" type="system" weight="semibold" pointSize="16"/>
                         </label>
                         <label width="136" alignment="left" text="Post Title" numberOfLines="0" id="XYC-nm-30e"/>
-                        <imageView width="1" alignment="left" id="wIb-5o-dFo">
+                        <imageView width="1" alignment="left" id="wIb-5o-dFo"/>
+                        <group width="1" alignment="left" layout="vertical" radius="3" spacing="0.0" id="Myh-aH-eoO">
+                            <items>
+                                <label alignment="left" text="Read Article" id="Mwe-kD-zTL"/>
+                                <separator alignment="left" id="oMb-sv-LGF"/>
+                                <label alignment="left" text="www.wptv.com" id="6Lu-J5-h18">
+                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <fontDescription key="font" type="system" pointSize="12"/>
+                                </label>
+                            </items>
                             <gestureRecognizers>
-                                <tapGestureRecognizer id="o2x-e4-dhP">
+                                <tapGestureRecognizer id="lPE-AK-ATY">
                                     <connections>
-                                        <action selector="imageTapped:" destination="REJ-04-EQn" id="Wso-qZ-I9A"/>
+                                        <action selector="readArticle:" destination="REJ-04-EQn" id="KNI-BN-sBu"/>
                                     </connections>
                                 </tapGestureRecognizer>
                             </gestureRecognizers>
-                        </imageView>
+                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </group>
                         <movie width="1" height="100" alignment="left" id="Cct-bG-IOO"/>
                         <label alignment="left" numberOfLines="0" id="db8-mH-ghL">
                             <fontDescription key="font" type="system" pointSize="13"/>
@@ -425,6 +440,9 @@
                         <imageView width="1" alignment="center" contentMode="center" id="Hhw-tv-8af"/>
                     </items>
                     <connections>
+                        <outlet property="articleDomain" destination="6Lu-J5-h18" id="38x-ie-sc6"/>
+                        <outlet property="articleHousing" destination="Myh-aH-eoO" id="huX-sW-4Q9"/>
+                        <outlet property="articleTitle" destination="Mwe-kD-zTL" id="HRf-Oa-duX"/>
                         <outlet property="commentsTable" destination="hlc-ag-5jF" id="em4-Dh-3qE"/>
                         <outlet property="downvoteButton" destination="Gej-z4-U1l" id="Et2-QJ-b0O"/>
                         <outlet property="loadingIndicator" destination="Hhw-tv-8af" id="JuI-tt-slt"/>
@@ -467,6 +485,28 @@
                 <controller id="4sK-HA-Art" customClass="NotificationController" customModule="watchapp" customModuleProvider="target"/>
             </objects>
             <point key="canvasLocation" x="466" y="815"/>
+        </scene>
+        <!--articleViewer-->
+        <scene sceneID="KFm-28-iep">
+            <objects>
+                <controller identifier="articleViewer" id="he9-vw-Rmg" customClass="articleViewer" customModule="watchapp_Extension">
+                    <items>
+                        <label width="1" alignment="left" text="Label" textAlignment="center" numberOfLines="0" id="hgw-Wr-zOh"/>
+                        <imageView width="1" alignment="left" id="9qR-JB-kYA"/>
+                        <separator alignment="left" id="Y9E-AE-CTR"/>
+                        <label width="1" alignment="left" numberOfLines="0" id="yJY-J0-PF2">
+                            <string key="text">hi
+f</string>
+                        </label>
+                    </items>
+                    <connections>
+                        <outlet property="articleContent" destination="yJY-J0-PF2" id="kaB-5J-Tum"/>
+                        <outlet property="articleImage" destination="9qR-JB-kYA" id="7QU-w5-KH1"/>
+                        <outlet property="articleTitle" destination="hgw-Wr-zOh" id="0QJ-Fq-mAY"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="685.23076923076928" y="209.66666666666669"/>
         </scene>
         <!--Posts-->
         <scene sceneID="M7N-WF-n0M">
@@ -571,7 +611,7 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="710" y="346"/>
+            <point key="canvasLocation" x="685" y="490"/>
         </scene>
         <!--tutorial2-->
         <scene sceneID="Dwv-G0-XXy">

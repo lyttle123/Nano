@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0920"
+   LastUpgradeVersion = "0700"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0FD3875C09269CF4B90BA9A0C3066159"
+               BlueprintIdentifier = "3244465CEB1F32B65D8EC418A92A6D15"
                BuildableName = "SwiftyJSON.framework"
                BlueprintName = "SwiftyJSON-watchOS"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -47,7 +47,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0FD3875C09269CF4B90BA9A0C3066159"
+            BlueprintIdentifier = "3244465CEB1F32B65D8EC418A92A6D15"
             BuildableName = "SwiftyJSON.framework"
             BlueprintName = "SwiftyJSON-watchOS"
             ReferencedContainer = "container:Pods.xcodeproj">

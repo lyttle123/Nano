@@ -158,7 +158,6 @@ class RedditAPI{
 				.response { reponse in
 					print("Got \(String(describing: reponse.response?.statusCode))")
 				}
-				debugPrint(b)
 		}
 		func getSubscriptions(completionHandler: @escaping (JSON?) -> Void){
 			let headers = [

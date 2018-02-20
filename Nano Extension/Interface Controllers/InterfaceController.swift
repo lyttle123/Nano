@@ -5,7 +5,6 @@
 //  Created by Will Bishop on 20/12/17.
 //  Copyright © 2017 Will Bishop. All rights reserved.
 //
-
 import WatchKit
 import Foundation
 import SwiftyJSON
@@ -44,7 +43,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, voteButtonD
 				loadingIndicator.startAnimating()
 				loadingIndicator.setHidden(false)
 				_loading = true
-
+				
 			} else{
 				_loading = false
 				loadingIndicator.stopAnimating()
@@ -99,7 +98,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, voteButtonD
 			wcSession?.delegate = self
 			wcSession?.activate()
 			
-		} 
+		}
 		
 		if let sort = UserDefaults.standard.object(forKey: currentSubreddit + "sort") as? String{
 			UserDefaults.standard.removeObject(forKey: currentSubreddit + "sort")
@@ -331,6 +330,14 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, voteButtonD
 						row.nameLabe.setText(stuff["title"].string!.dehtmlify())
 						row.id = stuff["id"].string!
 						row.delegate = self
+						if let url = stuff["url"].string{
+							if let converted = URL(string: url){
+								if let host = converted.host{
+									row.postDomain.setText(host)
+								}
+							}
+							
+						}
 						
 						if let gildedCount = stuff["gilded"].int{
 							if gildedCount > 0{
@@ -527,7 +534,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, voteButtonD
 	func didSelect(upvoteButton: WKInterfaceButton, downvoteButton: WKInterfaceButton, onCellWith id: String, action: String) {
 		print(id)
 		WKInterfaceDevice.current().play(.click)
-
+		
 		var dir = 0
 		if action == "upvote" && !upvoted{
 			WKInterfaceDevice.current().play(.click)
@@ -568,14 +575,14 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, voteButtonD
 	override func interfaceOffsetDidScrollToBottom() {
 		if loading {return} //If we're already loading posts, don't try again
 		WKInterfaceDevice.current().play(.click)
-
+		
 		print("LOADING MORE")
 		let loadAfter = ids.last
 		let previousCount = self.post.count
 		loading = true
 		reddit.getSubreddit(currentSubreddit, sort: currentSort, after: loadAfter, completionHandler: {json in
 			WKInterfaceDevice.current().play(.success)
-
+			
 			self.loading = false
 			let children = json["data"]["children"].array
 			self.redditTable.insertRows(at: IndexSet(self.names.count ... self.names.count + (children?.count)! - 1), withRowType: "redditCell") //From the current number of posts to the current number of posts + the number of new posts minus one because arrays start at zero
@@ -710,7 +717,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, voteButtonD
 			}
 			
 		})
-//		setupTable(currentSubreddit, sort: currentSort, after: loadAfter, currentIndex: self.names.count)
+		//		setupTable(currentSubreddit, sort: currentSort, after: loadAfter, currentIndex: self.names.count)
 		
 	}
 	

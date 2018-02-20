@@ -37,6 +37,7 @@
 		BE2D9DED2026E0CA003C32A2 /* handoffController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2D9DEC2026E0CA003C32A2 /* handoffController.swift */; };
 		BE2D9DEF2026EA5D003C32A2 /* thanksController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2D9DEE2026EA5C003C32A2 /* thanksController.swift */; };
 		BE4F9A021FFE34780094F0C8 /* Twitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4F9A011FFE34780094F0C8 /* Twitter.swift */; };
+		BE560869203C14A400AC990A /* articleViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE560868203C14A400AC990A /* articleViewer.swift */; };
 		BE64A7A71FFDD8A2005B9350 /* waitForiPhone.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE64A7A61FFDD8A2005B9350 /* waitForiPhone.swift */; };
 		BE8B1FC120107A6D00D24D26 /* commentSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8B1FC020107A6D00D24D26 /* commentSort.swift */; };
 		BE8B1FC420107DDA00D24D26 /* sortCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8B1FC220107D0C00D24D26 /* sortCell.swift */; };
@@ -154,6 +155,8 @@
 		BE2D9DEC2026E0CA003C32A2 /* handoffController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = handoffController.swift; sourceTree = "<group>"; };
 		BE2D9DEE2026EA5C003C32A2 /* thanksController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = thanksController.swift; sourceTree = "<group>"; };
 		BE4F9A011FFE34780094F0C8 /* Twitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Twitter.swift; sourceTree = "<group>"; };
+		BE560867203C058200AC990A /* ReaderView.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = ReaderView.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		BE560868203C14A400AC990A /* articleViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = articleViewer.swift; sourceTree = "<group>"; };
 		BE64A7A61FFDD8A2005B9350 /* waitForiPhone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = waitForiPhone.swift; sourceTree = "<group>"; };
 		BE8B1FC020107A6D00D24D26 /* commentSort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = commentSort.swift; sourceTree = "<group>"; };
 		BE8B1FC220107D0C00D24D26 /* sortCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sortCell.swift; sourceTree = "<group>"; };
@@ -386,11 +389,13 @@
 		BEF6BA99202E8D9800E2ACE0 /* Interface Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				BE560867203C058200AC990A /* ReaderView.playground */,
 				BE8B1FC020107A6D00D24D26 /* commentSort.swift */,
 				BE2406C31FEA744300D92A34 /* InterfaceController.swift */,
 				BE2406E31FEB1E5300D92A34 /* subCommentController.swift */,
 				BE64A7A61FFDD8A2005B9350 /* waitForiPhone.swift */,
 				BE2406DE1FEA8BB200D92A34 /* postController.swift */,
+				BE560868203C14A400AC990A /* articleViewer.swift */,
 			);
 			path = "Interface Controllers";
 			sourceTree = "<group>";
@@ -765,12 +770,14 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire-watchOS/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON-watchOS/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/OAuthSwift/OAuthSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftSoup/SwiftSoup.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OAuthSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftSoup.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -925,6 +932,7 @@
 				BE2406E41FEB1E5300D92A34 /* subCommentController.swift in Sources */,
 				BE2406C61FEA744300D92A34 /* ExtensionDelegate.swift in Sources */,
 				BE2406C41FEA744300D92A34 /* InterfaceController.swift in Sources */,
+				BE560869203C14A400AC990A /* articleViewer.swift in Sources */,
 				BE64A7A71FFDD8A2005B9350 /* waitForiPhone.swift in Sources */,
 				BE2406E21FEA9EAF00D92A34 /* commentController.swift in Sources */,
 				BE8B1FC120107A6D00D24D26 /* commentSort.swift in Sources */,

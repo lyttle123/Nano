@@ -20,6 +20,9 @@ class subCommentController: WKInterfaceController {
     var reduce = commentController()
     var post = JSON()
     @IBOutlet var repliesTable: WKInterfaceTable!
+	
+	
+
     override func awake(withContext context: Any?) {
 	
 		self.setTitle("Comments")

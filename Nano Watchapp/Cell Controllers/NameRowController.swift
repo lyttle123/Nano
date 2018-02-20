@@ -16,6 +16,7 @@ class NameRowController: NSObject {
 	weak var delegate: voteButtonDelegate?
 	var index: Int = 0
 	
+	@IBOutlet var postDomain: WKInterfaceLabel!
 	@IBOutlet var nameLabe: WKInterfaceLabel!
 	@IBOutlet var postImage: WKInterfaceImage!
 	@IBOutlet var postScore: WKInterfaceLabel!
