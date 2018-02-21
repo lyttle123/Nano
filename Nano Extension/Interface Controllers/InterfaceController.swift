@@ -57,6 +57,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, voteButtonD
 	
 	override func awake(withContext context: Any?) {
 		super.awake(withContext: context)
+	
 		invalidateUserActivity()
 		loadingIndicator.setHidden(true)
 		if setup{
@@ -318,7 +319,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, voteButtonD
 			}
 			if (after?.isEmpty)!{
 				print("Hiding")
-				self.redditTable.setAlpha(0.0)
+				self.redditTable.setHidden(true)
 				
 			}
 			self.redditTable.setNumberOfRows(self.names.count, withRowType: "redditCell")
@@ -335,6 +336,8 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, voteButtonD
 								if let host = converted.host{
 									if host != "www.reddit.com" {
 										row.postDomain.setText(host) 
+									} else{
+										row.postDomain.setHidden(true)
 									}
 								}
 							}
@@ -386,7 +389,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, voteButtonD
 								let id = stuff["url"].string!.components(separatedBy: "/").last!
 								Twitter().getTweet(tweetId: id, completionHandler: {tweet in
 									if let js = tweet{
-										row.tweetText.setText(js["text"].string!)
+										row.tweetText.setText(js["text"].string!.dehtmlify())
 										row.twitterLikes.setText(String(js["favorite_count"].int!) + " Likes")
 										row.twitterRetweets.setText(String(describing: js["retweet_count"].int!) +	 " Retweets")
 										row.twitterUsername.setText("@" + js["user"]["screen_name"].string!)
@@ -452,7 +455,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, voteButtonD
 				
 				
 			}
-			self.redditTable.setAlpha(1.0)
+			self.redditTable.setHidden(false)
 			self.redditTable.scrollToRow(at: currentIndex - 1)
 			
 			WKInterfaceDevice.current().play(.success)
@@ -525,6 +528,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, voteButtonD
 				print("Should attach image")
 				UserDefaults.standard.set(true, forKey: "shouldLoadImage")
 				UserDefaults.standard.set(ids[rowIndex], forKey: "selectedId")
+				
 				UserDefaults.standard.set(UIImagePNGRepresentation(images[rowIndex]!), forKey: "selectedThumbnail" + ids[rowIndex])
 				
 				self.pushController(withName: "lorem", context: post[ids[rowIndex]])

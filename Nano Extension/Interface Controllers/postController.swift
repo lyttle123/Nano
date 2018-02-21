@@ -16,6 +16,7 @@ class postController: WKInterfaceController {
 	
 	
 	
+	@IBOutlet var waitIndicator: WKInterfaceLabel!
 	@IBOutlet var postCommentButton: WKInterfaceButton!
 	@IBOutlet var movieControl: WKInterfaceMovie!
 	@IBOutlet var postComments: WKInterfaceLabel!
@@ -153,6 +154,19 @@ class postController: WKInterfaceController {
 				self.progressLabel.setText("Downloading...")
 				Alamofire.request(url)
 					.response { imageData in
+						
+						if let subreddit = post["subreddit"].string, let id = post["id"].string {
+							self.getComments(subreddit: subreddit, id: id)
+							self.currentSubreddit = subreddit
+							self.currentId = id
+							
+							
+							self.updateUserActivity("com.willbishop.redditwatch.handoff", userInfo: ["current": id, "subreddit": subreddit], webpageURL: nil)
+							
+							
+						} else{
+							print("wouldn't let")
+						}
 						self.progressLabel.setHidden(true)
 						print(imageData.data)
 						print("FINISHED")
@@ -278,18 +292,7 @@ class postController: WKInterfaceController {
 		}
 		
 		// Configure interface objects here.
-		if let subreddit = post["subreddit"].string, let id = post["id"].string {
-			getComments(subreddit: subreddit, id: id)
-			currentSubreddit = subreddit
-			currentId = id
-			
-			
-			updateUserActivity("com.willbishop.redditwatch.handoff", userInfo: ["current": id, "subreddit": subreddit], webpageURL: nil)
-			
-			
-		} else{
-			print("wouldn't let")
-		}
+		
 	}
 	
 	func getText(html: String) -> [String: Any]{
@@ -313,7 +316,7 @@ class postController: WKInterfaceController {
 			
 			return returners
 			
-		} catch Exception.Error(let _, let message) {
+		} catch Exception.Error( _, let message) {
 			print(message)
 			return ["error": message]
 		} catch {
@@ -365,6 +368,7 @@ class postController: WKInterfaceController {
 		loading = true
 		reddit.getComments(subreddit: subreddit, id: id, sort: sort, completionHandler: {json in
 			self.loading = false
+			self.waitIndicator.setHidden(true)
 			
 			if let da = json.array?.last!["data"]["children"]{
 				for (_, element) in da.enumerated(){
@@ -376,7 +380,7 @@ class postController: WKInterfaceController {
 				print("yeah no")
 			}
 			
-			self.commentsTable.setAlpha(0.0)
+			self.commentsTable.setHidden(true)
 			self.commentsTable.setNumberOfRows(self.comments.count - 1, withRowType: "commentCell")
 			for (index, element) in self.idList.enumerated(){
 				_ = [String]()
@@ -447,7 +451,7 @@ class postController: WKInterfaceController {
 					print("helllll no")
 				}
 			}
-			self.commentsTable.setAlpha(1.0)
+			self.commentsTable.setHidden(false)
 			WKInterfaceDevice.current().play(.success)
 			
 			
