@@ -68,6 +68,6 @@ Bold features signify "Recently Added" features.
 
 # Maybe One Day Features
 
-[x] Click on actual links and get a "Reader Mode" output like Safari
+- [x] Click on actual links and get a "Reader Mode" output like Safari
 
 
