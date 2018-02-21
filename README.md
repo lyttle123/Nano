@@ -16,53 +16,53 @@ Nano is a new Reddit client for the Apple Watch. It's feature packed with GIF Su
 
 Bold features signify "Recently Added" features.
 
-* View any subreddit
+- [x] View any subreddit
 
-* View comments of posts
+- [x] View comments of posts
 
-* View replies to comments in a post
+- [x] View replies to comments in a post
 
-* See post time, score, author, and number of replies
+- [x] See post time, score, author, and number of replies
 
-* Haptics to signal when the content is loaded (WatchKit URLSession is often slow)
+- [x] Haptics to signal when the content is loaded (WatchKit URLSession is often slow)
 
-* Image Support
+- [x] Image Support
 
-* Sort Subreddit Posts
+- [x] Sort Subreddit Posts
 
-* See Gilded Posts
+- [x] See Gilded Posts
 
-* Author highlighting (Moderator, OP, **Admin**)
+- [x] Author highlighting (Moderator, OP, **Admin**)
 
-* Sign into account
+- [x] Sign into account
 
-* Upvote, downvote, and save posts
+- [x] Upvote, downvote, and save posts
 
-* Inline Twitter support
+- [x] Inline Twitter support
 
-* Handoff support to your favourite Reddit clients (Apollo, Reddit, Narwhal, more to come)
+- [x] Handoff support to your favourite Reddit clients (Apollo, Reddit, Narwhal, more to come)
 
-* Sort Comments
+- [x] Sort Comments
 
-* Comment on posts
+- [x] Comment on posts
 
-* Reply to comments
+- [x] Reply to comments
 
-* See flair of a post
+- [x] See flair of a post
 
-* See subreddit of post if in /r/popular or /r/all
+- [x] See subreddit of post if in /r/popular or /r/all
 
-* See if a post is SFW or NSFW
+- [x] See if a post is SFW or NSFW
 
-* Upvote, downvote, and save comments
+- [x] Upvote, downvote, and save comments
 
-* Endless scrolling
+- [x] Endless scrolling
 
-* View your subscriptions
+- [x] View your subscriptions
 
-* **Article Reader**
+- [x] **Article Reader**
 
-* **Gif Support**
+- [x] **Gif Support**
 
 
 
