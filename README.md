@@ -34,8 +34,6 @@ Bold features signify "Recently Added" features.
 
 * Author highlighting (Moderator, OP, **Admin**)
 
-* Gif Support (not inline) (Very slow gif support; no gifv, webm, etc support at this time)
-
 * Sign into account
 
 * Upvote, downvote, and save posts
@@ -46,22 +44,30 @@ Bold features signify "Recently Added" features.
 
 * Sort Comments
 
-* **Comment on posts**
+* Comment on posts
 
-* **Reply to comments**
+* Reply to comments
 
-* **See flair of a post**
+* See flair of a post
 
-* **See subreddit of post if in /r/popular or /r/all**
+* See subreddit of post if in /r/popular or /r/all
 
-* **See if a post is SFW or NSFW**
+* See if a post is SFW or NSFW
 
-* **Upvote, downvote, and save comments**
+* Upvote, downvote, and save comments
+
+* Endless scrolling
+
+* View your subscriptions
+
+* **Article Reader**
+
+* **Gif Support**
 
 
 
 # Maybe One Day Features
 
-* Click on actual links and get a "Reader Mode" output like Safari
+[x] Click on actual links and get a "Reader Mode" output like Safari
 
 
