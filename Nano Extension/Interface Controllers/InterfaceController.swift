@@ -333,7 +333,9 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate, voteButtonD
 						if let url = stuff["url"].string{
 							if let converted = URL(string: url){
 								if let host = converted.host{
-									row.postDomain.setText(host)
+									if host != "www.reddit.com" {
+										row.postDomain.setText(host) 
+									}
 								}
 							}
 							
